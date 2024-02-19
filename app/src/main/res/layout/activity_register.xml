@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/buttonCreateAccount">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editTextFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="Prénom"
+                android:padding="10dp"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editTextLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextFirstName"
+                android:layout_marginTop="10dp"
+                android:hint="Nom"
+                android:padding="10dp"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextLastName"
+                android:layout_marginTop="10dp"
+                android:hint="Adresse e-mail"
+                android:padding="10dp"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextEmail"
+                android:layout_marginTop="10dp"
+                android:hint="Mot de passe"
+                android:padding="10dp"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/buttonChooseImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextPassword"
+                android:layout_marginTop="10dp"
+                android:text="Choisir une image" />
+
+            <ImageView
+                android:id="@+id/imageViewProfile"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_below="@id/buttonChooseImage"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/default_profile_image"
+                android:scaleType="centerCrop"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/buttonCreateAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Créer un compte" />
+
+</RelativeLayout>
