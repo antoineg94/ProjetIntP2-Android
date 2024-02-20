@@ -2,5 +2,24 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Gestion des médicaments" />
+    <item
+        android:id="@+id/itGestionMedic"
+        android:title="Gestion des médicaments"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/itDispositif"
+        android:icon="@drawable/ic_devices"
+        android:title="Dispositifs"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/itProfil"
+        android:title="Profil"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/itGuide"
+        android:title="Guide d'utilisation"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/itDeconnexion"
+        android:title="Déconnexion" />
 </menu>
