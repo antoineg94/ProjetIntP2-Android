@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface InterfaceServeur {
-    @GET("/medicament.php")
+    /*@GET("/medicament.php")
     Call<Medicaments> getMedicaments();
 
     @GET("/getListeMedicaments.php")
@@ -16,6 +16,6 @@ public interface InterfaceServeur {
     Call<Prescriptions> getPrescriptions();
 
     @GET("/getListePrescriptions.php")
-    Call<List<Prescriptions>> getListePrescriptions();
+    Call<List<Prescriptions>> getListePrescriptions();*/
 
 }

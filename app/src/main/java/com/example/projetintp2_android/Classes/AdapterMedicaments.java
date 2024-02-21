@@ -29,7 +29,7 @@ public class AdapterMedicaments extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MonViewHolder monViewHolder=(MonViewHolder) holder;
-        monViewHolder.tvNom.setText("le com de l'utilisateur");
+        monViewHolder.tvNom.setText("Nom du médicament");
 
         monViewHolder.tvNom.setText(liste.get(position).getNom());
     }
