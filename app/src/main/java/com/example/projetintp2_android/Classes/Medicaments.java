@@ -1,9 +1,14 @@
 package com.example.projetintp2_android.Classes;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Medicaments {
-    
+
+    @SerializedName("id")
     int id;
+    @SerializedName("nom")
     String nom;
+    @SerializedName("fonction")
     String fonction;
 
     public Medicaments(int id, String nom, String fonction) {
