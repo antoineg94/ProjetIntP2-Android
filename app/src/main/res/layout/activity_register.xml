@@ -58,14 +58,24 @@
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:textSize="24sp" />
+            <EditText
+                android:id="@+id/etConfirmationMotDePasse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etMotDePasse"
+                android:layout_marginTop="10dp"
+                android:hint="Confirmation de Mot de passe"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/btChoixImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/etMotDePasse"
-                android:layout_marginTop="10dp"
-                android:text="Choisir une image"
+                android:layout_below="@id/etConfirmationMotDePasse"
+                android:layout_marginTop="16dp"
+                android:text="photo de profil"
                 android:textSize="20sp" />
 
             <ImageView

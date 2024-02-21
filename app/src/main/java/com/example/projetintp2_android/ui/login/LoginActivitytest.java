@@ -2,6 +2,7 @@ package com.example.projetintp2_android.ui.login;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projetintp2_android.R;
+import com.example.projetintp2_android.RegisterActivity;
 
 public class LoginActivitytest extends AppCompatActivity {
 
@@ -51,6 +53,10 @@ public class LoginActivitytest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Redirection vers la page de création de compte
+
+                Intent intent = new Intent(LoginActivitytest.this, RegisterActivity.class);
+                startActivity(intent);
+
             }
         });
     }
