@@ -29,9 +29,8 @@ public class AdapterMedicaments extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MonViewHolder monViewHolder=(MonViewHolder) holder;
-        monViewHolder.tvNom.setText("Nom du médicament");
-
         monViewHolder.tvNom.setText(liste.get(position).getNom());
+        monViewHolder.tvFonction.setText(liste.get(position).getFonction());
     }
 
     @Override
@@ -41,10 +40,12 @@ public class AdapterMedicaments extends RecyclerView.Adapter{
 
     public  class MonViewHolder extends  RecyclerView.ViewHolder
     {
-        TextView tvNom;
+        TextView tvNom, tvFonction;
         public MonViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNom= itemView.findViewById((R.id.tvNom));
+            tvFonction= itemView.findViewById((R.id.tvFonction));
+
         }
     }
 }

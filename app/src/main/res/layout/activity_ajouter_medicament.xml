@@ -1,0 +1,179 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AjouterMedicament">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- TextInputLayout pour le médicament -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Médicament:">
+
+            <!-- SearchView pour sélectionner un médicament -->
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:queryHint="Sélectionner un médicament" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- TextInputLayout pour la date de commencement du traitement -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date de commencement du traitement:">
+
+            <!-- LinearLayout pour la date de début -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- ImageView pour l'icône du calendrier -->
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="57dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_calendar" />
+
+                <!-- EditText pour sélectionner une date de début -->
+                <EditText
+                    android:id="@+id/edDateDebut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:layout_weight="10"
+                    android:focusable="false"
+                    android:hint="Sélectionner une date de début"
+                    android:inputType="none" />
+
+            </LinearLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- TextInputLayout pour la date de fin du traitement -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date de fin du traitement (optionnel):">
+
+            <!-- LinearLayout pour la date de fin -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- ImageView pour l'icône du calendrier -->
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="57dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_calendar" />
+
+                <!-- EditText pour sélectionner une date de fin -->
+                <EditText
+                    android:id="@+id/edDateFin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:layout_weight="10"
+                    android:focusable="false"
+                    android:hint="Sélectionner une date de fin"
+                    android:inputType="none" />
+
+            </LinearLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- TextInputLayout pour l'intervalle entre les doses -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Intervalle entre les doses (heures):">
+
+            <!-- EditText pour l'intervalle entre les doses -->
+            <EditText
+                android:id="@+id/editTextTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="time" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- TextView pour la fréquence quotidienne de médication -->
+        <TextView
+            android:id="@+id/tx5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Fréquence quotidienne de médication:"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- CheckBox pour la fréquence quotidienne de médication -->
+        <CheckBox
+            android:id="@+id/chQuotidienne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quotidienne" />
+
+        <!-- TextInputLayout pour la périodicité -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Périodicité:">
+
+            <!-- Parent CheckBox pour la périodicité hebdomadaire -->
+            <CheckBox
+                android:id="@+id/chHebdomadaire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hebdomadaire" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- LinearLayout pour les CheckBox enfants de la périodicité hebdomadaire -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="40dp">
+
+            <!-- CheckBox enfants pour la périodicité hebdomadaire -->
+            <CheckBox
+                android:id="@+id/child_checkbox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Child CheckBox 1" />
+
+            <CheckBox
+                android:id="@+id/child_checkbox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Child CheckBox 2" />
+
+            <!-- Ajoutez ici les autres CheckBox enfants de la même manière -->
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

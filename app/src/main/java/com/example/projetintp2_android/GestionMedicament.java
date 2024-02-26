@@ -11,35 +11,58 @@ import android.telecom.Call;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.projetintp2_android.Classes.AdapterMedicaments;
+import com.example.projetintp2_android.AjouterMedicament;
 import com.example.projetintp2_android.Classes.InterfaceServeur;
 import com.example.projetintp2_android.Classes.Medicaments;
 import com.example.projetintp2_android.Classes.Retrofit;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class GestionMedicament extends AppCompatActivity {
+public class GestionMedicament extends AppCompatActivity{
 
     RecyclerView rvMedicaments;
     AdapterMedicaments adapter;
+    FloatingActionButton btAdd;
+    List<Medicaments> liste = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_medicament);
 
+        btAdd = findViewById(R.id.btAdd);
+
+        liste.add(new Medicaments(1,"Concerta", "IDDID"));
+        liste.add(new Medicaments(2,"MIA", "SDFSDF"));
+        liste.add(new Medicaments(3,"YAZ", "IDDFSDDSID"));
+
         rvMedicaments= findViewById(R.id.rvListeMedicaments);
         rvMedicaments.setHasFixedSize(true);
         rvMedicaments.setLayoutManager(new LinearLayoutManager(this));
 
-        getMedicaments();
+        AdapterMedicaments adapterMedicaments= new AdapterMedicaments(liste);
+        rvMedicaments.setAdapter(adapterMedicaments);
+
+        btAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GestionMedicament.this, AjouterMedicament.class);
+                startActivity(intent);
+            }
+        });
+
+        //getMedicaments();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu,menu);
-        setTitle("Pill Box");
+        setTitle("Gestion des médicaments");
         return true;
     }
 
