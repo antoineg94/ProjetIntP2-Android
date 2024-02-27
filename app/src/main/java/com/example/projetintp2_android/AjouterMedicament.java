@@ -1,30 +1,42 @@
 package com.example.projetintp2_android;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+
+
+import com.example.projetintp2_android.Classes.DaysAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AjouterMedicament extends AppCompatActivity {
 
     EditText edDateDebut, edDateFin;
     CheckBox chQutodien, chHebdomadaire;
+    Context context;
+    TextView tvJours;
 
 
     @Override
@@ -36,11 +48,16 @@ public class AjouterMedicament extends AppCompatActivity {
         edDateFin = findViewById(R.id.edDateFin);
         chQutodien = findViewById(R.id.chQuotidien);
         chHebdomadaire = findViewById(R.id.chHebdomadaire);
+        tvJours = findViewById(R.id.tvJours);
+        context = this;
 
-        // Code pour vérifier et définir l'état de la CheckBox chQuotidien
-        boolean isChecked = chQutodien.isChecked();
+        boolean isChecked1 = chQutodien.isChecked();
         chQutodien.setChecked(true); // pour cocher la CheckBox
         chQutodien.setChecked(false); // pour décocher la CheckBox
+
+        boolean isChecked2 = chHebdomadaire.isChecked();
+        chHebdomadaire.setChecked(true); // pour cocher la CheckBox
+        chHebdomadaire.setChecked(false); // pour décocher la CheckBox
 
         edDateDebut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,12 +74,11 @@ public class AjouterMedicament extends AppCompatActivity {
         });
 
         chQutodien.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
-                if(isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
                     // CheckBox cochée, faire quelque chose
                     Toast.makeText(AjouterMedicament.this, "CheckBox cochée", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     // CheckBox décochée, faire quelque chose
                     Toast.makeText(AjouterMedicament.this, "CheckBox décochée", Toast.LENGTH_SHORT).show();
                 }
@@ -70,40 +86,66 @@ public class AjouterMedicament extends AppCompatActivity {
         });
 
         chHebdomadaire.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Récupérer les CheckBox enfants par leur ID
-                CheckBox childCheckBox1 = findViewById(R.id.child_checkbox1);
-                CheckBox childCheckBox2 = findViewById(R.id.child_checkbox2);
-                // Ajouter ici les autres CheckBox enfants de la même manière
+                if (isChecked) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setCancelable(false);
+                    builder.setTitle("Ajouter un joueur");
 
-                // Cocher ou décocher les CheckBox enfants en fonction de l'état du CheckBox parent
-                childCheckBox1.setChecked(isChecked);
-                childCheckBox2.setChecked(isChecked);
-                // Ajouter ici les autres CheckBox enfants de la même manière
+                    // Créer la RecyclerView avec l'adaptateur DaysAdapter
+                    RecyclerView recyclerView = new RecyclerView(AjouterMedicament.this);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(AjouterMedicament.this));
+                    List<String> daysOfWeek = new ArrayList<>();
+                    daysOfWeek.add("Lundi");
+                    daysOfWeek.add("Mardi");
+                    daysOfWeek.add("Mercredi");
+                    daysOfWeek.add("Jeudi");
+                    daysOfWeek.add("Vendredi");
+                    daysOfWeek.add("Samedi");
+                    daysOfWeek.add("Dimanche");
+                    DaysAdapter adapter = new DaysAdapter(daysOfWeek);
+                    recyclerView.setAdapter(adapter);
+
+                    builder.setView(recyclerView);
+
+                    // Définir le bouton "OK"
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            List<String> selectedDays = adapter.getSelectedDays();
+                            StringBuilder selectedDaysText = new StringBuilder();
+                            for (String day : selectedDays) {
+                                selectedDaysText.append(day).append(", ");
+                            }
+                            String daysText = selectedDaysText.toString();
+                            // Supprimer la virgule et l'espace à la fin
+                            if (daysText.length() > 0) {
+                                daysText = daysText.substring(0, daysText.length() - 2);
+                            }
+                            tvJours.setText(daysText);
+                        }
+                    });
+
+                    // Définir le bouton "Annuler"
+                    builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else {
+                    // CheckBox décochée, faire quelque chose
+                    Toast.makeText(AjouterMedicament.this, "CheckBox décochée", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        // Récupérer les CheckBox enfants par leur ID
-        CheckBox childCheckBox1 = findViewById(R.id.child_checkbox1);
-        CheckBox childCheckBox2 = findViewById(R.id.child_checkbox2);
-        // Ajouter ici les autres CheckBox enfants de la même manière
 
-        // Ajouter un écouteur de changement d'état aux CheckBox enfants
-        CompoundButton.OnCheckedChangeListener childCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Traiter l'état des CheckBox enfants ici
-                if (isChecked) {
-                    Toast.makeText(AjouterMedicament.this, buttonView.getText() + " cochée", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(AjouterMedicament.this, buttonView.getText() + " décochée", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
 
-        childCheckBox1.setOnCheckedChangeListener(childCheckedChangeListener);
-        childCheckBox2.setOnCheckedChangeListener(childCheckedChangeListener);
+
     }
 
     private void DateDebut() {
