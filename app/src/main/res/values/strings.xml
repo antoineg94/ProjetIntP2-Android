@@ -58,4 +58,20 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_dispositif">Dispositif</string>
 
+    <string-array name="months">
+        <item>Janvier</item>
+        <item>Fevrier</item>
+        <item>Mars</item>
+        <item>Avril</item>
+        <item>Mai</item>
+        <item>Juin</item>
+        <item>Juillet</item>
+        <item>Aout</item>
+        <item>Septembre</item>
+        <item>Octobre</item>
+        <item>Novembre</item>
+        <item>Decembre</item>
+    </string-array>
+
+
 </resources>

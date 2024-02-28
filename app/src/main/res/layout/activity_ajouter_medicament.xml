@@ -6,17 +6,20 @@
     tools:context=".AjouterMedicament">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:id="@+id/linearLayout"
+        android:layout_width="378dp"
+        android:layout_height="581dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
 
         <SearchView
@@ -99,7 +102,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="306dp"
+            android:layout_height="205dp"
             android:orientation="vertical">
 
             <CheckBox
@@ -124,16 +127,58 @@
                     android:layout_width="221dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingLeft="10dp"
-                    android:text="TextView" />
+                    android:paddingLeft="10dp" />
             </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/chMensuel"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mensuelle" />
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/chMensuel"
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mensuelle" />
+
+                <TextView
+                    android:id="@+id/tvJourMois"
+                    android:layout_width="221dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/chAnnuel"
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:text="Annuelle" />
+
+                <TextView
+                    android:id="@+id/tvMois"
+                    android:layout_width="221dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btValide"
+        android:layout_width="175dp"
+        android:layout_height="52dp"
+        android:text="Valider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
