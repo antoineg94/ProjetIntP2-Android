@@ -213,6 +213,7 @@ public class AjouterMedicament extends AppCompatActivity {
         Spinner monthSpinner = dialogView.findViewById(R.id.monthSpinner);
         NumberPicker dayPicker = dialogView.findViewById(R.id.dayPicker);
         EditText yearEditText = dialogView.findViewById(R.id.etAn);
+        yearEditText.setText("1");
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.months, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
