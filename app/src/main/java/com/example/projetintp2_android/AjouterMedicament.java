@@ -40,7 +40,7 @@ public class AjouterMedicament extends AppCompatActivity {
     CheckBox chQuotidien, chHebdomadaire, chMensuel, chAnnuel;
     Context context;
     TextView tvJours, tvJourMois, tvMois;
-    Button btValide;
+    Button btAjoutM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +56,15 @@ public class AjouterMedicament extends AppCompatActivity {
         tvJours = findViewById(R.id.tvJours);
         tvJourMois = findViewById(R.id.tvJourMois);
         tvMois = findViewById(R.id.tvMois);
-        btValide = findViewById(R.id.btValide);
+        btAjoutM = findViewById(R.id.btAjoutM);
         context = this;
 
         chQuotidien.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    chHebdomadaire.setChecked(false); // Décocher Hebdomadaire si Quotidien est coché
+                    chHebdomadaire.setChecked(false);
+                    chMensuel.setChecked(false);
+                    chAnnuel.setChecked(false);
                     Toast.makeText(AjouterMedicament.this, "CheckBox cochée", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(AjouterMedicament.this, "CheckBox décochée", Toast.LENGTH_SHORT).show();
@@ -73,7 +75,9 @@ public class AjouterMedicament extends AppCompatActivity {
         chHebdomadaire.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    chQuotidien.setChecked(false); // Décocher Quotidien si Hebdomadaire est coché
+                    chQuotidien.setChecked(false);
+                    chMensuel.setChecked(false);
+                    chAnnuel.setChecked(false);
                     afficherFenetreDialogueSelectionJours();
                 } else {
                     tvJours.setText("");
@@ -84,6 +88,9 @@ public class AjouterMedicament extends AppCompatActivity {
         chMensuel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    chQuotidien.setChecked(false);
+                    chHebdomadaire.setChecked(false);
+                    chAnnuel.setChecked(false);
                     afficherFenetreDialogueSelectionMois();
                 } else {
                     tvJourMois.setText("");
@@ -94,6 +101,9 @@ public class AjouterMedicament extends AppCompatActivity {
         chAnnuel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    chQuotidien.setChecked(false);
+                    chHebdomadaire.setChecked(false);
+                    chMensuel.setChecked(false);
                     afficherFenetreDialogueSelectionAnnee();
                 } else {
                     tvMois.setText("");
@@ -115,7 +125,7 @@ public class AjouterMedicament extends AppCompatActivity {
             }
         });
 
-        btValide.setOnClickListener(new View.OnClickListener() {
+        btAjoutM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -335,7 +345,8 @@ public class AjouterMedicament extends AppCompatActivity {
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Toast.makeText(this, "À faire", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, GestionDispositifs.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

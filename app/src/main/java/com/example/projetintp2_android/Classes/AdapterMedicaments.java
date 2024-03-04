@@ -3,6 +3,7 @@ package com.example.projetintp2_android.Classes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,13 +39,28 @@ public class AdapterMedicaments extends RecyclerView.Adapter{
         return liste.size();
     }
 
+    public void supprimerMedicament(int position)
+    {
+        liste.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public  class MonViewHolder extends  RecyclerView.ViewHolder
     {
         TextView tvNom, tvFonction;
+        ImageView icSupprimer;
         public MonViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNom= itemView.findViewById((R.id.tvNom));
             tvFonction= itemView.findViewById((R.id.tvFonction));
+            icSupprimer= itemView.findViewById((R.id.icSupprimer));
+
+            icSupprimer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    supprimerMedicament(getLayoutPosition());
+                }
+            });
 
         }
     }

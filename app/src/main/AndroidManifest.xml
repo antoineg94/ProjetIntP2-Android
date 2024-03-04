@@ -15,12 +15,15 @@
         android:theme="@style/Theme.ProjetIntP2Android"
         tools:targetApi="31">
         <activity
-            android:name=".AjouterMedicament"
-            android:parentActivityName=".GestionMedicament"
+            android:name=".GestionDispositifs"
             android:exported="false" />
         <activity
-        android:name=".GestionMedicament"
-        android:exported="false" />
+            android:name=".AjouterMedicament"
+            android:exported="false"
+            android:parentActivityName=".GestionMedicament" />
+        <activity
+            android:name=".GestionMedicament"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -30,7 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

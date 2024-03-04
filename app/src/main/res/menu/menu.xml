@@ -9,7 +9,7 @@
     <item
         android:id="@+id/itDispositif"
         android:icon="@drawable/ic_devices"
-        android:title="Dispositifs"
+        android:title="Gestion des dispositifs"
         app:showAsAction="collapseActionView" />
     <item
         android:id="@+id/itProfil"

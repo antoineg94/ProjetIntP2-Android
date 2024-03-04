@@ -68,16 +68,14 @@ public class GestionMedicament extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()== R.id.itGestionMedic)
-        {
+        if (item.getItemId() == R.id.itGestionMedic) {
             Intent intent = new Intent(this, GestionMedicament.class);
             startActivity(intent);
-            return true ;
-        }
-        else if(item.getItemId()== R.id.itDispositif)
-        {
-            Toast.makeText(this,"A faire",Toast.LENGTH_LONG).show();
-            return true ;
+            return true;
+        } else if (item.getItemId() == R.id.itDispositif) {
+            Intent intent = new Intent(this, GestionDispositifs.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

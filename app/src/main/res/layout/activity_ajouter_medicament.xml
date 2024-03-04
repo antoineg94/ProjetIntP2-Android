@@ -219,9 +219,9 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btValide"
-        android:layout_width="175dp"
-        android:layout_height="52dp"
+        android:id="@+id/btAjoutM"
+        android:layout_width="181dp"
+        android:layout_height="wrap_content"
         android:text="Valider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

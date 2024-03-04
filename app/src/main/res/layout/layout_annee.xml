@@ -4,6 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!-- Layout DialogView Annuelle -->
+
     <EditText
         android:id="@+id/etAn"
         android:layout_width="match_parent"
