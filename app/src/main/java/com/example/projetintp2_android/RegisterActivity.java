@@ -3,7 +3,9 @@ package com.example.projetintp2_android;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,14 +20,22 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+
+import Interfaces.InterfaceServeur;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
     EditText etNom,etPrenom,etEmail,etMotDePasse,etConfirmationMotDePasse;
     //Choix de la photo de profil a faire
     Button btCreationCompte,btChoixImage;
-    String Nom,prenom,motPasse,email,confirmation;
+    String Nom,prenom,motPasse,email,confirmation,nomComplet;
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imageViewProfile;
     private Uri imageUri;
@@ -86,12 +96,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     //methode de validation des champs(vérifie si tous les champs obligatoires a la creation de compte sont bien rentrés)
-    private void checkRegistry() {
+    public void checkRegistry() {
             Nom = etNom.getText().toString();
             prenom = etPrenom.getText().toString();
             email = etEmail.getText().toString();
             motPasse = etMotDePasse.getText().toString();
             confirmation = etConfirmationMotDePasse.getText().toString();
+            nomComplet=Nom + " "+ prenom;
+
 
 
             if(Nom.isEmpty()||prenom.isEmpty()||email.isEmpty()||motPasse.isEmpty())
@@ -104,18 +116,95 @@ public class RegisterActivity extends AppCompatActivity {
             }
             else
             {
-                sendRegister();
+                sendRegister(nomComplet,email,motPasse);
             }
 
 
     }
 
-    private void sendRegister() {
-        Toast.makeText(this,"creation de compte réussie",Toast.LENGTH_LONG).show();
+    public void sendRegister(String name,String courriel,String password) {
+
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+
+       Users  request = new Users(name, courriel,password);
+
+        Call<Boolean> call = serveur.register(request);
+
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                boolean resultat= response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this,"une erreur",Toast.LENGTH_LONG).show();
+
+
+            }
+
+        });
+
+
+/*
+        JSONObject params = new JSONObject();
+        try{
+            params.put("name",Nom);
+          //  params.put("name",prenom);
+            params.put("email",email);
+            params.put("password",motPasse);
+         //   params.put("password_confirmation",confirmation);
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        String data = params.toString();
+        String url = getString(R.string.api_server)+"/register";
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Http http = new Http(RegisterActivity.this,url);
+                http.setMethod("post");
+                http.setData(data);
+                http.send();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Integer code = http.getStatusCode();
+                        if(code == 201 || code ==200 )
+                        {
+                            Toast.makeText(RegisterActivity.this,"creation de compte réussie",Toast.LENGTH_LONG).show();
+                        } else if (code == 442) {
+                            try {
+                                JSONObject response = new JSONObject(http.getResponse());
+                                String msg = response.getString("message");
+                                alertFail(msg);
+
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+                            
+                        }
+                         else {
+                             Toast.makeText(RegisterActivity.this,"Erreur"+code,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+            }
+        }).start();
+
+*/
+
+      //  Toast.makeText(this,"creation de compte réussie",Toast.LENGTH_LONG).show();
     }
 
-
-    /*private void alertSuccess(String s) {
+/*
+    private void alertSuccess(String s) {
         new AlertDialog.Builder(this)
                 .setTitle("succes")
                 .setIcon(R.drawable.ic_check)

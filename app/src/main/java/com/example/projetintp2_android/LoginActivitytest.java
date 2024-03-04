@@ -1,4 +1,4 @@
-package com.example.projetintp2_android.ui.login;
+package com.example.projetintp2_android;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,9 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.projetintp2_android.R;
-import com.example.projetintp2_android.RegisterActivity;
 
 public class LoginActivitytest extends AppCompatActivity {
 
