@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetIntP2Android"
         tools:targetApi="31"
-        android:networkSecurityConfig="@xm"
+        android:networkSecurityConfig="@xml/connexion_reseau"
 
 
         >

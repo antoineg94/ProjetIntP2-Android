@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Http {
+/*
     Context context;
     private String url,method = "GET",data=null,response = null;
     private Integer statusCode=0;
@@ -92,5 +93,6 @@ public class Http {
             e.printStackTrace();
         }
     }
+*/
 
 }

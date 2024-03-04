@@ -1,23 +1,27 @@
 package com.example.projetintp2_android;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Users {
 
 
 
-
+    @SerializedName("id")
     int id;
+    @SerializedName("name")
     String name;
+    @SerializedName("email")
     String email;
 
     String  api_token;
-
+    @SerializedName("password")
     String password;
 
 
 
 
     public Users( String name, String email, String password) {
-     //   this.id = id;
+        //this.id = id;
         this.name = name;
         this.email = email;
         this.password=password;

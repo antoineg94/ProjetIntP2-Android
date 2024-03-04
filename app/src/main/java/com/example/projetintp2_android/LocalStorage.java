@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class LocalStorage {
-
+/*
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Context context;
@@ -26,5 +26,5 @@ public class LocalStorage {
         editor.putString("TOKEN",token);
         editor.commit();
         this.token = token;
-    }
+    }*/
 }
