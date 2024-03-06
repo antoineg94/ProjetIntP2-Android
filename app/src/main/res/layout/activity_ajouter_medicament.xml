@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="Sélectionner un médicament:"
+            android:text="@string/ajSearch"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -35,8 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
             android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:queryHint="Sélectionner un médicament" />
+            android:layout_marginEnd="1dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:text="Sélectionner une date de début:"
+                android:text="@string/ajDD"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -70,7 +69,6 @@
                     android:layout_height="56dp"
                     android:layout_weight="10"
                     android:focusable="false"
-                    android:hint="Date de début"
                     android:inputType="none" />
             </LinearLayout>
 
@@ -86,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:text="Sélectionner une date de fin:"
+                android:text="@string/ajDF"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -108,7 +106,6 @@
                     android:layout_height="56dp"
                     android:layout_weight="10"
                     android:focusable="false"
-                    android:hint="Date de fin"
                     android:inputType="none" />
             </LinearLayout>
 
@@ -124,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:text="Intervalle entre les doses (heures):"
+                android:text="@string/ajInter"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -142,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="Fréquence quotidienne de médication:"
+            android:text="@string/ajFr"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -156,7 +153,7 @@
                 android:id="@+id/chQuotidien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quotidienne" />
+                android:text="@string/aj_tv_Q" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -167,7 +164,7 @@
                     android:id="@+id/chHebdomadaire"
                     android:layout_width="141dp"
                     android:layout_height="wrap_content"
-                    android:text="Hebdomadaire" />
+                    android:text="@string/aj_tv_H" />
 
                 <TextView
                     android:id="@+id/tvJours"
@@ -186,7 +183,7 @@
                     android:id="@+id/chMensuel"
                     android:layout_width="141dp"
                     android:layout_height="wrap_content"
-                    android:text="Mensuelle" />
+                    android:text="@string/aj_tv_M" />
 
                 <TextView
                     android:id="@+id/tvJourMois"
@@ -205,7 +202,7 @@
                     android:id="@+id/chAnnuel"
                     android:layout_width="141dp"
                     android:layout_height="wrap_content"
-                    android:text="Annuelle" />
+                    android:text="@string/aj_tv_A" />
 
                 <TextView
                     android:id="@+id/tvMois"
@@ -222,7 +219,7 @@
         android:id="@+id/btAjoutM"
         android:layout_width="181dp"
         android:layout_height="wrap_content"
-        android:text="Valider"
+        android:text="@string/ajBt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

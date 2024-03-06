@@ -10,6 +10,9 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +37,11 @@ import com.example.projetintp2_android.Classes.DaysAdapter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class AjouterMedicament extends AppCompatActivity {
 
+    private static final String PREF_LANGUAGE_KEY = "pref_language";
     EditText edDateDebut, edDateFin;
     CheckBox chQuotidien, chHebdomadaire, chMensuel, chAnnuel;
     Context context;
@@ -46,6 +52,9 @@ public class AjouterMedicament extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_medicament);
+
+        String savedLanguage = getSavedLanguage();
+        setLocale(savedLanguage);
 
         edDateDebut = findViewById(R.id.edDateDebut);
         edDateFin = findViewById(R.id.edDateFin);
@@ -340,6 +349,8 @@ public class AjouterMedicament extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
         if (item.getItemId() == R.id.itGestionMedic) {
             Intent intent = new Intent(this, GestionMedicament.class);
             startActivity(intent);
@@ -348,7 +359,47 @@ public class AjouterMedicament extends AppCompatActivity {
             Intent intent = new Intent(this, GestionDispositifs.class);
             startActivity(intent);
             return true;
+        } else if (id == R.id.menu_language_switch) {
+            Switch languageSwitch = findViewById(R.id.languageSwitch);
+            boolean isChecked = languageSwitch.isChecked();
+
+            if (isChecked) {
+                saveLanguage("fr");
+            } else {
+                saveLanguage("en");
+            }
+
+            recreate();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveLanguage(String language) {
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PREF_LANGUAGE_KEY, language);
+        editor.apply();
+    }
+    private String getSavedLanguage() {
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return preferences.getString(PREF_LANGUAGE_KEY, "fr");
+    }
+    private void setLocale(String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Configuration config = getResources().getConfiguration();
+        config.setLocale(locale);
+        Context context = createConfigurationContext(config);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+        /*Locale locale = new Locale(languageCode);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+        // Redémarrez votre activité pour appliquer les modifications
+        recreate();*/
     }
 }

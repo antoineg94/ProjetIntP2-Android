@@ -20,6 +20,11 @@
         android:title="Guide d'utilisation"
         app:showAsAction="collapseActionView" />
     <item
+        android:id="@+id/menu_language_switch"
+        android:title="FR"
+        app:actionLayout="@layout/layout_menu_langage"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/itDeconnexion"
         android:title="Déconnexion" />
 </menu>
