@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ProjetIntP2Android"
         tools:targetApi="31">
         <activity
+            android:name=".AfficherPrescription"
+            android:exported="false" />
+        <activity
             android:name=".GestionDispositifs"
             android:exported="false" />
         <activity

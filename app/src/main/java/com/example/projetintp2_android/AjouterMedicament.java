@@ -43,9 +43,9 @@ public class AjouterMedicament extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
     EditText edDateDebut, edDateFin;
-    CheckBox chQuotidien, chHebdomadaire, chMensuel, chAnnuel;
+    CheckBox chQuotidien, chHebdomadaire;
     Context context;
-    TextView tvJours, tvJourMois, tvMois;
+    TextView tvJours;
     Button btAjoutM;
 
     @Override
@@ -60,11 +60,7 @@ public class AjouterMedicament extends AppCompatActivity {
         edDateFin = findViewById(R.id.edDateFin);
         chQuotidien = findViewById(R.id.chQuotidien);
         chHebdomadaire = findViewById(R.id.chHebdomadaire);
-        chMensuel = findViewById(R.id.chMensuel);
-        chAnnuel = findViewById(R.id.chAnnuel);
         tvJours = findViewById(R.id.tvJours);
-        tvJourMois = findViewById(R.id.tvJourMois);
-        tvMois = findViewById(R.id.tvMois);
         btAjoutM = findViewById(R.id.btAjoutM);
         context = this;
 
@@ -72,68 +68,34 @@ public class AjouterMedicament extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     chHebdomadaire.setChecked(false);
-                    chMensuel.setChecked(false);
-                    chAnnuel.setChecked(false);
                     Toast.makeText(AjouterMedicament.this, "CheckBox cochée", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(AjouterMedicament.this, "CheckBox décochée", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
         chHebdomadaire.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     chQuotidien.setChecked(false);
-                    chMensuel.setChecked(false);
-                    chAnnuel.setChecked(false);
                     afficherFenetreDialogueSelectionJours();
                 } else {
                     tvJours.setText("");
                 }
             }
         });
-
-        chMensuel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    chQuotidien.setChecked(false);
-                    chHebdomadaire.setChecked(false);
-                    chAnnuel.setChecked(false);
-                    afficherFenetreDialogueSelectionMois();
-                } else {
-                    tvJourMois.setText("");
-                }
-            }
-        });
-
-        chAnnuel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    chQuotidien.setChecked(false);
-                    chHebdomadaire.setChecked(false);
-                    chMensuel.setChecked(false);
-                    afficherFenetreDialogueSelectionAnnee();
-                } else {
-                    tvMois.setText("");
-                }
-            }
-        });
-
         edDateDebut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DateDebut();
             }
         });
-
         edDateFin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DateFin();
             }
         });
-
         btAjoutM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,7 +103,6 @@ public class AjouterMedicament extends AppCompatActivity {
             }
         });
     }
-
     private void afficherFenetreDialogueSelectionJours() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
@@ -188,125 +149,6 @@ public class AjouterMedicament extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
-    private void afficherFenetreDialogueSelectionMois() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setCancelable(false);
-        builder.setTitle("Sélectionner le nombre de mois");
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.layout_mois, null);
-        builder.setView(dialogView);
-
-        NumberPicker intervalNumberPicker = dialogView.findViewById(R.id.intervalNumberPicker);
-        intervalNumberPicker.setMaxValue(11);  // Valeur maximale
-        intervalNumberPicker.setMinValue(1);   // Valeur minimale
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int selectedInterval = intervalNumberPicker.getValue();
-                String selectedDate = "Le premier de chaque " + selectedInterval + " mois";
-                tvJourMois.setText(selectedDate);
-            }
-        });
-
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void afficherFenetreDialogueSelectionAnnee() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setCancelable(false);
-        builder.setTitle("Sélectionner la date");
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.layout_annee, null);
-        builder.setView(dialogView);
-
-        Spinner monthSpinner = dialogView.findViewById(R.id.monthSpinner);
-        NumberPicker dayPicker = dialogView.findViewById(R.id.dayPicker);
-        EditText yearEditText = dialogView.findViewById(R.id.etAn);
-        yearEditText.setText("1");
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.months, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        monthSpinner.setAdapter(adapter);
-
-        monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int daysInMonth = getDaysInMonth(position);
-                dayPicker.setMaxValue(daysInMonth);
-                dayPicker.setMinValue(1);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Récupérer le mois sélectionné
-                int selectedMonth = monthSpinner.getSelectedItemPosition();
-
-                // Récupérer le jour sélectionné
-                int selectedDay = dayPicker.getValue();
-
-                // Récupérer l'année sélectionnée
-                int selectedYear = Integer.parseInt(yearEditText.getText().toString());
-
-                // Afficher le mois, le jour et l'année sélectionnés
-                String monthText = getResources().getStringArray(R.array.months)[selectedMonth];
-                String selectedDate = selectedDay + " " + monthText + " tous les " + selectedYear + " an(s)";
-                tvMois.setText(selectedDate);
-            }
-        });
-
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private int getDaysInMonth(int month) {
-        switch (month) {
-            case 0: // Janvier
-            case 2: // Mars
-            case 4: // Mai
-            case 6: // Juillet
-            case 7: // Août
-            case 9: // Octobre
-            case 11: // Décembre
-                return 31;
-            case 3: // Avril
-            case 5: // Juin
-            case 8: // Septembre
-            case 10: // Novembre
-                return 30;
-            case 1: // Février
-                return isLeapYear(Calendar.getInstance().get(Calendar.YEAR)) ? 29 : 28;
-            default:
-                return 0;
-        }
-    }
-
-    private boolean isLeapYear(int year) {
-        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-    }
-
     private void DateDebut() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -322,7 +164,6 @@ public class AjouterMedicament extends AppCompatActivity {
 
         datePickerDialog.show();
     }
-
     private void DateFin() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -346,7 +187,6 @@ public class AjouterMedicament extends AppCompatActivity {
         setTitle("Ajouter un médicament");
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();

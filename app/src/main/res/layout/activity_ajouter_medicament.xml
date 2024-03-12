@@ -177,40 +177,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/chMensuel"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/aj_tv_M" />
-
-                <TextView
-                    android:id="@+id/tvJourMois"
-                    android:layout_width="221dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp" />
-            </LinearLayout>
+                android:orientation="horizontal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/chAnnuel"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/aj_tv_A" />
-
-                <TextView
-                    android:id="@+id/tvMois"
-                    android:layout_width="221dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp" />
-            </LinearLayout>
+                android:orientation="horizontal"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AfficherPrescription">
+
+    <TextView
+        android:id="@+id/tvNomP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nom Prescription" />
+
+    <TextView
+        android:id="@+id/tvDateP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date de Prescription" />
+
+    <TextView
+        android:id="@+id/tvDateDebut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date Début" />
+
+    <TextView
+        android:id="@+id/tvDateFin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date Fin" />
+
+    <TextView
+        android:id="@+id/tvDureeP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Durée Prescription" />
+
+    <TextView
+        android:id="@+id/tvPremiereDose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Première dose" />
+
+    <TextView
+        android:id="@+id/tvFreHeures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fréquences entre Heures" />
+
+    <TextView
+        android:id="@+id/tvFreJours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fréquences par jour" />
+
+</LinearLayout>
