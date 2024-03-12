@@ -1,5 +1,8 @@
 package com.example.projetintp2_android;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +15,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Map;
 
 import Interfaces.InterfaceServeur;
 import okhttp3.ResponseBody;
@@ -67,10 +72,34 @@ public class RegisterActivity extends AppCompatActivity {
         btChoixImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                verifierPermission();
+
                 // methode pour aller choisir la photo de profil dans le telephone
-                openFileChooser();
+                //openFileChooser();
             }
         });
+    }
+    public void verifierPermission() {
+        ActivityResultLauncher<String[]> permissionsLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(),
+                new ActivityResultCallback<Map<String, Boolean>>() {
+                    @Override
+                    public void onActivityResult(Map<String, Boolean> result) {
+                        result.forEach((permission, reponse) -> {
+                            if (reponse) {
+                                openFileChooser();
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Permission refusée", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+        );
+        String[] permissions = {
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.CAMERA
+        };
+        permissionsLauncher.launch(permissions);
     }
 
     private void openFileChooser() {
@@ -127,9 +156,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
 
-       Users  request = new Users( name, courriel,password);
+       //Users  request = new Users( name, courriel,password);
 
-        Call<ResponseBody> call = serveur.register(request);
+        Call<ResponseBody> call = serveur.register(name, courriel,password);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

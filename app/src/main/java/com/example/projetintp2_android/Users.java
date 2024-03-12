@@ -13,20 +13,30 @@ public class Users {
     @SerializedName("email")
     String email;
 
+
+
     String  api_token;
     @SerializedName("password")
     String password;
+    public Users( int id,String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password=password;
+        // this.api_token = api_token;
+    }
 
 
 
-
-    public Users( String name, String email, String password) {
+  /*  public Users( String name, String email, String password) {
         //this.id = id;
         this.name = name;
         this.email = email;
         this.password=password;
        // this.api_token = api_token;
     }
+
+   */
     public String getPassword() {
         return password;
     }
@@ -65,6 +75,7 @@ public class Users {
     public void setApi_token(String api_token) {
         this.api_token = api_token;
     }
+
 
 
 }
