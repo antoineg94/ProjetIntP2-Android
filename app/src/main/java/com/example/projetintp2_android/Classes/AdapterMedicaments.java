@@ -14,8 +14,8 @@ import com.example.projetintp2_android.R;
 import java.util.List;
 
 public class AdapterMedicaments extends RecyclerView.Adapter{
-    List<Medicaments> liste;
-    public AdapterMedicaments(List<Medicaments> liste)
+    List<Prescriptions> liste;
+    public AdapterMedicaments(List<Prescriptions> liste)
     {
         this.liste=liste ;
     }
@@ -30,8 +30,8 @@ public class AdapterMedicaments extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MonViewHolder monViewHolder=(MonViewHolder) holder;
-        monViewHolder.tvNom.setText(liste.get(position).getNom());
-        monViewHolder.tvFonction.setText(liste.get(position).getFonction());
+        monViewHolder.tvNom.setText(liste.get(position).getNameOfPrescription());
+        monViewHolder.tvFonction.setText(liste.get(position).getFrequencyBetweenDosesInHours());
     }
 
     @Override

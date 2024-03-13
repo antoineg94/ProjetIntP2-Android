@@ -3,7 +3,14 @@ package com.example.projetintp2_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.telecom.Call;
 import android.widget.TextView;
+
+import com.example.projetintp2_android.Classes.InterfaceServeur;
+import com.example.projetintp2_android.Classes.Prescriptions;
+import com.example.projetintp2_android.Classes.Retrofit;
+
+import java.util.List;
 
 public class AfficherPrescription extends AppCompatActivity {
 
@@ -22,4 +29,6 @@ public class AfficherPrescription extends AppCompatActivity {
         tvFreHeures = findViewById(R.id.tvFreHeures);
         tvFreJours = findViewById(R.id.tvFreJours);
     }
+
+
 }
