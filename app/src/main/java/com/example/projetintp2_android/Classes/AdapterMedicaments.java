@@ -31,7 +31,6 @@ public class AdapterMedicaments extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MonViewHolder monViewHolder=(MonViewHolder) holder;
         monViewHolder.tvNom.setText(liste.get(position).getNameOfPrescription());
-        monViewHolder.tvFonction.setText(liste.get(position).getFrequencyBetweenDosesInHours());
     }
 
     @Override
@@ -47,12 +46,11 @@ public class AdapterMedicaments extends RecyclerView.Adapter{
 
     public  class MonViewHolder extends  RecyclerView.ViewHolder
     {
-        TextView tvNom, tvFonction;
+        TextView tvNom;
         ImageView icSupprimer;
         public MonViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNom= itemView.findViewById((R.id.tvNom));
-            tvFonction= itemView.findViewById((R.id.tvFonction));
             icSupprimer= itemView.findViewById((R.id.icSupprimer));
 
             icSupprimer.setOnClickListener(new View.OnClickListener() {
