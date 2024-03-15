@@ -14,22 +14,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Retrofit {
     //public static final String BASE_URL = "10.0.2.2";
-    public static final String BASE_URL = "https://10.0.2.2:8000/api/";
-
+    public static final String BASE_URL = "https://10.0.2.2:8000/laravel/public/api/";
     private static retrofit2.Retrofit retrofit;
-    //public static final String BASE_URL = "https://10.2.43.237:8000/api/";
 
     public static retrofit2.Retrofit getInstance(){
-
-        if(retrofit == null)
-        {
+        if(retrofit == null) {
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(getUnsafeOkHttpClient().build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-
         return retrofit;
     }
 

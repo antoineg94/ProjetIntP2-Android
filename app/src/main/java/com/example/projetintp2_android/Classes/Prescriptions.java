@@ -2,33 +2,33 @@ package com.example.projetintp2_android.Classes;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
 
 public class Prescriptions {
 
     @SerializedName("id")
-    int id;
+    private int id;
     @SerializedName("nameOfPrescription")
-    String nameOfPrescription;
+    private String nameOfPrescription;
     @SerializedName("dateOfPrescription")
-    Date dateOfPrescription;
+    private Date dateOfPrescription;
     @SerializedName("dateOfStart")
-    Date dateOfStart;
+    private Date dateOfStart;
     @SerializedName("durationOffPrescriptionInDays")
-    int durationOffPrescriptionInDays;
+    private int durationOffPrescriptionInDays;
     @SerializedName("firstIntakeHour")
-    Time firstIntakeHour;
+    private String firstIntakeHour;
     @SerializedName("frequencyBetweenDosesInHours")
-    int frequencyBetweenDosesInHours;
+    private int frequencyBetweenDosesInHours;
     @SerializedName("frequencyPerDay")
-    int frequencyPerDay;
+    private int frequencyPerDay;
     @SerializedName("user_id")
-    int user_id;
+    private int user_id;
     @SerializedName("medication_id")
-    int medication_id;
+    private int medication_id;
+
     public Prescriptions(int id, String nameOfPrescription, Date dateOfPrescription, Date dateOfStart,
-                         int durationOffPrescriptionInDays, Time firstIntakeHour, int frequencyBetweenDosesInHours,
+                         int durationOffPrescriptionInDays, String firstIntakeHour, int frequencyBetweenDosesInHours,
                          int frequencyPerDay, int user_id, int medication_id) {
         this.id = id;
         this.nameOfPrescription = nameOfPrescription;
@@ -41,6 +41,7 @@ public class Prescriptions {
         this.user_id = user_id;
         this.medication_id = medication_id;
     }
+
     public int getId() {
         return id;
     }
@@ -81,11 +82,11 @@ public class Prescriptions {
         this.durationOffPrescriptionInDays = durationOffPrescriptionInDays;
     }
 
-    public Time getFirstIntakeHour() {
+    public String getFirstIntakeHour() {
         return firstIntakeHour;
     }
 
-    public void setFirstIntakeHour(Time firstIntakeHour) {
+    public void setFirstIntakeHour(String firstIntakeHour) {
         this.firstIntakeHour = firstIntakeHour;
     }
 

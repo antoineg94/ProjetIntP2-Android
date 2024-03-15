@@ -11,26 +11,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetintp2_android.R;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
-public class AdapterMedicaments extends RecyclerView.Adapter{
-    List<Prescriptions> liste;
-    public AdapterMedicaments(List<Prescriptions> liste)
-    {
-        this.liste=liste ;
+public class AdapterMedicaments extends RecyclerView.Adapter<AdapterMedicaments.MonViewHolder> {
+    private List<Prescriptions> liste;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+    public AdapterMedicaments(List<Prescriptions> liste) {
+        this.liste = liste;
     }
+
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.layout_card,parent,false);
+        View view = inflater.inflate(R.layout.layout_card, parent, false);
         return new MonViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MonViewHolder monViewHolder=(MonViewHolder) holder;
-        monViewHolder.tvNom.setText(liste.get(position).getNameOfPrescription());
+    public void onBindViewHolder(@NonNull MonViewHolder holder, int position) {
+        Prescriptions prescription = liste.get(position);
+        holder.tvNom.setText(prescription.getNameOfPrescription());
     }
 
     @Override
@@ -38,28 +42,26 @@ public class AdapterMedicaments extends RecyclerView.Adapter{
         return liste.size();
     }
 
-    public void supprimerMedicament(int position)
-    {
+    public void supprimerMedicament(int position) {
         liste.remove(position);
         notifyItemRemoved(position);
     }
 
-    public  class MonViewHolder extends  RecyclerView.ViewHolder
-    {
+    public class MonViewHolder extends RecyclerView.ViewHolder {
         TextView tvNom;
         ImageView icSupprimer;
+
         public MonViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNom= itemView.findViewById((R.id.tvNom));
-            icSupprimer= itemView.findViewById((R.id.icSupprimer));
+            tvNom = itemView.findViewById(R.id.tvNom);
+            icSupprimer = itemView.findViewById(R.id.icSupprimer);
 
             icSupprimer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    supprimerMedicament(getLayoutPosition());
+                    supprimerMedicament(getAdapterPosition());
                 }
             });
-
         }
     }
 }
