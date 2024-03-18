@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.projetintp2_android.Classes.AdapterMedicaments;
 import com.example.projetintp2_android.Classes.InterfaceServeur;
+import com.example.projetintp2_android.Classes.PrescriptionDAO;
+import com.example.projetintp2_android.Classes.PrescriptionDB;
 import com.example.projetintp2_android.Classes.Prescriptions;
 import com.example.projetintp2_android.Classes.Retrofit;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,7 +33,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GestionMedicament extends AppCompatActivity {
+public class GestionMedicament extends AppCompatActivity implements AdapterMedicaments.InterfacePrescription{
+
+    PrescriptionDB pdb;
+    PrescriptionDAO pdao;
 
     RecyclerView rvMedicaments;
     AdapterMedicaments adapter;
@@ -45,13 +51,18 @@ public class GestionMedicament extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_medicament);
 
+        pdb = Room.databaseBuilder(this, PrescriptionDB.class, "PrescriptionsDB")
+                .allowMainThreadQueries()
+                .build();
+
+        pdao = pdb.pdao();
+
         btAdd = findViewById(R.id.btAdd);
 
         rvMedicaments = findViewById(R.id.rvListeMedicaments);
         rvMedicaments.setHasFixedSize(true);
         rvMedicaments.setLayoutManager(new LinearLayoutManager(this));
         listePrescriptions = new ArrayList<>();
-
 
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +79,7 @@ public class GestionMedicament extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        setTitle("Gestion des médicaments");
+        setTitle("Gestion des prescriptions");
         return true;
     }
 
@@ -93,7 +104,7 @@ public class GestionMedicament extends AppCompatActivity {
             public void onResponse(Call<List<Prescriptions>> call, Response<List<Prescriptions>> response) {
                 if (response.isSuccessful()) {
                     listePrescriptions = response.body();
-                    adapter = new AdapterMedicaments(listePrescriptions);
+                    adapter = new AdapterMedicaments(listePrescriptions, GestionMedicament.this); // Passer une référence à GestionMedicament
                     rvMedicaments.setAdapter(adapter);
                 } else {
                     Toast.makeText(GestionMedicament.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();
@@ -107,5 +118,18 @@ public class GestionMedicament extends AppCompatActivity {
                 Log.e("TAG", "Erreur de connexion au serveur : " + t.getMessage());
             }
         });
+    }
+    @Override
+    public void gestionClick(int position, Prescriptions prescriptions) {
+        Intent intent = new Intent(this, ZoomPrescription.class);
+        intent.putExtra("nom", prescriptions.getNameOfPrescription());
+        intent.putExtra("dateP", prescriptions.getDateOfPrescription());
+        intent.putExtra("dateD", prescriptions.getDateOfStart());
+        intent.putExtra("dateF", prescriptions.getDurationOfPrescriptionInDays());
+        intent.putExtra("dose", prescriptions.getFirstIntakeHour());
+        intent.putExtra("fHeures", prescriptions.getFrequencyBetweenDosesInHours());
+        intent.putExtra("fJours", prescriptions.getFrequencyOfIntakeInDays());
+        intent.putExtra("fParJours", prescriptions.getFrequencyPerDay());
+        startActivity(intent);
     }
 }

@@ -7,7 +7,9 @@ import retrofit2.http.GET;
 
 public interface InterfaceServeur {
 
-    @GET("/laravel/public/api/prescriptions")
+    @GET("prescriptions")
+//    @GET("/laravel/public/api/prescriptions")
+//    @GET("/index.php?route=/sql&pos=0&db=laravel&table=prescriptions")
     Call<List<Prescriptions>> getMedicaments();
 
 

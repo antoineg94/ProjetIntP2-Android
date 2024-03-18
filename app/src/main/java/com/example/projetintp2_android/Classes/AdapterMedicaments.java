@@ -1,26 +1,33 @@
 package com.example.projetintp2_android.Classes;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.projetintp2_android.GestionMedicament;
 import com.example.projetintp2_android.R;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class AdapterMedicaments extends RecyclerView.Adapter<AdapterMedicaments.MonViewHolder> {
-    private List<Prescriptions> liste;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public AdapterMedicaments(List<Prescriptions> liste) {
+    public interface InterfacePrescription
+    {
+        public void gestionClick(int position, Prescriptions prescriptions);
+    }
+
+    InterfacePrescription interfacePrescription;
+    private GestionMedicament gestionMedicament;
+    private List<Prescriptions> liste;
+
+    public AdapterMedicaments(List<Prescriptions> liste, InterfacePrescription interfacePrescription) {
         this.liste = liste;
+        this.interfacePrescription = interfacePrescription;
     }
 
     @NonNull
@@ -56,6 +63,12 @@ public class AdapterMedicaments extends RecyclerView.Adapter<AdapterMedicaments.
             tvNom = itemView.findViewById(R.id.tvNom);
             icSupprimer = itemView.findViewById(R.id.icSupprimer);
 
+            tvNom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    interfacePrescription.gestionClick(getLayoutPosition(), liste.get(getLayoutPosition()));
+                }
+            });
             icSupprimer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

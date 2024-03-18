@@ -184,7 +184,7 @@ public class AjouterMedicament extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        setTitle("Ajouter un médicament");
+        setTitle("Ajouter une prescription");
         return true;
     }
     @Override
