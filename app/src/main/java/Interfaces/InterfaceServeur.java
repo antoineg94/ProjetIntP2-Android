@@ -24,9 +24,25 @@ public interface InterfaceServeur {
     Call<LoginResponse> login(@Field("email") String nom,
                               @Field("password") String psw);
     @POST("/projet/laravel/public/api/logout")
-    Call<ResponseBody> logout();
-  //  @POST("register")
-  //  Call<RegisterResponse> register(@Body RegisterRequest request);
+    Call<LoginResponse> logout();
+
+    @POST("/projet/laravel/public/api/update")
+    @FormUrlEncoded
+    Call<ResponseBody> update(@Field("name") String nom,
+                              @Field("email") String email,
+                              @Field("password") String psw );
+    @POST("/projet/laravel/public/api/updateName")
+    @FormUrlEncoded
+    Call<ResponseBody> updateName(@Field("name") String nom);
+
+
+    @POST("/projet/laravel/public/api/updateEmail")
+    @FormUrlEncoded
+    Call<ResponseBody> updateEmail(@Field("email") String email);
+
+    @POST("/projet/laravel/public/api/updatePassword")
+    @FormUrlEncoded
+    Call<ResponseBody> updatePassword(@Field("passord") String password);
 
  //   @GET("alluser")
   //  Call<ResponseBody> getUser();

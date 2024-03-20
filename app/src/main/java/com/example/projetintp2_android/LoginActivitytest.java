@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import Interfaces.InterfaceServeur;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +33,7 @@ public class LoginActivitytest extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logintest);
 
-        editTextEmail = findViewById(R.id.etEmail);
+        editTextEmail = findViewById(R.id.etEmailmodifie);
         editTextPassword = findViewById(R.id.etMotDePasse);
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewForgotPassword = findViewById(R.id.textViewForgotPassword);

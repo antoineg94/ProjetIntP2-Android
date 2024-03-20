@@ -6,16 +6,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,9 +20,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Map;
@@ -55,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         etNom = findViewById(R.id.etNom);
         etPrenom = findViewById(R.id.etPrenom);
-        etEmail = findViewById(R.id.etEmail);
+        etEmail = findViewById(R.id.etEmailmodifie);
         etMotDePasse = findViewById(R.id.etMotDePasse);
         btCreationCompte = findViewById(R.id.btCreationCompte);
         btChoixImage = findViewById(R.id.btChoixImage);
@@ -72,14 +66,14 @@ public class RegisterActivity extends AppCompatActivity {
         btChoixImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verifierPermission();
+               // verifierPermission();
 
                 // methode pour aller choisir la photo de profil dans le telephone
-                //openFileChooser();
+                openFileChooser();
             }
         });
     }
-    public void verifierPermission() {
+    /*public void verifierPermission() {
         ActivityResultLauncher<String[]> permissionsLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestMultiplePermissions(),
                 new ActivityResultCallback<Map<String, Boolean>>() {
@@ -100,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                 android.Manifest.permission.CAMERA
         };
         permissionsLauncher.launch(permissions);
-    }
+    }*/
 
     private void openFileChooser() {
         Intent intent = new Intent();

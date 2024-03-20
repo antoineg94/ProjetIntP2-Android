@@ -38,7 +38,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/etEmail"
+                android:id="@+id/etEmailmodifie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/etPrenom"
@@ -52,7 +52,7 @@
                 android:id="@+id/etMotDePasse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/etEmail"
+                android:layout_below="@id/etEmailmodifie"
                 android:layout_marginTop="10dp"
                 android:hint="Mot de passe"
                 android:inputType="textPassword"

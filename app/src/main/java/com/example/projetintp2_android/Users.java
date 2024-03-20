@@ -1,11 +1,15 @@
 package com.example.projetintp2_android;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "Table_User")
 public class Users {
 
 
-
+    @PrimaryKey(autoGenerate = true )
     @SerializedName("id")
     int id;
     @SerializedName("name")
@@ -14,18 +18,24 @@ public class Users {
     String email;
 
 
+    @SerializedName("api_token")
 
     String  api_token;
     @SerializedName("password")
     String password;
-    public Users( int id,String name, String email) {
+
+
+
+
+
+    public Users( int id,String name, String email,String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password=password;
-        // this.api_token = api_token;
-    }
 
+         this.api_token = "";
+    }
 
 
   /*  public Users( String name, String email, String password) {
