@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,11 +24,20 @@
         android:inputType="textPassword"
         android:textSize="24sp" />
 
+    <CheckBox
+        android:id="@+id/checkBoxRememberMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etMotDePasse"
+        android:layout_marginTop="20dp"
+        android:text="Se souvenir de moi"
+        android:textSize="18sp" />
+
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etMotDePasse"
+        android:layout_below="@id/checkBoxRememberMe"
         android:layout_marginTop="20dp"
         android:text="Connexion" />
 
@@ -39,7 +49,7 @@
         android:layout_marginTop="20dp"
         android:text="Mot de passe oublié ?"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewCreateAccount"
@@ -49,6 +59,6 @@
         android:layout_marginTop="20dp"
         android:text="Créer un compte"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
 </RelativeLayout>
