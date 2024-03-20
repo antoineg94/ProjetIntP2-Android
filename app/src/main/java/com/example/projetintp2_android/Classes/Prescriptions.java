@@ -8,6 +8,7 @@ import androidx.room.TypeConverter;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity(tableName = "Table_Prescription")
@@ -26,7 +27,7 @@ public class Prescriptions {
     @SerializedName("durationOfPrescriptionInDays")
     private int durationOfPrescriptionInDays;
     @SerializedName("firstIntakeHour")
-    private Time firstIntakeHour;
+    private LocalTime  firstIntakeHour;
     @SerializedName("frequencyBetweenDosesInHours")
     private int frequencyBetweenDosesInHours;
     @SerializedName("frequencyOfIntakeInDays")
@@ -38,7 +39,7 @@ public class Prescriptions {
     @SerializedName("medication_id")
     private int medication_id;
     public Prescriptions(int id, String nameOfPrescription, Date dateOfPrescription, Date dateOfStart,
-                         int durationOfPrescriptionInDays, Time firstIntakeHour, int frequencyBetweenDosesInHours,
+                         int durationOfPrescriptionInDays, LocalTime  firstIntakeHour, int frequencyBetweenDosesInHours,
                          int frequencyOfIntakeInDays, int frequencyPerDay, int user_id, int medication_id) {
         this.id = id;
         this.nameOfPrescription = nameOfPrescription;
@@ -84,10 +85,10 @@ public class Prescriptions {
     public void setDurationOfPrescriptionInDays(int durationOfPrescriptionInDays) {
         this.durationOfPrescriptionInDays = durationOfPrescriptionInDays;
     }
-    public Time getFirstIntakeHour() {
+    public LocalTime getFirstIntakeHour() {
         return firstIntakeHour;
     }
-    public void setFirstIntakeHour(Time firstIntakeHour) {
+    public void setFirstIntakeHour(LocalTime  firstIntakeHour) {
         this.firstIntakeHour = firstIntakeHour;
     }
     public int getFrequencyBetweenDosesInHours() {

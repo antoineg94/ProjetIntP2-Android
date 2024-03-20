@@ -37,7 +37,6 @@ public class GestionMedicament extends AppCompatActivity implements AdapterMedic
 
     PrescriptionDB pdb;
     PrescriptionDAO pdao;
-
     RecyclerView rvMedicaments;
     AdapterMedicaments adapter;
     FloatingActionButton btAdd;
@@ -99,12 +98,13 @@ public class GestionMedicament extends AppCompatActivity implements AdapterMedic
     public void getMedicaments() {
         InterfaceServeur serveur = Retrofit.getInstance().create(InterfaceServeur.class);
         Call<List<Prescriptions>> call = serveur.getMedicaments();
+
         call.enqueue(new Callback<List<Prescriptions>>() {
             @Override
             public void onResponse(Call<List<Prescriptions>> call, Response<List<Prescriptions>> response) {
                 if (response.isSuccessful()) {
                     listePrescriptions = response.body();
-                    adapter = new AdapterMedicaments(listePrescriptions, GestionMedicament.this); // Passer une référence à GestionMedicament
+                    adapter = new AdapterMedicaments(listePrescriptions, GestionMedicament.this);
                     rvMedicaments.setAdapter(adapter);
                 } else {
                     Toast.makeText(GestionMedicament.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();

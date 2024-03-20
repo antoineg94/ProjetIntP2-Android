@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +17,10 @@ import com.example.projetintp2_android.R;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -41,7 +46,8 @@ public class ZoomPrescription extends AppCompatActivity {
         String nom = intent.getStringExtra("nom");
 
         long timestamp1 = intent.getLongExtra("dateP", 0);
-        Date dateP = new Date(timestamp1);
+        Calendar dateP = Calendar.getInstance();
+        dateP.setTimeInMillis(timestamp1);
 
         long timestamp2 = intent.getLongExtra("dateD", 0);
         Date dateDP = new Date(timestamp2);
@@ -49,21 +55,28 @@ public class ZoomPrescription extends AppCompatActivity {
         int dateFP = intent.getIntExtra("dateF", 0);
 
         long timestamp4 = intent.getLongExtra("dose", 0);
-        Time dose = new Time(timestamp4);
+        if (timestamp4 != 0) {
+            Time dose = new Time(timestamp4);
+            tvDoseP.setText(dose.toString());
+        } else {
+            tvDoseP.setText("Valeur de dose indisponible");
+        }
 
         int fHeures = intent.getIntExtra("fHeures", 0);
         int fJours = intent.getIntExtra("fJours", 0);
         int fParJours = intent.getIntExtra("fParJours", 0);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
         tvNomP.setText(nom);
-        tvDateP.setText(dateFormat.format(dateP));
+        tvDateP.setText(dateFormat.format(dateP.getTime()));
         tvDateDP.setText(dateFormat.format(dateDP));
         tvDateFP.setText(String.valueOf(dateFP));
-        tvDoseP.setText(dose.toString());
+
         tvFrequenceHP.setText(String.valueOf(fHeures));
         tvFrequenceJours.setText(String.valueOf(fJours));
         tvFrequenceJP.setText(String.valueOf(fParJours));
+        Log.e("TAG", tvFrequenceJours.getText().toString());
     }
 
     @Override

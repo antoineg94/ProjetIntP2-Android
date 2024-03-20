@@ -3,9 +3,23 @@ package com.example.projetintp2_android.Classes;
 import androidx.room.TypeConverter;
 
 import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class CustomTypeConverters {
+
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+    @TypeConverter
+    public static LocalTime toLocalTime(Long value) {
+        return (value == null) ? null : LocalTime.parse(value.toString(), formatter);
+    }
+
+    @TypeConverter
+    public static Long toLong(LocalTime value) {
+        return (value == null) ? null : Long.parseLong(value.format(formatter));
+    }
     @TypeConverter
     public static Date toDate(Long timestamp) {
         return timestamp == null ? null : new Date(timestamp);
