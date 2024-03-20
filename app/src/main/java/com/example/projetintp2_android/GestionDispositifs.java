@@ -1,50 +1,53 @@
 package com.example.projetintp2_android;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Handler;
 
-import com.example.projetintp2_android.R;
-
+import com.example.projetintp2_android.Classes.AdapterDispositifs;
+import com.example.projetintp2_android.Classes.AdapterMedicaments;
+import com.example.projetintp2_android.Classes.Dispositifs;
+import com.example.projetintp2_android.Classes.Medicaments;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class GestionDispositifs extends AppCompatActivity {
+
+    RecyclerView rvDispositifs;
+    AdapterDispositifs adapter;
+    List<Dispositifs> liste = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getSupportActionBar().hide();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_gestion_dispositifs);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this, LoginActivitytest.class);
-                startActivity(intent);
-            }
-        },3000);
+        liste.add(new Dispositifs(1,"123123", "JS", 1));
+        liste.add(new Dispositifs(2,"456456", "BS", 2));
+        liste.add(new Dispositifs(3,"789789", "JD", 3));
+
+        rvDispositifs= findViewById(R.id.rvListeDispositifs);
+        rvDispositifs.setHasFixedSize(true);
+        rvDispositifs.setLayoutManager(new LinearLayoutManager(this));
+
+        AdapterDispositifs adapterDispositifs= new AdapterDispositifs(liste);
+        rvDispositifs.setAdapter(adapterDispositifs);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
-        setTitle("Pill Box");
+        inflater.inflate(R.menu.menu, menu);
+        setTitle("Gestion des dispositifs");
         return true;
     }
 
@@ -61,20 +64,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-  /*  protected void onStart()
-    {
-        super.onStart();
-        if(SharedPrefManager.getInstance(this).isLoggedIn())
-        {
-            Intent intent = new Intent(this,ProfileActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-
-
-            //if()
-        }
-    }*/
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjetIntP2-Android</string>
+    <string name="app_name">Pilulier intelligent</string>
     <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -10,6 +10,34 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_gestion_medicament">GestionMedicament</string>
+    <string name="title_activity_dispositif">Dispositif</string>
 
-    <!--    <string name="api_server">http://192.168.2.12:8000/api</string>-->
+    <string-array name="months">
+        <item>Janvier</item>
+        <item>Fevrier</item>
+        <item>Mars</item>
+        <item>Avril</item>
+        <item>Mai</item>
+        <item>Juin</item>
+        <item>Juillet</item>
+        <item>Aout</item>
+        <item>Septembre</item>
+        <item>Octobre</item>
+        <item>Novembre</item>
+        <item>Decembre</item>
+    </string-array>
+
+    <string name="ajSearch">Sélectionnez un médicament</string>
+    <string name="ajDD">Sélectionnez une date de début</string>
+    <string name="ajDF">Sélectionnez une date de fin</string>
+    <string name="ajInter">Intervalles entre les doses (en heures)</string>
+    <string name="ajFr">Périodicité</string>
+
+    <string name="aj_tv_Q">Quotidienne</string>
+    <string name="aj_tv_H">Hebdomadaire</string>
+    <string name="aj_tv_M">Mensuelle</string>
+    <string name="aj_tv_A">Annuelle</string>
+
+    <string name="ajBt">Valider</string>
 </resources>

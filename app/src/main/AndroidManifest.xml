@@ -43,6 +43,20 @@
      android:label="string/title_activity_login" />
         -->
         <activity
+            android:name=".ZoomPrescription"
+            android:exported="false"
+            android:parentActivityName=".GestionMedicament"/>
+        <activity
+            android:name=".GestionDispositifs"
+            android:exported="false" />
+        <activity
+            android:name=".AjouterMedicament"
+            android:exported="false"
+            android:parentActivityName=".GestionMedicament" />
+        <activity
+            android:name=".GestionMedicament"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivitytest"
             android:exported="true">
             <intent-filter>

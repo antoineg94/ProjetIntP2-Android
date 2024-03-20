@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pill Box</string>
+    <string name="title_activity_gestion_medicament">MedicationManagement</string>
+    <string name="title_activity_dispositif">Device</string>
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string name="ajSearch">Select a medication</string>
+    <string name="ajDD">Select a start date</string>
+    <string name="ajDF">Select an end date</string>
+    <string name="ajInter">Intervals between doses (in hours)</string>
+    <string name="ajFr">Frequency</string>
+
+    <string name="aj_tv_Q">Daily</string>
+    <string name="aj_tv_H">Weekly</string>
+    <string name="aj_tv_M">Monthly</string>
+    <string name="aj_tv_A">Yearly</string>
+
+    <string name="ajBt">Validate</string>
+</resources>

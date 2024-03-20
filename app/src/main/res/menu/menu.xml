@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itGestionMedic"
+        android:title="Gestion des prescriptions"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/itDispositif"
+        android:icon="@drawable/ic_devices"
+        android:title="Gestion des dispositifs"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/itProfil"
+        android:title="Profil"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/itGuide"
+        android:title="Guide d'utilisation"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/menu_language_switch"
+        android:title="FR"
+        app:actionLayout="@layout/layout_menu_langage"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/itDeconnexion"
+        android:title="Déconnexion" />
+</menu>
