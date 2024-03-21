@@ -1,11 +1,24 @@
 package com.example.projetintp2_android.Classes.Objects;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.google.gson.annotations.SerializedName;
+
+@Entity(tableName = "Table_Logs")
 public class Logs {
+    @PrimaryKey(autoGenerate = false)
+    @SerializedName("id")
     int id;
+    @SerializedName("actionTimestamp")
     String actionTimestamp;
+    @SerializedName("action")
     String action;
+    @SerializedName("device_id")
     int device_id;
+    @SerializedName("created_at")
     String created_at;
+    @SerializedName("updated_at")
     String updated_at;
 
     public Logs(int id, String actionTimestamp, String action, int device_id, String created_at, String updated_at) {

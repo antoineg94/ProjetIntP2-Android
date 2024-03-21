@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterDispositifs;
-import com.example.projetintp2_android.Classes.Objects.Dispositifs;
+import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterDevices;
+import com.example.projetintp2_android.Classes.Objects.Devices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,23 +20,23 @@ import java.util.List;
 public class GestionDispositifsActivity extends AppCompatActivity {
 
     RecyclerView rvDispositifs;
-    AdapterDispositifs adapter;
-    List<Dispositifs> liste = new ArrayList<>();
+    AdapterDevices adapter;
+    List<Devices> liste = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_dispositifs);
 
-        liste.add(new Dispositifs(1,"123123", "JS", 1));
-        liste.add(new Dispositifs(2,"456456", "BS", 2));
-        liste.add(new Dispositifs(3,"789789", "JD", 3));
+        liste.add(new Devices(1,"123123", "JS", 1,null,null));
+        liste.add(new Devices(2,"456456", "BS", 2,null,null));
+        liste.add(new Devices(3,"789789", "JD", 3,null,null));
 
         rvDispositifs= findViewById(R.id.rvListeDispositifs);
         rvDispositifs.setHasFixedSize(true);
         rvDispositifs.setLayoutManager(new LinearLayoutManager(this));
 
-        AdapterDispositifs adapterDispositifs= new AdapterDispositifs(liste);
+        AdapterDevices adapterDispositifs= new AdapterDevices(liste);
         rvDispositifs.setAdapter(adapterDispositifs);
     }
 

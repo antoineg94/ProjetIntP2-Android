@@ -16,7 +16,6 @@ public class UserV2 {
     @SerializedName("email")
     String email;
 
-
     @SerializedName("created_at")
     String created_at;
     @SerializedName("updated_at")

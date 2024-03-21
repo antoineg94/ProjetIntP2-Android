@@ -7,15 +7,15 @@ public class DataFromAPI {
     UserV2 user;
     String token;
     List<Prescriptions> prescriptionsList;
-    List<Medicaments> medicamentsList;
+    List<Medications> medicationsList;
     List<Alerts> alertsList;
     List<Logs> logsList;
 
-    public DataFromAPI(UserV2 user, String token, List<Prescriptions> prescriptionsList, List<Medicaments> medicamentsList, List<Alerts> alertsList, List<Logs> logsList) {
+    public DataFromAPI(UserV2 user, String token, List<Prescriptions> prescriptionsList, List<Medications> medicationsList, List<Alerts> alertsList, List<Logs> logsList) {
         this.user = user;
         this.token = token;
         this.prescriptionsList = prescriptionsList;
-        this.medicamentsList = medicamentsList;
+        this.medicationsList = medicationsList;
         this.alertsList = alertsList;
         this.logsList = logsList;
     }
@@ -44,12 +44,12 @@ public class DataFromAPI {
         this.prescriptionsList = prescriptionsList;
     }
 
-    public List<Medicaments> getMedicamentsList() {
-        return medicamentsList;
+    public List<Medications> getMedicationsList() {
+        return medicationsList;
     }
 
-    public void setMedicamentsList(List<Medicaments> medicamentsList) {
-        this.medicamentsList = medicamentsList;
+    public void setMedicationsList(List<Medications> medicationsList) {
+        this.medicationsList = medicationsList;
     }
 
     public List<Alerts> getAlertsList() {
@@ -74,7 +74,7 @@ public class DataFromAPI {
                 "user=" + user +
                 ", token=" + token +
                 ", prescriptionsList=" + prescriptionsList +
-                ", medicamentsList=" + medicamentsList +
+                ", medicationsList=" + medicationsList +
                 ", alertsList=" + alertsList +
                 ", logsList=" + logsList +
                 '}';

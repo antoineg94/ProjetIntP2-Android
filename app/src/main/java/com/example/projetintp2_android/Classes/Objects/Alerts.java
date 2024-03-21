@@ -1,11 +1,23 @@
 package com.example.projetintp2_android.Classes.Objects;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.google.gson.annotations.SerializedName;
+
+@Entity(tableName = "Table_Alerts")
 public class Alerts {
 
+    @PrimaryKey(autoGenerate = false)
+
     int id;
+    @SerializedName("isTheMedicationTaken")
     Boolean isTheMedicationTaken;
+    @SerializedName("calendar_id")
     int calendar_id;
+    @SerializedName("created_at")
     String created_at;
+    @SerializedName("updated_at")
     String updated_at;
 
     public Alerts(int id, Boolean isTheMedicationTaken, int calendar_id, String created_at, String updated_at) {
@@ -55,6 +67,7 @@ public class Alerts {
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
+
 
     @Override
     public String toString() {
