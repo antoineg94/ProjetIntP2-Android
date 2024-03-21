@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
+import com.example.projetintp2_android.Classes.CustomTypeConverters;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Time;
@@ -12,9 +14,10 @@ import java.time.LocalTime;
 import java.util.Date;
 
 @Entity(tableName = "Table_Prescription")
+@TypeConverters(CustomTypeConverters.class)
 public class Prescriptions {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @NonNull
     @SerializedName("id")
     private int id;
@@ -119,8 +122,5 @@ public class Prescriptions {
     public int getMedication_id() {
         return medication_id;
     }
-    @TypeConverter
-    public static Date toDate(Long timestamp) {
-        return timestamp == null ? null : new Date(timestamp);
-    }
+
 }
