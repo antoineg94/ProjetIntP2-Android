@@ -14,7 +14,7 @@ import com.example.projetintp2_android.R;
 
 import java.util.List;
 
-public class AdapterMedicaments extends RecyclerView.Adapter<AdapterMedicaments.MonViewHolder> {
+public class AdapterMedications extends RecyclerView.Adapter<AdapterMedications.MonViewHolder> {
 
     public interface InterfacePrescription
     {
@@ -25,7 +25,7 @@ public class AdapterMedicaments extends RecyclerView.Adapter<AdapterMedicaments.
     private GestionMedicamentActivity gestionMedicament;
     private List<Prescriptions> liste;
 
-    public AdapterMedicaments(List<Prescriptions> liste, InterfacePrescription interfacePrescription) {
+    public AdapterMedications(List<Prescriptions> liste, InterfacePrescription interfacePrescription) {
         this.liste = liste;
         this.interfacePrescription = interfacePrescription;
     }

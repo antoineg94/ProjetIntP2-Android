@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.projetintp2_android.Classes.APIResponses.APILoginResponse;
-import com.example.projetintp2_android.Classes.APIResponses.LoginResponse;
+import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 
+import com.example.projetintp2_android.Classes.Objects.Token;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.RetrofitInstance;
 import com.google.gson.Gson;
@@ -113,28 +113,28 @@ public class LoginActivitytest extends AppCompatActivity  {
         // Users  request = new Users( name, courriel,password);
         String locale = "en";
 
-        Call<ResponseBody> call = serveur.login(locale,email,password);
+        Call<APIResponse> call = serveur.login(locale,email,password);
 
-        call.enqueue(new Callback<ResponseBody>() {
-            
+        call.enqueue(new Callback<APIResponse>() {
+
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                ResponseBody resultat= response.body();
-                String temp = null;
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse loginResponse = response.body();
 
                 try{
-                    temp = resultat.string();
-                    Log.d("resultat",temp.toString());
-                    Gson gson = new Gson();
-                    APILoginResponse loginResponse = gson.fromJson(temp, APILoginResponse.class);
-                    Log.d("APILoginResponse",loginResponse.toString());
-                    Log.d("User",loginResponse.getUser().toString());
-                    UserV2 user = loginResponse.getUserV2FromJson();
 
+                    UserV2 user = loginResponse.getData().getUser();
+                    String token = loginResponse.getData().getToken();
+
+                    Log.d("user",user.toString());
+                    Log.d("token",token.toString());
                     SharedPrefManager.getInstance(LoginActivitytest.this).SaveUserV2(user);
+                    SharedPrefManager.getInstance(LoginActivitytest.this).saveToken(token);
                     Intent intent = new Intent(LoginActivitytest.this,ProfileActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+
+                    //Changer l'intent pour aller vers la page d'accueil(prescriptions)
 
 
                 }
@@ -146,7 +146,7 @@ public class LoginActivitytest extends AppCompatActivity  {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<APIResponse> call, Throwable t) {
                 Toast.makeText(LoginActivitytest.this,t.getMessage(),Toast.LENGTH_LONG).show();
 
 

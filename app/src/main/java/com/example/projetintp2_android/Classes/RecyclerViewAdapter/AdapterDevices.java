@@ -9,16 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projetintp2_android.Classes.Objects.Dispositifs;
+import com.example.projetintp2_android.Classes.Objects.Devices;
 import com.example.projetintp2_android.R;
 
 import java.util.List;
 
-public class AdapterDispositifs extends RecyclerView.Adapter{
+public class AdapterDevices extends RecyclerView.Adapter{
 
-    List<Dispositifs> liste;
+    List<Devices> liste;
 
-    public AdapterDispositifs(List<Dispositifs> liste)
+    public AdapterDevices(List<Devices> liste)
     {
         this.liste=liste ;
     }
@@ -33,7 +33,7 @@ public class AdapterDispositifs extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        AdapterDispositifs.MonViewHolder monViewHolder=(AdapterDispositifs.MonViewHolder) holder;
+        AdapterDevices.MonViewHolder monViewHolder=(AdapterDevices.MonViewHolder) holder;
         monViewHolder.tvNoSerie.setText(liste.get(position).getNoSerie());
         monViewHolder.tvNom.setText(liste.get(position).getAssociatedPatientFullName());
     }

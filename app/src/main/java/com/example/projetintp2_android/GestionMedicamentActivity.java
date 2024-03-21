@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedicaments;
+import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedications;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
 import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
 import com.example.projetintp2_android.Classes.Databases.PrescriptionDB;
@@ -32,12 +32,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GestionMedicamentActivity extends AppCompatActivity implements AdapterMedicaments.InterfacePrescription{
+public class GestionMedicamentActivity extends AppCompatActivity implements AdapterMedications.InterfacePrescription{
 
     PrescriptionDB pdb;
     PrescriptionDAO pdao;
     RecyclerView rvMedicaments;
-    AdapterMedicaments adapter;
+    AdapterMedications adapter;
     FloatingActionButton btAdd;
     List<Prescriptions> listePrescriptions;
 
@@ -103,7 +103,7 @@ public class GestionMedicamentActivity extends AppCompatActivity implements Adap
             public void onResponse(Call<List<Prescriptions>> call, Response<List<Prescriptions>> response) {
                 if (response.isSuccessful()) {
                     listePrescriptions = response.body();
-                    adapter = new AdapterMedicaments(listePrescriptions, GestionMedicamentActivity.this);
+                    adapter = new AdapterMedications(listePrescriptions, GestionMedicamentActivity.this);
                     rvMedicaments.setAdapter(adapter);
                 } else {
                     Toast.makeText(GestionMedicamentActivity.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();
