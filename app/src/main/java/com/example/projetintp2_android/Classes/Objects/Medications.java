@@ -2,30 +2,32 @@ package com.example.projetintp2_android.Classes.Objects;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.projetintp2_android.Classes.CustomTypeConverters;
 import com.google.gson.annotations.SerializedName;
 @Entity(tableName = "Table_Medications")
+@TypeConverters(CustomTypeConverters.class)
 public class Medications {
 
     @SerializedName("id")
             @PrimaryKey(autoGenerate = false)
-    int id;
+    private int id;
     @SerializedName("name")
-
-    String name;
-    @SerializedName("fonction")
-    String fonction;
+    private String name;
+    @SerializedName("function")
+    private String function;
     @SerializedName("canBeInPillBox")
-    boolean canBeInPillBox;
+    private boolean canBeInPillBox;
     @SerializedName("created_at")
-    String created_at;
+    private String created_at;
     @SerializedName("updated_at")
-    String updated_at;
+    private String updated_at;
 
-    public Medications(int id, String nom, String fonction, boolean canBeInPillBox, String created_at, String updated_at) {
+    public Medications(int id, String name, String function, boolean canBeInPillBox, String created_at, String updated_at) {
         this.id = id;
-        this.name = nom;
-        this.fonction = fonction;
+        this.name = name;
+        this.function = function;
         this.canBeInPillBox = canBeInPillBox;
         this.created_at = created_at;
         this.updated_at = updated_at;
@@ -40,12 +42,12 @@ public class Medications {
         this.id = id;
     }
 
-    public String getNom() {
+    public String getName() {
         return name;
     }
 
-    public void setNom(String nom) {
-        this.name = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isCanBeInPillBox() {
@@ -72,12 +74,12 @@ public class Medications {
         this.updated_at = updated_at;
     }
 
-    public String getFonction() {
-        return fonction;
+    public String getFunction() {
+        return function;
     }
 
-    public void setFonction(String fonction) {
-        this.fonction = fonction;
+    public void setFunction(String function) {
+        this.function = function;
     }
 
     @Override
@@ -85,7 +87,7 @@ public class Medications {
         return "Medicaments{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", fonction='" + fonction + '\'' +
+                ", function='" + function + '\'' +
                 ", canBeInPillBox=" + canBeInPillBox +
                 ", created_at='" + created_at + '\'' +
                 ", updated_at='" + updated_at + '\'' +
