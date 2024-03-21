@@ -16,9 +16,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitInstance {
  //public static final String BASE_URL = "http://10.0.2.2";
     public static final String BASE_URL = "http://10.0.2.2/";
-    private static final String TestServerURL = "http://172.16.87.131:80/api";
-    private static final String DevServerURL = "http://172.16.87.132:80/api";
-    private static final String ProdServerURL = "http://172.16.87.133:80/api";
+    private static final String TestServerURL = "http://172.16.87.131/api/";
+    private static final String DevServerURL = "http://172.16.87.132/api/";
+    private static final String ProdServerURL = "http://172.16.87.133/api/";
     private static Retrofit retrofit;
 
     public static Retrofit getInstance(){
@@ -26,7 +26,7 @@ public class RetrofitInstance {
         if(retrofit == null)
         {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(DevServerURL)
                     .client(getUnsafeOkHttpClient().build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,13 +14,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projetintp2_android.Classes.APIResponses.APILoginResponse;
 import com.example.projetintp2_android.Classes.APIResponses.LoginResponse;
-import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
-import com.example.projetintp2_android.Classes.RetrofitInstance;
+import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 
+import com.example.projetintp2_android.Classes.Objects.UserV2;
+import com.example.projetintp2_android.Classes.RetrofitInstance;
+import com.google.gson.Gson;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class LoginActivitytest extends AppCompatActivity  {
 
@@ -101,38 +108,46 @@ public class LoginActivitytest extends AppCompatActivity  {
 
     private void sendLogin() {
 
-        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
 
         // Users  request = new Users( name, courriel,password);
+        String locale = "en";
 
-        Call<LoginResponse> call = serveur.login(email,password);
+        Call<ResponseBody> call = serveur.login(locale,email,password);
 
-        call.enqueue(new Callback<LoginResponse>() {
+        call.enqueue(new Callback<ResponseBody>() {
+            
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                LoginResponse resultat= response.body();
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                ResponseBody resultat= response.body();
+                String temp = null;
 
-                if(resultat.getToken()!= null)
-                {
+                try{
+                    temp = resultat.string();
+                    Log.d("resultat",temp.toString());
+                    Gson gson = new Gson();
+                    APILoginResponse loginResponse = gson.fromJson(temp, APILoginResponse.class);
+                    Log.d("APILoginResponse",loginResponse.toString());
+                    Log.d("User",loginResponse.getUser().toString());
+                    UserV2 user = loginResponse.getUserV2FromJson();
 
-                    SharedPrefManager.getInstance(LoginActivitytest.this).saveUser(resultat.getUser());
+                    SharedPrefManager.getInstance(LoginActivitytest.this).SaveUserV2(user);
                     Intent intent = new Intent(LoginActivitytest.this,ProfileActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    //save user
 
-                    // proceed with the login
-                  //  Toast.makeText(LoginActivitytest.this,resultat.getMessage(),Toast.LENGTH_LONG).show();
+
                 }
-                else {
-                    alertFail("informations de connexion invalides");
-                 //   Toast.makeText(LoginActivitytest.this,"connexion echouée",Toast.LENGTH_LONG).show();
+                catch (Exception e){
+                    e.printStackTrace();
                 }
+
+
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(LoginActivitytest.this,"une erreur",Toast.LENGTH_LONG).show();
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(LoginActivitytest.this,t.getMessage(),Toast.LENGTH_LONG).show();
 
 
             }

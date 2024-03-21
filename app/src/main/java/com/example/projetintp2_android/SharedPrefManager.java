@@ -3,6 +3,7 @@ package com.example.projetintp2_android;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.Objects.Users;
 
 public class SharedPrefManager {
@@ -26,6 +27,15 @@ public class SharedPrefManager {
     }
     public void saveUser(Users user)
     {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("id", user.getId());
+        editor.putString("name",user.getName());
+        editor.putString("email",user.getEmail());
+        editor.putString("api_token",user.getApi_token());
+        editor.apply();
+    }
+    public void SaveUserV2(UserV2 user){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("id", user.getId());
