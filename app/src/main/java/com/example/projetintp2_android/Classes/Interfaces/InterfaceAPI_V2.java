@@ -1,14 +1,11 @@
 package com.example.projetintp2_android.Classes.Interfaces;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
-import com.example.projetintp2_android.Classes.APIResponses.LoginResponse;
 import com.example.projetintp2_android.Classes.Objects.Prescriptions;
 
 import java.util.List;
 
 
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 import retrofit2.http.Field;
@@ -64,6 +61,6 @@ public interface InterfaceAPI_V2 {
                                       @Field("passord") String password);
 
     @GET("{locale}/prescriptions")
-    Call<List<Prescriptions>> getMedicaments(@Path("locale") String locale,
-                                             @Header("Authorization") String token);
+    Call<List<Prescriptions>> getPrescriptions(@Path("locale") String locale,
+                                               @Header("Authorization") String token);
 }

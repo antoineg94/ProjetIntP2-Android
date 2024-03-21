@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, LoginActivitytest.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         },3000);
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.itGestionMedic) {
-            Intent intent = new Intent(this, GestionMedicamentActivity.class);
+            Intent intent = new Intent(this, GestionPrescriptionActivity.class);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {

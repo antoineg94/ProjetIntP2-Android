@@ -17,18 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 
-import com.example.projetintp2_android.Classes.Objects.Token;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.RetrofitInstance;
-import com.google.gson.Gson;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class LoginActivitytest extends AppCompatActivity  {
+public class LoginActivity extends AppCompatActivity  {
 
     private EditText editTextEmail, editTextPassword;
     private CheckBox checkBoxRememberMe ;
@@ -70,7 +67,7 @@ public class LoginActivitytest extends AppCompatActivity  {
             public void onClick(View v) {
                 // Redirection vers la page de création de compte
 
-                Intent intent = new Intent(LoginActivitytest.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
 
             }
@@ -81,7 +78,7 @@ public class LoginActivitytest extends AppCompatActivity  {
         super.onStart();
         if(isChecked=checkBoxRememberMe.isChecked()) {
             if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-                Intent intent = new Intent(LoginActivitytest.this, ProfileActivity.class);
+                Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
@@ -128,9 +125,9 @@ public class LoginActivitytest extends AppCompatActivity  {
 
                     Log.d("user",user.toString());
                     Log.d("token",token.toString());
-                    SharedPrefManager.getInstance(LoginActivitytest.this).SaveUserV2(user);
-                    SharedPrefManager.getInstance(LoginActivitytest.this).saveToken(token);
-                    Intent intent = new Intent(LoginActivitytest.this,ProfileActivity.class);
+                    SharedPrefManager.getInstance(LoginActivity.this).SaveUserV2(user);
+                    SharedPrefManager.getInstance(LoginActivity.this).saveToken(token);
+                    Intent intent = new Intent(LoginActivity.this,GestionPrescriptionActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 
@@ -147,7 +144,7 @@ public class LoginActivitytest extends AppCompatActivity  {
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                Toast.makeText(LoginActivitytest.this,t.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
 
 
             }

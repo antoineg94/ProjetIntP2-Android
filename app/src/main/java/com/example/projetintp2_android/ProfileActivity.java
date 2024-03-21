@@ -25,7 +25,6 @@ import java.io.IOException;
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
-import com.example.projetintp2_android.Classes.Objects.Token;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.Objects.Users;
 import com.example.projetintp2_android.Classes.RetrofitInstance;
@@ -380,7 +379,7 @@ public class ProfileActivity extends AppCompatActivity {
                 logoutResponse = response.body();
                 Log.d("logout", logoutResponse.getMessage());
                 if (logoutResponse.getStatus().equals("success")) {
-                    Intent intent = new Intent(ProfileActivity.this, LoginActivitytest.class);
+                    Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish(); // Fermer l'activité actuelle pour empêcher l'utilisateur de revenir en arrière

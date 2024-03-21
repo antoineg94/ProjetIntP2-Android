@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GestionMedicamentActivity extends AppCompatActivity implements AdapterMedications.InterfacePrescription{
+public class GestionPrescriptionActivity extends AppCompatActivity implements AdapterMedications.InterfacePrescription{
 
     PrescriptionDB pdb;
     PrescriptionDAO pdao;
@@ -65,7 +65,7 @@ public class GestionMedicamentActivity extends AppCompatActivity implements Adap
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GestionMedicamentActivity.this, AddMedicamentActivity.class);
+                Intent intent = new Intent(GestionPrescriptionActivity.this, AddMedicamentActivity.class);
                 startActivity(intent);
             }
         });
@@ -103,17 +103,17 @@ public class GestionMedicamentActivity extends AppCompatActivity implements Adap
             public void onResponse(Call<List<Prescriptions>> call, Response<List<Prescriptions>> response) {
                 if (response.isSuccessful()) {
                     listePrescriptions = response.body();
-                    adapter = new AdapterMedications(listePrescriptions, GestionMedicamentActivity.this);
+                    adapter = new AdapterMedications(listePrescriptions, GestionPrescriptionActivity.this);
                     rvMedicaments.setAdapter(adapter);
                 } else {
-                    Toast.makeText(GestionMedicamentActivity.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GestionPrescriptionActivity.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();
                     Log.d("TAG", "Code d'erreur : " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Prescriptions>> call, Throwable t) {
-                Toast.makeText(GestionMedicamentActivity.this, "Erreur de connexion au serveur", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GestionPrescriptionActivity.this, "Erreur de connexion au serveur", Toast.LENGTH_SHORT).show();
                 Log.e("TAG", "Erreur de connexion au serveur : " + t.getMessage());
             }
         });

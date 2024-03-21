@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetintp2_android.Classes.Objects.Prescriptions;
-import com.example.projetintp2_android.GestionMedicamentActivity;
+import com.example.projetintp2_android.GestionPrescriptionActivity;
 import com.example.projetintp2_android.R;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class AdapterMedications extends RecyclerView.Adapter<AdapterMedications.
     }
 
     InterfacePrescription interfacePrescription;
-    private GestionMedicamentActivity gestionMedicament;
+    private GestionPrescriptionActivity gestionMedicament;
     private List<Prescriptions> liste;
 
     public AdapterMedications(List<Prescriptions> liste, InterfacePrescription interfacePrescription) {

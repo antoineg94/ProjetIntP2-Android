@@ -186,7 +186,7 @@ public class AddMedicamentActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (item.getItemId() == R.id.itGestionMedic) {
-            Intent intent = new Intent(this, GestionMedicamentActivity.class);
+            Intent intent = new Intent(this, GestionPrescriptionActivity.class);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
