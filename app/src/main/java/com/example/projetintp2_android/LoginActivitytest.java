@@ -13,7 +13,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import Interfaces.InterfaceServeur;
+import com.example.projetintp2_android.Classes.APIResponses.LoginResponse;
+import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
+import com.example.projetintp2_android.Classes.RetrofitInstance;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

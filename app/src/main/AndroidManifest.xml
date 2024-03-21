@@ -43,18 +43,18 @@
      android:label="string/title_activity_login" />
         -->
         <activity
-            android:name=".ZoomPrescription"
+            android:name=".ZoomPrescriptionActivity"
             android:exported="false"
-            android:parentActivityName=".GestionMedicament"/>
+            android:parentActivityName=".GestionMedicamentActivity"/>
         <activity
-            android:name=".GestionDispositifs"
+            android:name=".GestionDispositifsActivity"
             android:exported="false" />
         <activity
-            android:name=".AjouterMedicament"
+            android:name=".AddMedicamentActivity"
             android:exported="false"
-            android:parentActivityName=".GestionMedicament" />
+            android:parentActivityName=".GestionMedicamentActivity" />
         <activity
-            android:name=".GestionMedicament"
+            android:name=".GestionMedicamentActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivitytest"

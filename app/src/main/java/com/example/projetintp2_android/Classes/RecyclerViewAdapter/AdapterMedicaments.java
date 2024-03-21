@@ -1,6 +1,5 @@
-package com.example.projetintp2_android.Classes;
+package com.example.projetintp2_android.Classes.RecyclerViewAdapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.projetintp2_android.GestionMedicament;
+
+import com.example.projetintp2_android.Classes.Objects.Prescriptions;
+import com.example.projetintp2_android.GestionMedicamentActivity;
 import com.example.projetintp2_android.R;
-import java.text.SimpleDateFormat;
+
 import java.util.List;
-import java.util.Locale;
 
 public class AdapterMedicaments extends RecyclerView.Adapter<AdapterMedicaments.MonViewHolder> {
 
@@ -22,7 +22,7 @@ public class AdapterMedicaments extends RecyclerView.Adapter<AdapterMedicaments.
     }
 
     InterfacePrescription interfacePrescription;
-    private GestionMedicament gestionMedicament;
+    private GestionMedicamentActivity gestionMedicament;
     private List<Prescriptions> liste;
 
     public AdapterMedicaments(List<Prescriptions> liste, InterfacePrescription interfacePrescription) {

@@ -1,4 +1,4 @@
-package com.example.projetintp2_android.Classes;
+package com.example.projetintp2_android.Classes.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

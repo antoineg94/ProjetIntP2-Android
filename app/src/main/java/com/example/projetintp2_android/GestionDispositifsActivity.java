@@ -10,17 +10,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.projetintp2_android.Classes.AdapterDispositifs;
-import com.example.projetintp2_android.Classes.AdapterMedicaments;
-import com.example.projetintp2_android.Classes.Dispositifs;
-import com.example.projetintp2_android.Classes.Medicaments;
+import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterDispositifs;
+import com.example.projetintp2_android.Classes.Objects.Dispositifs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestionDispositifs extends AppCompatActivity {
+public class GestionDispositifsActivity extends AppCompatActivity {
 
     RecyclerView rvDispositifs;
     AdapterDispositifs adapter;
@@ -54,11 +51,11 @@ public class GestionDispositifs extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.itGestionMedic) {
-            Intent intent = new Intent(this, GestionMedicament.class);
+            Intent intent = new Intent(this, GestionMedicamentActivity.class);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Intent intent = new Intent(this, GestionDispositifs.class);
+            Intent intent = new Intent(this, GestionDispositifsActivity.class);
             startActivity(intent);
             return true;
         }

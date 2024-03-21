@@ -1,4 +1,4 @@
-package com.example.projetintp2_android;
+package com.example.projetintp2_android.Classes;
 
 import java.security.cert.CertificateException;
 
@@ -16,6 +16,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitInstance {
  //public static final String BASE_URL = "http://10.0.2.2";
     public static final String BASE_URL = "http://10.0.2.2/";
+    private static final String TestServerURL = "http://172.16.87.131:80/api";
+    private static final String DevServerURL = "http://172.16.87.132:80/api";
+    private static final String ProdServerURL = "http://172.16.87.133:80/api";
     private static Retrofit retrofit;
 
     public static Retrofit getInstance(){

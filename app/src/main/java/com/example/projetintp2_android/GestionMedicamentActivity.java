@@ -15,15 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.projetintp2_android.Classes.AdapterMedicaments;
-import com.example.projetintp2_android.Classes.InterfaceServeur;
-import com.example.projetintp2_android.Classes.PrescriptionDAO;
-import com.example.projetintp2_android.Classes.PrescriptionDB;
-import com.example.projetintp2_android.Classes.Prescriptions;
+import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedicaments;
+import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
+import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
+import com.example.projetintp2_android.Classes.Databases.PrescriptionDB;
+import com.example.projetintp2_android.Classes.Objects.Prescriptions;
 import com.example.projetintp2_android.Classes.Retrofit;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GestionMedicament extends AppCompatActivity implements AdapterMedicaments.InterfacePrescription{
+public class GestionMedicamentActivity extends AppCompatActivity implements AdapterMedicaments.InterfacePrescription{
 
     PrescriptionDB pdb;
     PrescriptionDAO pdao;
@@ -66,7 +65,7 @@ public class GestionMedicament extends AppCompatActivity implements AdapterMedic
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GestionMedicament.this, AjouterMedicament.class);
+                Intent intent = new Intent(GestionMedicamentActivity.this, AddMedicamentActivity.class);
                 startActivity(intent);
             }
         });
@@ -88,7 +87,7 @@ public class GestionMedicament extends AppCompatActivity implements AdapterMedic
             Toast.makeText(this, "Vous êtes déjà dans la gestion des médicaments", Toast.LENGTH_SHORT).show();
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Intent intent = new Intent(this, GestionDispositifs.class);
+            Intent intent = new Intent(this, GestionDispositifsActivity.class);
             startActivity(intent);
             return true;
         }
@@ -104,24 +103,24 @@ public class GestionMedicament extends AppCompatActivity implements AdapterMedic
             public void onResponse(Call<List<Prescriptions>> call, Response<List<Prescriptions>> response) {
                 if (response.isSuccessful()) {
                     listePrescriptions = response.body();
-                    adapter = new AdapterMedicaments(listePrescriptions, GestionMedicament.this);
+                    adapter = new AdapterMedicaments(listePrescriptions, GestionMedicamentActivity.this);
                     rvMedicaments.setAdapter(adapter);
                 } else {
-                    Toast.makeText(GestionMedicament.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GestionMedicamentActivity.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();
                     Log.d("TAG", "Code d'erreur : " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Prescriptions>> call, Throwable t) {
-                Toast.makeText(GestionMedicament.this, "Erreur de connexion au serveur", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GestionMedicamentActivity.this, "Erreur de connexion au serveur", Toast.LENGTH_SHORT).show();
                 Log.e("TAG", "Erreur de connexion au serveur : " + t.getMessage());
             }
         });
     }
     @Override
     public void gestionClick(int position, Prescriptions prescriptions) {
-        Intent intent = new Intent(this, ZoomPrescription.class);
+        Intent intent = new Intent(this, ZoomPrescriptionActivity.class);
         intent.putExtra("nom", prescriptions.getNameOfPrescription());
         intent.putExtra("dateP", prescriptions.getDateOfPrescription());
         intent.putExtra("dateD", prescriptions.getDateOfStart());

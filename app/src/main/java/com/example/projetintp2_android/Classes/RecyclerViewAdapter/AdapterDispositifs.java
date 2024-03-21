@@ -1,4 +1,4 @@
-package com.example.projetintp2_android.Classes;
+package com.example.projetintp2_android.Classes.RecyclerViewAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projetintp2_android.Classes.Objects.Dispositifs;
 import com.example.projetintp2_android.R;
 
 import java.util.List;

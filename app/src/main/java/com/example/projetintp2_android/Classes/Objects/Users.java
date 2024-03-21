@@ -1,4 +1,4 @@
-package com.example.projetintp2_android;
+package com.example.projetintp2_android.Classes.Objects;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

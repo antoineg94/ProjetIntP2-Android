@@ -1,8 +1,5 @@
 package com.example.projetintp2_android;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,9 +19,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
-import java.util.Map;
 
-import Interfaces.InterfaceServeur;
+import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
+import com.example.projetintp2_android.Classes.RetrofitInstance;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

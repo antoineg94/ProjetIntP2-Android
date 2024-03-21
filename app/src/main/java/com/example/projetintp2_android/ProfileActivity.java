@@ -18,11 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.projetintp2_android.ui.login.LoginActivity;
 
 import java.io.IOException;
 
-import Interfaces.InterfaceServeur;
+import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
+import com.example.projetintp2_android.Classes.Objects.Users;
+import com.example.projetintp2_android.Classes.RetrofitInstance;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

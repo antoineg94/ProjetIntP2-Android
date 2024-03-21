@@ -1,4 +1,6 @@
-package com.example.projetintp2_android;
+package com.example.projetintp2_android.Classes.APIResponses;
+
+import com.example.projetintp2_android.Classes.Objects.Users;
 
 public class LoginResponse {
     private String token ;
@@ -7,7 +9,7 @@ public class LoginResponse {
 
     private String message;
 
-    public LoginResponse(String token,Users users) {
+    public LoginResponse(String token, Users users) {
         this.token = token;
         this.user=users;
 

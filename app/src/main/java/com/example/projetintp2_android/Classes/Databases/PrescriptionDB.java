@@ -1,8 +1,12 @@
-package com.example.projetintp2_android.Classes;
+package com.example.projetintp2_android.Classes.Databases;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+
+import com.example.projetintp2_android.Classes.CustomTypeConverters;
+import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
+import com.example.projetintp2_android.Classes.Objects.Prescriptions;
 
 @Database(entities = {Prescriptions.class}, version = 1)
 @TypeConverters({CustomTypeConverters.class})

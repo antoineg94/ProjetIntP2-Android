@@ -3,6 +3,8 @@ package com.example.projetintp2_android;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.projetintp2_android.Classes.Objects.Users;
+
 public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "my_shared_preff";
     private static SharedPrefManager mInstance;

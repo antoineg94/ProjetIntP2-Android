@@ -12,34 +12,28 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.NumberPicker;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projetintp2_android.Classes.DaysAdapter;
+import com.example.projetintp2_android.Classes.RecyclerViewAdapter.DaysAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AjouterMedicament extends AppCompatActivity {
+public class AddMedicamentActivity extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
     EditText edDateDebut, edDateFin;
@@ -68,9 +62,9 @@ public class AjouterMedicament extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     chHebdomadaire.setChecked(false);
-                    Toast.makeText(AjouterMedicament.this, "CheckBox cochée", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddMedicamentActivity.this, "CheckBox cochée", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(AjouterMedicament.this, "CheckBox décochée", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddMedicamentActivity.this, "CheckBox décochée", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -108,8 +102,8 @@ public class AjouterMedicament extends AppCompatActivity {
         builder.setCancelable(false);
         builder.setTitle("Sélectionner les jours");
 
-        RecyclerView recyclerView = new RecyclerView(AjouterMedicament.this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(AjouterMedicament.this));
+        RecyclerView recyclerView = new RecyclerView(AddMedicamentActivity.this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(AddMedicamentActivity.this));
         List<String> daysOfWeek = new ArrayList<>();
         daysOfWeek.add("Lundi");
         daysOfWeek.add("Mardi");
@@ -192,11 +186,11 @@ public class AjouterMedicament extends AppCompatActivity {
         int id = item.getItemId();
 
         if (item.getItemId() == R.id.itGestionMedic) {
-            Intent intent = new Intent(this, GestionMedicament.class);
+            Intent intent = new Intent(this, GestionMedicamentActivity.class);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Intent intent = new Intent(this, GestionDispositifs.class);
+            Intent intent = new Intent(this, GestionDispositifsActivity.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.menu_language_switch) {

@@ -12,19 +12,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projetintp2_android.GestionDispositifs;
-import com.example.projetintp2_android.R;
-
 import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class ZoomPrescription extends AppCompatActivity {
+public class ZoomPrescriptionActivity extends AppCompatActivity {
 
     TextView tvNomP, tvDateP, tvDateDP, tvDateFP, tvDoseP, tvFrequenceHP, tvFrequenceJours, tvFrequenceJP;
 
@@ -93,7 +87,7 @@ public class ZoomPrescription extends AppCompatActivity {
             Toast.makeText(this, "Vous êtes déjà dans la gestion des médicaments", Toast.LENGTH_SHORT).show();
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Intent intent = new Intent(this, GestionDispositifs.class);
+            Intent intent = new Intent(this, GestionDispositifsActivity.class);
             startActivity(intent);
             return true;
         }
