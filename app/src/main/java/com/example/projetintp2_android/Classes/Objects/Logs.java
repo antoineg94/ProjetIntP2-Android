@@ -2,10 +2,13 @@ package com.example.projetintp2_android.Classes.Objects;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.projetintp2_android.Classes.CustomTypeConverters;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "Table_Logs")
+@TypeConverters(CustomTypeConverters.class)
 public class Logs {
     @PrimaryKey(autoGenerate = false)
     @SerializedName("id")

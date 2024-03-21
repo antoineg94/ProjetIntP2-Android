@@ -1,14 +1,22 @@
 package com.example.projetintp2_android.Classes.Objects;
 
+import android.icu.util.LocaleData;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.projetintp2_android.Classes.CustomTypeConverters;
 import com.google.gson.annotations.SerializedName;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity(tableName = "Table_Calendars")
+@TypeConverters(CustomTypeConverters.class)
 public class Calendars {
     @PrimaryKey(autoGenerate = false)
             @SerializedName("id")
@@ -16,7 +24,7 @@ public class Calendars {
     @SerializedName("dateOfIntake")
     Date dateOfIntake;
     @SerializedName("timeOfIntake")
-    Time timeOfIntake;
+    LocalTime timeOfIntake;
     @SerializedName("active")
     Boolean active;
     @SerializedName("prescription_id")
@@ -26,7 +34,7 @@ public class Calendars {
     @SerializedName("updated_at")
     String updated_at;
 
-    public Calendars(int id, Date dateOfIntake, Time timeOfIntake, Boolean active, int prescription_id, String created_at, String updated_at) {
+    public Calendars(int id, Date dateOfIntake, LocalTime timeOfIntake, Boolean active, int prescription_id, String created_at, String updated_at) {
         this.id = id;
         this.dateOfIntake = dateOfIntake;
         this.timeOfIntake = timeOfIntake;
@@ -52,11 +60,11 @@ public class Calendars {
         this.dateOfIntake = dateOfIntake;
     }
 
-    public Time getTimeOfIntake() {
+    public LocalTime getTimeOfIntake() {
         return timeOfIntake;
     }
 
-    public void setTimeOfIntake(Time timeOfIntake) {
+    public void setTimeOfIntake(LocalTime timeOfIntake) {
         this.timeOfIntake = timeOfIntake;
     }
 
@@ -90,6 +98,11 @@ public class Calendars {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    @TypeConverter
+    public static Date toDate(Long timestamp) {
+        return timestamp == null ? null : new Date(timestamp);
     }
 
     @Override
