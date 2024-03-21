@@ -1,6 +1,6 @@
 package com.example.projetintp2_android.Classes.Interfaces;
 
-import com.example.projetintp2_android.Classes.APIResponses.APILoginResponse;
+import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.APIResponses.LoginResponse;
 import com.example.projetintp2_android.Classes.Objects.Prescriptions;
 
@@ -22,24 +22,24 @@ public interface InterfaceAPI_V2 {
 
     @POST("{locale}/register")
     @FormUrlEncoded
-    Call<ResponseBody> register(@Path ("locale") String locale,
+    Call<APIResponse> register(@Path ("locale") String locale,
                                     @Field("name") String nom,
                                     @Field("email") String email,
                                     @Field("password") String psw );
 
     @POST("{locale}/login")
     @FormUrlEncoded
-    Call<ResponseBody> login(@Path ("locale") String locale,
-                                   @Field("email") String nom,
-                                   @Field("password") String psw);
+    Call<APIResponse> login(@Path ("locale") String locale,
+                            @Field("email") String nom,
+                            @Field("password") String psw);
 
     @POST("{locale}/logout")
-    Call<LoginResponse> logout(@Path("locale") String locale,
-                               @Header("Authorization") String token);
+    Call<APIResponse> logout(@Path("locale") String locale,
+                             @Header("Authorization") String token);
 
     @POST("{locale}/update")
     @FormUrlEncoded
-    Call<Response> update(@Path("locale") String locale,
+    Call<APIResponse> update(@Path("locale") String locale,
                               @Header("Authorization") String token,
                               @Field("name") String nom,
                               @Field("email") String email,
@@ -47,19 +47,19 @@ public interface InterfaceAPI_V2 {
 
     @POST("{locale}/updateName")
     @FormUrlEncoded
-    Call<Response> updateName(@Path("locale") String locale,
+    Call<APIResponse> updateName(@Path("locale") String locale,
                                   @Header("Authorization") String token,
                                   @Field("name") String nom);
 
     @POST("{locale}/updateEmail")
     @FormUrlEncoded
-    Call<Response> updateEmail(@Path("locale") String locale,
+    Call<APIResponse> updateEmail(@Path("locale") String locale,
                                    @Header("Authorization") String token,
                                    @Field("email") String email);
 
     @POST("{locale}/updatePassword")
     @FormUrlEncoded
-    Call<Response> updatePassword(@Path("locale") String locale,
+    Call<APIResponse> updatePassword(@Path("locale") String locale,
                                       @Header("Authorization") String token,
                                       @Field("passord") String password);
 
