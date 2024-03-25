@@ -24,6 +24,8 @@ import com.example.projetintp2_android.Classes.Databases.PrescriptionDB;
 import com.example.projetintp2_android.Classes.Objects.Prescriptions;
 import com.example.projetintp2_android.Classes.RetrofitInstance;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -107,11 +109,9 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         Log.d("Token", "Token : " + token);
 
         call.enqueue(new Callback<APIResponse>() {
-            APIResponse apiResponse = new APIResponse(null,null,null,null);
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                    apiResponse  = response.body();
-                    listePrescriptions = apiResponse.getData().getPrescriptionsList();
+                    listePrescriptions = response.body().getData().getPrescriptionsList();
                     Log.d("Prescriptions", "Liste des prescriptions : " + listePrescriptions.toString());
                     pdao.insertAllPrescriptions(listePrescriptions);
                     adapter = new AdapterMedications(listePrescriptions, GestionPrescriptionActivity.this);
@@ -121,9 +121,9 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                
-                Toast.makeText(GestionPrescriptionActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
-                Log.e("API_ERROR", "Erreur de connexion au serveur : " + t.toString());
+
+                Toast.makeText(GestionPrescriptionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("TAG", "Erreur de connexion au serveur : " + t.getMessage());
             }
         });
     }

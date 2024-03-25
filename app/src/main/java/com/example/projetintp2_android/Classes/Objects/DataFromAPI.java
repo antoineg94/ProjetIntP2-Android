@@ -6,23 +6,23 @@ public class DataFromAPI {
 
     UserV2 user;
     String token;
-    List<Prescriptions> prescriptionsList;
-    List<Medications> medicationsList;
-    List<Alerts> alertsList;
-    List<Logs> logsList;
-    List<Calendars> calendarsList;
-    List<Devices> devicesList;
+    List<Prescriptions> prescriptions;
+    List<Medications> medications;
+    List<Alerts> alerts;
+    List<Logs> logs;
+    List<Calendars> calendars;
+    List<Devices> devices;
 
 
-    public DataFromAPI(UserV2 user, String token, List<Prescriptions> prescriptionsList, List<Medications> medicationsList, List<Alerts> alertsList, List<Logs> logsList, List<Calendars> calendarsList, List<Devices> devicesList) {
+    public DataFromAPI(UserV2 user, String token, List<Prescriptions> prescriptions, List<Medications> medications, List<Alerts> alerts, List<Logs> logs, List<Calendars> calendars, List<Devices> devices) {
         this.user = user;
         this.token = token;
-        this.prescriptionsList = prescriptionsList;
-        this.medicationsList = medicationsList;
-        this.alertsList = alertsList;
-        this.logsList = logsList;
-        this.calendarsList = calendarsList;
-        this.devicesList = devicesList;
+        this.prescriptions = prescriptions;
+        this.medications = medications;
+        this.alerts = alerts;
+        this.logs = logs;
+        this.calendars = calendars;
+        this.devices = devices;
     }
 
     public UserV2 getUser() {
@@ -42,35 +42,35 @@ public class DataFromAPI {
     }
 
     public List<Prescriptions> getPrescriptionsList() {
-        return prescriptionsList;
+        return prescriptions;
     }
 
     public void setPrescriptionsList(List<Prescriptions> prescriptionsList) {
-        this.prescriptionsList = prescriptionsList;
+        this.prescriptions = prescriptionsList;
     }
 
     public List<Medications> getMedicationsList() {
-        return medicationsList;
+        return medications;
     }
 
     public void setMedicationsList(List<Medications> medicationsList) {
-        this.medicationsList = medicationsList;
+        this.medications = medicationsList;
     }
 
     public List<Alerts> getAlertsList() {
-        return alertsList;
+        return alerts;
     }
 
     public void setAlertsList(List<Alerts> alertsList) {
-        this.alertsList = alertsList;
+        this.alerts = alertsList;
     }
 
     public List<Logs> getLogsList() {
-        return logsList;
+        return logs;
     }
 
     public void setLogsList(List<Logs> logsList) {
-        this.logsList = logsList;
+        this.logs = logsList;
     }
 
     @Override
@@ -78,10 +78,10 @@ public class DataFromAPI {
         return "DataFromAPI{" +
                 "user=" + user +
                 ", token=" + token +
-                ", prescriptionsList=" + prescriptionsList +
-                ", medicationsList=" + medicationsList +
-                ", alertsList=" + alertsList +
-                ", logsList=" + logsList +
+                ", prescriptionsList=" + prescriptions +
+                ", medicationsList=" + medications +
+                ", alertsList=" + alerts +
+                ", logsList=" + logs +
                 '}';
     }
 }

@@ -14,7 +14,6 @@ import java.time.LocalTime;
 import java.util.Date;
 
 @Entity(tableName = "Table_Prescription")
-@TypeConverters(CustomTypeConverters.class)
 public class Prescriptions {
 
     @PrimaryKey(autoGenerate = false)
