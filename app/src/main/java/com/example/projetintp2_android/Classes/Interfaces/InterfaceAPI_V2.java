@@ -23,16 +23,16 @@ public interface InterfaceAPI_V2 {
 
     @POST("{locale}/register")
     @FormUrlEncoded
-    Call<APIResponse> register(@Path ("locale") String locale,
-                                    @Field("name") String nom,
-                                    @Field("email") String email,
-                                    @Field("password") String psw ,
-                                    @Field("password_confirmation") String pswd
-                                                     );
+    Call<APIResponse> register(@Path("locale") String locale,
+                               @Field("name") String nom,
+                               @Field("email") String email,
+                               @Field("password") String psw,
+                               @Field("password_confirmation") String pswd
+    );
 
     @POST("{locale}/login")
     @FormUrlEncoded
-    Call<APIResponse> login(@Path ("locale") String locale,
+    Call<APIResponse> login(@Path("locale") String locale,
                             @Field("email") String nom,
                             @Field("password") String psw);
 
@@ -43,29 +43,29 @@ public interface InterfaceAPI_V2 {
     @POST("{locale}/update")
     @FormUrlEncoded
     Call<APIResponse> update(@Path("locale") String locale,
-                              @Header("Authorization") String token,
-                              @Field("name") String nom,
-                              @Field("email") String email,
-                              @Field("password") String psw );
+                             @Header("Authorization") String token,
+                             @Field("name") String nom,
+                             @Field("email") String email,
+                             @Field("password") String psw);
 
     @PATCH("{locale}/updateName")
     @FormUrlEncoded
     Call<APIResponse> updateName(@Path("locale") String locale,
-                                  @Header("Authorization") String token,
-                                  @Field("name") String nom);
+                                 @Header("Authorization") String token,
+                                 @Field("name") String nom);
 
     @PATCH("{locale}/updateEmail")
     @FormUrlEncoded
     Call<APIResponse> updateEmail(@Path("locale") String locale,
-                                   @Header("Authorization") String token,
-                                   @Field("email") String email);
+                                  @Header("Authorization") String token,
+                                  @Field("email") String email);
 
     @PATCH("{locale}/updatePassword")
     @FormUrlEncoded
     Call<APIResponse> updatePassword(@Path("locale") String locale,
-                                      @Header("Authorization") String token,
-                                      @Field("current_password") String current_password,
-                                      @Field("password") String password,
+                                     @Header("Authorization") String token,
+                                     @Field("current_password") String current_password,
+                                     @Field("password") String password,
                                      @Field("password_confirmation") String password_confirmation);
 
     @GET("{locale}/prescriptions")
