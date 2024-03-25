@@ -107,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // Users  request = new Users( name, courriel,password);
         String locale = "en";
-        email = "1234@1234";
-        password = "123456789";
+        email = "123@123";
+        password = "123";
         Call<APIResponse> call = serveur.login(locale, email, password);
 
         call.enqueue(new Callback<APIResponse>() {

@@ -14,7 +14,7 @@ import java.util.List;
 public interface PrescriptionDAO {
 
     @Query("SELECT * FROM Table_Prescriptions")
-    List<Prescription> getAfficherP();
+    List<Prescription> getAllPrescriptions();
     @Query("SELECT * FROM Table_Prescriptions WHERE id = :id")
     Prescription getPrescriptionById(int id);
     @Insert

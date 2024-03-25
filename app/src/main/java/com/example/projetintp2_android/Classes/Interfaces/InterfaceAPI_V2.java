@@ -62,8 +62,9 @@ public interface InterfaceAPI_V2 {
     Call<APIResponse> getPrescriptions(@Path("locale") String locale,
                                        @Header("Authorization") String token);
 
-    @GET("fr/prescriptions")
-    Call<ResponseBody> getPrescriptions2(@Header("Authorization") String token);
+    @GET("{locale}/prescriptions")
+    Call<ResponseBody> getPrescriptions2(@Path("locale") String locale,
+                                         @Header("Authorization") String token);
     @POST("{locale}/prescriptions")
     @FormUrlEncoded
     Call<APIResponse> postPrescriptions(@Path("locale") String locale,
