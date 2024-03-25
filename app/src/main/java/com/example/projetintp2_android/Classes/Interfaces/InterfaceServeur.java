@@ -1,6 +1,6 @@
 package com.example.projetintp2_android.Classes.Interfaces;
 
-import com.example.projetintp2_android.Classes.Objects.Prescriptions;
+import com.example.projetintp2_android.Classes.Objects.Prescription;
 import com.example.projetintp2_android.Classes.APIResponses.LoginResponse;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public interface InterfaceServeur {
 
 
     @GET("fr/prescriptions")
-    Call<List<Prescriptions>> getMedicaments();
+    Call<List<Prescription>> getMedicaments();
 
 
 }

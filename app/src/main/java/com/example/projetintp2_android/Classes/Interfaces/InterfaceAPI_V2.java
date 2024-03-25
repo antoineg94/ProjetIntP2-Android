@@ -1,10 +1,6 @@
 package com.example.projetintp2_android.Classes.Interfaces;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
-import com.example.projetintp2_android.Classes.Objects.Prescriptions;
-import com.google.gson.JsonObject;
-
-import java.util.List;
 
 
 import okhttp3.ResponseBody;
@@ -65,4 +61,7 @@ public interface InterfaceAPI_V2 {
     @GET("{locale}/prescriptions")
     Call<APIResponse> getPrescriptions(@Path("locale") String locale,
                                        @Header("Authorization") String token);
+
+    @GET("fr/prescriptions")
+    Call<ResponseBody> getPrescriptions2(@Header("Authorization") String token);
 }

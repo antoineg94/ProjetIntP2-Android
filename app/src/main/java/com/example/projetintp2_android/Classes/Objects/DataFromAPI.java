@@ -6,7 +6,7 @@ public class DataFromAPI {
 
     UserV2 user;
     String token;
-    List<Prescriptions> prescriptions;
+    List<Prescription> prescriptions;
     List<Medications> medications;
     List<Alerts> alerts;
     List<Logs> logs;
@@ -14,7 +14,7 @@ public class DataFromAPI {
     List<Devices> devices;
 
 
-    public DataFromAPI(UserV2 user, String token, List<Prescriptions> prescriptions, List<Medications> medications, List<Alerts> alerts, List<Logs> logs, List<Calendars> calendars, List<Devices> devices) {
+    public DataFromAPI(UserV2 user, String token, List<Prescription> prescriptions, List<Medications> medications, List<Alerts> alerts, List<Logs> logs, List<Calendars> calendars, List<Devices> devices) {
         this.user = user;
         this.token = token;
         this.prescriptions = prescriptions;
@@ -41,11 +41,11 @@ public class DataFromAPI {
         this.token = token;
     }
 
-    public List<Prescriptions> getPrescriptionsList() {
+    public List<Prescription> getPrescriptionsList() {
         return prescriptions;
     }
 
-    public void setPrescriptionsList(List<Prescriptions> prescriptionsList) {
+    public void setPrescriptionsList(List<Prescription> prescriptionsList) {
         this.prescriptions = prescriptionsList;
     }
 

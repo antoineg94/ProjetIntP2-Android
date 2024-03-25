@@ -6,12 +6,13 @@ import androidx.room.TypeConverters;
 
 import com.example.projetintp2_android.Classes.CustomTypeConverters;
 import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "Table_Medications")
 @TypeConverters(CustomTypeConverters.class)
 public class Medications {
 
     @SerializedName("id")
-            @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = false)
     private int id;
     @SerializedName("name")
     private String name;

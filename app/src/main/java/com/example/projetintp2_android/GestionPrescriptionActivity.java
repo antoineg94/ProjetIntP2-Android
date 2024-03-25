@@ -17,21 +17,20 @@ import android.widget.Toast;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
+import com.example.projetintp2_android.Classes.Objects.Prescription;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedications;
 import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
 import com.example.projetintp2_android.Classes.Databases.PrescriptionDB;
-import com.example.projetintp2_android.Classes.Objects.Prescriptions;
 import com.example.projetintp2_android.Classes.RetrofitInstance;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,7 +42,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     RecyclerView rvMedicaments;
     AdapterMedications adapter;
     FloatingActionButton btAdd;
-    List<Prescriptions> listePrescriptions;
+    List<Prescription> listePrescriptions;
     UserV2 user;
     String token,locale;
 
@@ -111,11 +110,12 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                    listePrescriptions = response.body().getData().getPrescriptionsList();
+                    Log.d("Liste de prescriptions", "Liste des prescriptions : " + response.body().getData().getPrescriptionsList().toString());
+                   /* listePrescriptions = response.body().getData().getPrescriptionsList();
                     Log.d("Prescriptions", "Liste des prescriptions : " + listePrescriptions.toString());
                     pdao.insertAllPrescriptions(listePrescriptions);
                     adapter = new AdapterMedications(listePrescriptions, GestionPrescriptionActivity.this);
-                    rvMedicaments.setAdapter(adapter);
+                    rvMedicaments.setAdapter(adapter);*/
 
             }
 
@@ -127,8 +127,10 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             }
         });
     }
+
+
     @Override
-    public void gestionClick(int position, Prescriptions prescriptions) {
+    public void gestionClick(int position, Prescription prescriptions) {
         Intent intent = new Intent(this, ZoomPrescriptionActivity.class);
         intent.putExtra("nom", prescriptions.getNameOfPrescription());
         intent.putExtra("dateP", prescriptions.getDateOfPrescription());

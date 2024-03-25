@@ -34,6 +34,11 @@ public class DataFromLogin extends  Data{
                 ", token='" + token + '\'' +
                 '}';
     }
-    
+
+    @Override
+    public Data getData() {
+        return this;
+    }
+
 
 }
