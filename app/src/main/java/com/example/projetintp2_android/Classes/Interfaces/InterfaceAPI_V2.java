@@ -61,6 +61,6 @@ public interface InterfaceAPI_V2 {
                                       @Field("passord") String password);
 
     @GET("{locale}/prescriptions")
-    Call<List<Prescriptions>> getPrescriptions(@Path("locale") String locale,
-                                               @Header("Authorization") String token);
+    Call<APIResponse> getPrescriptions(@Path("locale") String locale,
+                                       @Header("Authorization") String token);
 }

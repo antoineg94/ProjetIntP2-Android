@@ -15,14 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedications;
-import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
 import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
 import com.example.projetintp2_android.Classes.Databases.PrescriptionDB;
 import com.example.projetintp2_android.Classes.Objects.Prescriptions;
-import com.example.projetintp2_android.Classes.Retrofit;
+import com.example.projetintp2_android.Classes.RetrofitInstance;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -101,27 +101,33 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     }
 
     public void getMedicaments() {
-        InterfaceAPI_V2 serveur = Retrofit.getInstance().create(InterfaceAPI_V2.class);
-        Call<List<Prescriptions>> call = serveur.getPrescriptions(locale,token);
+        InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = serveur.getPrescriptions(locale,token);
+        Log.d("Locale", "Locale : " + locale);
+        Log.d("Token", "Token : " + token);
 
-        call.enqueue(new Callback<List<Prescriptions>>() {
+        call.enqueue(new Callback<APIResponse>() {
             @Override
-            public void onResponse(Call<List<Prescriptions>> call, Response<List<Prescriptions>> response) {
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 if (response.isSuccessful()) {
-                    listePrescriptions = response.body();
+                    APIResponse apiResponse  = response.body();
+                    listePrescriptions = apiResponse.getData().getPrescriptionsList();
+                    Log.d("Prescriptions", "Liste des prescriptions : " + listePrescriptions.toString());
+                    pdao.insertAllPrescriptions(listePrescriptions);
                     adapter = new AdapterMedications(listePrescriptions, GestionPrescriptionActivity.this);
                     rvMedicaments.setAdapter(adapter);
-                    pdao.insertAllPrescriptions(listePrescriptions);
 
                 } else {
-                    Toast.makeText(GestionPrescriptionActivity.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();
-                    Log.d("TAG", "Code d'erreur : " + response.code());
+                    APIResponse apiResponse = response.body();
+                    Toast.makeText(GestionPrescriptionActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("API_Error", "Code d'erreur : " + apiResponse.getStatus());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Prescriptions>> call, Throwable t) {
-                Toast.makeText(GestionPrescriptionActivity.this, "Erreur de connexion au serveur", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+
+                Toast.makeText(GestionPrescriptionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("TAG", "Erreur de connexion au serveur : " + t.getMessage());
             }
         });
