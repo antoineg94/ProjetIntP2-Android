@@ -49,7 +49,7 @@ public class LoginActivitytest extends AppCompatActivity  {
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
         textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
-       checkBoxRememberMe = findViewById(R.id.checkBoxRememberMe);
+
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +80,7 @@ public class LoginActivitytest extends AppCompatActivity  {
     protected void onStart()
     {
         super.onStart();
-        if(isChecked=checkBoxRememberMe.isChecked()) {
+
             if (SharedPrefManager.getInstance(this).isLoggedIn()) {
                 Intent intent = new Intent(LoginActivitytest.this, ProfileActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -89,7 +89,6 @@ public class LoginActivitytest extends AppCompatActivity  {
 
                 //if()
             }
-        }
     }
 
     // methode qui verifie la conxion
