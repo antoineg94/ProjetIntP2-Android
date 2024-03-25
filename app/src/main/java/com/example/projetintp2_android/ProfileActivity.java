@@ -76,7 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
                 ivEnregistrerNom.setVisibility(View.VISIBLE);
                 ivSupNom.setVisibility(View.VISIBLE);
 
-
+                UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
                 etNom.setText(user.getName());
                 //    etCourriel.setText(user.getEmail());
                 //    etMotdepasse.setText("ppppppppp");
@@ -90,19 +90,41 @@ public class ProfileActivity extends AppCompatActivity {
                             etNom.setError("Entrez votre nom complet");
                             valide = false;
                         }
+
+
                         if (valide) {
-                            InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                            InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
 
-                            Call<ResponseBody> call = serveur.updateName(Nom);
+                            Log.d("token", "token" + token);
+                            Log.d("locale", "locale" + locale);
+                            Call<APIResponse> call = serveur.updateName(locale,"Bearer " + token,Nom);
 
-                            call.enqueue(new Callback<ResponseBody>() {
+                            call.enqueue(new Callback<APIResponse>() {
                                 @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    ResponseBody resultat = response.body();
+                                public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                                    APIResponse resultat = response.body();
+                                    Log.d("updateName", resultat.getMessage());
+                                    if (resultat.getStatus().equals("success")) {
+                                        SharedPrefManager.getInstance(ProfileActivity.this).updateName(Nom);
+                                        UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
+                                        //  user.getName();
+                                        tvNomComplet.setText(user.getName());
+                                        tvNomComplet.setVisibility(View.VISIBLE);
+                                        nom.setVisibility(View.VISIBLE);
+                                        ivModifNom.setVisibility(View.VISIBLE);
+                                        // rend visible ce qui est cache
+                                        etNom.setVisibility(View.INVISIBLE);
+                                        ivEnregistrerNom.setVisibility(View.INVISIBLE);
+                                        ivSupNom.setVisibility(View.INVISIBLE);
+
+                                    } else {
+                                        alertFail(resultat.getMessage());
+                                    }
+
                                 }
 
                                 @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                public void onFailure(Call<APIResponse> call, Throwable t) {
                                     Toast.makeText(ProfileActivity.this, "une erreur", Toast.LENGTH_LONG).show();
 
                                 }
@@ -145,6 +167,7 @@ public class ProfileActivity extends AppCompatActivity {
                 ivSaveCourriel.setVisibility(View.VISIBLE);
                 ivSupCourriel.setVisibility(View.VISIBLE);
 
+                UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
                 etCourriel.setText(user.getEmail());
 
 
@@ -161,13 +184,33 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                         if (valide) {
                             InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+                            // Users  request = new Users( name, courriel,password);
+                            Log.d("token", "token" + token);
+                            Log.d("locale", "locale" + locale);
+                            Call<APIResponse> call = serveur.updateEmail(locale, "Bearer " + token,courriel);
 
-                            Call<APIResponse> call = serveur.updateEmail(locale, token, courriel);
 
                             call.enqueue(new Callback<APIResponse>() {
                                 @Override
                                 public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                                     APIResponse resultat = response.body();
+                                    Log.d("updateEmail", resultat.getMessage());
+                                    if (resultat.getStatus().equals("success")) {
+                                        SharedPrefManager.getInstance(ProfileActivity.this).updateEmail(courriel);
+                                        UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
+                                        //  user.getName();
+                                        tvCourriel.setVisibility(View.VISIBLE);
+                                        Courriel.setVisibility(View.VISIBLE);
+                                        ivModifCourriel.setVisibility(View.VISIBLE);
+
+                                        // rend visible ce qui est cache
+                                        etCourriel.setVisibility(View.INVISIBLE);
+                                        ivSaveCourriel.setVisibility(View.INVISIBLE);
+                                        ivSupCourriel.setVisibility(View.INVISIBLE);
+
+                                    } else {
+                                        alertFail(resultat.getMessage());
+                                    }
                                 }
 
                                 @Override
@@ -235,24 +278,45 @@ public class ProfileActivity extends AppCompatActivity {
                             etConfirmMotPasse.setError("confirmez votre mot de passe");
                             valide = false;
                         }
-                        if (confirmMotPasse.equals(motdepasse)) {
-                            etNouveauMotPasse.setError("les mot de passe doivet etre identiques");
+                        if (!confirmMotPasse.equals(motdepasse)) {
+
                             etConfirmMotPasse.setError("les mots de passe doivent etre identiques");
                         }
                         if (valide) {
                             // si valide ici
-                            InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                            InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+                            Log.d("token", "token" + token);
+                            Log.d("locale", "locale" + locale);
 
-                            Call<ResponseBody> call = serveur.updatePassword(motdepasse);
+                            Call<APIResponse> call = serveur.updatePassword(locale,"Bearer " + token,ancienMotPasse,motdepasse,confirmMotPasse);
 
-                            call.enqueue(new Callback<ResponseBody>() {
+                            call.enqueue(new Callback<APIResponse>() {
                                 @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    ResponseBody resultat = response.body();
+                                public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                                    APIResponse resultat = response.body();
+                                    Log.d("updatePassword", resultat.getMessage());
+                                    if (resultat.getStatus().equals("success")) {
+                                        SharedPrefManager.getInstance(ProfileActivity.this).updateEmail(courriel);
+                                        UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
+                                        //  user.getName();
+                                        tvPassword.setVisibility(View.VISIBLE);
+                                        // Courriel.setVisibility(View.INVISIBLE);
+                                        ivModifMotPasse.setVisibility(View.VISIBLE);
+
+                                        // rend visible ce qui est cache
+                                        etAncienMotPasse.setVisibility(View.INVISIBLE);
+                                        etNouveauMotPasse.setVisibility(View.INVISIBLE);
+                                        etConfirmMotPasse.setVisibility(View.INVISIBLE);
+                                        ivAnnulerPassword.setVisibility(View.INVISIBLE);
+                                        ivSavePassword.setVisibility(View.INVISIBLE);
+
+                                    } else {
+                                        alertFail(resultat.getMessage());
+                                    }
                                 }
 
                                 @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                public void onFailure(Call<APIResponse> call, Throwable t) {
                                     Toast.makeText(ProfileActivity.this, "une erreur", Toast.LENGTH_LONG).show();
 
                                 }

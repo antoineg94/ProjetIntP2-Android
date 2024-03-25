@@ -35,6 +35,7 @@ public class LoginActivitytest extends AppCompatActivity  {
     private Button buttonLogin;
     private TextView textViewForgotPassword, textViewCreateAccount;
     boolean isChecked;
+    //private FirebaseAuth auth;
 
     private String email,password;
 

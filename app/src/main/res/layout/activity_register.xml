@@ -69,25 +69,6 @@
                 android:padding="10dp"
                 android:textSize="24sp" />
 
-            <Button
-                android:id="@+id/btChoixImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/etConfirmationMotDePasse"
-                android:layout_marginTop="16dp"
-                android:text="photo de profil"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/ivImageProfil"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_below="@id/btChoixImage"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_profilee_image"
-                app:srcCompat="@drawable/default_profilee_image" />
         </RelativeLayout>
     </ScrollView>
 
