@@ -107,28 +107,23 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         Log.d("Token", "Token : " + token);
 
         call.enqueue(new Callback<APIResponse>() {
+            APIResponse apiResponse = new APIResponse(null,null,null,null);
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                if (response.isSuccessful()) {
-                    APIResponse apiResponse  = response.body();
+                    apiResponse  = response.body();
                     listePrescriptions = apiResponse.getData().getPrescriptionsList();
                     Log.d("Prescriptions", "Liste des prescriptions : " + listePrescriptions.toString());
                     pdao.insertAllPrescriptions(listePrescriptions);
                     adapter = new AdapterMedications(listePrescriptions, GestionPrescriptionActivity.this);
                     rvMedicaments.setAdapter(adapter);
 
-                } else {
-                    APIResponse apiResponse = response.body();
-                    Toast.makeText(GestionPrescriptionActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("API_Error", "Code d'erreur : " + apiResponse.getStatus());
-                }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-
-                Toast.makeText(GestionPrescriptionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("TAG", "Erreur de connexion au serveur : " + t.getMessage());
+                
+                Toast.makeText(GestionPrescriptionActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                Log.e("API_ERROR", "Erreur de connexion au serveur : " + t.toString());
             }
         });
     }

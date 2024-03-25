@@ -372,7 +372,7 @@ public class ProfileActivity extends AppCompatActivity {
         Call<APIResponse> call = serveur.logout(locale, "Bearer " + token);
 
         call.enqueue(new Callback<APIResponse>() {
-            APIResponse logoutResponse = new APIResponse(null, null, null);
+            APIResponse logoutResponse = new APIResponse(null, null, null,null);
 
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {

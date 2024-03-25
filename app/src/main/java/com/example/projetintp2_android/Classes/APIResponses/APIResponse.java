@@ -5,16 +5,17 @@ import com.example.projetintp2_android.Classes.Objects.UserV2;
 
 public class APIResponse {
 
-    String status, message;
+    String status, message, code;
     DataFromAPI data;
 
     UserV2 user;
 
 
-    public APIResponse(String status, String message, DataFromAPI data) {
+    public APIResponse(String status, String message, DataFromAPI data, String code) {
         this.status = status;
         this.message = message;
         this.data = data;
+        this.code = code;
     }
 
     public String getStatus() {
@@ -29,11 +30,16 @@ public class APIResponse {
         return data;
     }
 
+    public String getCode() {
+        return code;
+    }
+
     public String toString() {
         return "APILoginResponse{" +
                 "status='" + status + '\'' +
                 ", message='" + message + '\'' +
-                ", data=" + data +
+                ", data=" + data + '\'' +
+                ", code='" + code + '\'' +
                 '}';
     }
 
