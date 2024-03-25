@@ -64,4 +64,16 @@ public interface InterfaceAPI_V2 {
 
     @GET("fr/prescriptions")
     Call<ResponseBody> getPrescriptions2(@Header("Authorization") String token);
+    @POST("{locale}/prescriptions")
+    @FormUrlEncoded
+    Call<APIResponse> postPrescriptions(@Path("locale") String locale,
+                                        @Header("Authorization") String token,
+                                        @Field("name") String name,
+                                        @Field("date") String date,
+                                        @Field("start") String start,
+                                        @Field("duration") int duration,
+                                        @Field("firstIntakeHour") String firstIntakeHour,
+                                        @Field("frequencyBetweenDosesInHours") int frequencyBetweenDosesInHours,
+                                        @Field("frequencyOfIntakeInDays") int frequencyOfIntakeInDays,
+                                        @Field("frequencyPerDay") int frequencyPerDay);
 }

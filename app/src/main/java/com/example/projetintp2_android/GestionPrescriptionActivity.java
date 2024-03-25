@@ -101,32 +101,45 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         return super.onOptionsItemSelected(item);
     }
 
-    public void getMedicaments() {
-        InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = serveur.getPrescriptions(locale,token);
-        Log.d("Locale", "Locale : " + locale);
-        Log.d("Token", "Token : " + token);
-
+   private void getPrescriptions(){
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.getPrescriptions(locale, token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                    Log.d("Liste de prescriptions", "Liste des prescriptions : " + response.body().getData().getPrescriptionsList().toString());
-                   /* listePrescriptions = response.body().getData().getPrescriptionsList();
-                    Log.d("Prescriptions", "Liste des prescriptions : " + listePrescriptions.toString());
-                    pdao.insertAllPrescriptions(listePrescriptions);
-                    adapter = new AdapterMedications(listePrescriptions, GestionPrescriptionActivity.this);
-                    rvMedicaments.setAdapter(adapter);*/
-
+                if(response.body().getData().getPrescriptionsList()!= null){
+                    listePrescriptions = response.body().getData().getPrescriptionsList();
+                    adapter = new AdapterMedications( listePrescriptions,GestionPrescriptionActivity.this);
+                    rvMedicaments.setAdapter(adapter);
+                }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-
-                Toast.makeText(GestionPrescriptionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("TAG", "Erreur de connexion au serveur : " + t.getMessage());
+                Log.e("Erreur", t.getMessage());
             }
         });
     }
+
+    private void getMedicaments(){
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.getPrescriptions(locale, token);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if(response.body().getData().getPrescriptionsList() != null){
+                    listePrescriptions = response.body().getData().getPrescriptionsList();
+                    adapter = new AdapterMedications( listePrescriptions,GestionPrescriptionActivity.this);
+                    rvMedicaments.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("Erreur", t.getMessage());
+            }
+        });
+   }
 
 
     @Override
