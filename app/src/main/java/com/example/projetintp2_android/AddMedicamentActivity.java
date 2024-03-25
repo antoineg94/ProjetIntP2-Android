@@ -36,7 +36,7 @@ import java.util.Locale;
 public class AddMedicamentActivity extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
-    EditText edDateDebut, edDateFin;
+    EditText edDateDebut, edDateFin, edNom, edDate;
     CheckBox chQuotidien, chHebdomadaire;
     Context context;
     TextView tvJours;
@@ -52,9 +52,11 @@ public class AddMedicamentActivity extends AppCompatActivity {
 
         edDateDebut = findViewById(R.id.edDateDebut);
         edDateFin = findViewById(R.id.edDateFin);
+        edDate = findViewById(R.id.edDate);
+        edNom = findViewById(R.id.edNom);
         chQuotidien = findViewById(R.id.chQuotidien);
-        chHebdomadaire = findViewById(R.id.chHebdomadaire);
-        tvJours = findViewById(R.id.tvJours);
+        //chHebdomadaire = findViewById(R.id.chHebdomadaire);
+        //tvJours = findViewById(R.id.tvJours);
         btAjoutM = findViewById(R.id.btAjoutM);
         context = this;
 

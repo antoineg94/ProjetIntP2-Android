@@ -19,9 +19,11 @@
         <item>December</item>
     </string-array>
 
+    <string name="ajNom">Prescription name</string>
     <string name="ajSearch">Select a medication</string>
     <string name="ajDD">Select a start date</string>
-    <string name="ajDF">Select an end date</string>
+    <string name="ajD">Prescription start date</string>
+    <string name="ajDF">Prescription duration (in days)</string>
     <string name="ajInter">Intervals between doses (in hours)</string>
     <string name="ajFr">Frequency</string>
 
