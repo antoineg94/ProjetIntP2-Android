@@ -1,18 +1,16 @@
 package com.example.projetintp2_android.Classes.APIResponses;
 
-import android.util.JsonReader;
-
+import com.example.projetintp2_android.Classes.DataClass.Data;
 import com.example.projetintp2_android.Classes.Objects.DataFromAPI;
-import com.example.projetintp2_android.Classes.Objects.UserV2;
 
-public class APIResponse {
+public class APIResponseV2 {
 
     String status, message, code;
-    DataFromAPI data;
+    Data data;
 
 
 
-    public APIResponse(String status, String message, DataFromAPI data, String code) {
+    public APIResponseV2(String status, String message, Data data, String code) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -28,7 +26,7 @@ public class APIResponse {
         return message;
     }
 
-    public DataFromAPI getData() {
+    public Data getData() {
         return data;
     }
 

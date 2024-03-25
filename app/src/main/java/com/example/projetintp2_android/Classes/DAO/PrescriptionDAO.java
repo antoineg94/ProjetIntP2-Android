@@ -6,26 +6,26 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.projetintp2_android.Classes.Objects.Prescriptions;
+import com.example.projetintp2_android.Classes.Objects.Prescription;
 
 import java.util.List;
 
 @Dao
 public interface PrescriptionDAO {
 
-    @Query("SELECT * FROM Table_Prescription")
-    List<Prescriptions> getAfficherP();
-    @Query("SELECT * FROM Table_Prescription WHERE id = :id")
-    Prescriptions getPrescriptionById(int id);
+    @Query("SELECT * FROM Table_Prescriptions")
+    List<Prescription> getAllPrescriptions();
+    @Query("SELECT * FROM Table_Prescriptions WHERE id = :id")
+    Prescription getPrescriptionById(int id);
     @Insert
-    void insertPrescription(Prescriptions prescription);
+    void insertPrescription(Prescription prescription);
     @Insert
-    void insertAllPrescriptions(List<Prescriptions> prescriptions);
+    void insertAllPrescriptions(List<Prescription> prescriptions);
     @Update
-    void updatePrescription(Prescriptions prescription);
+    void updatePrescription(Prescription prescription);
 
     @Delete
-    void deletePrescription(Prescriptions prescription);
+    void deletePrescription(Prescription prescription);
 
 
 }

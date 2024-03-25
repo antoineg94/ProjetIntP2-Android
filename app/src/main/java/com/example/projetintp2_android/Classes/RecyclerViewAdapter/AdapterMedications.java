@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projetintp2_android.Classes.Objects.Prescriptions;
+import com.example.projetintp2_android.Classes.Objects.Prescription;
 import com.example.projetintp2_android.GestionPrescriptionActivity;
 import com.example.projetintp2_android.R;
 
@@ -18,14 +18,14 @@ public class AdapterMedications extends RecyclerView.Adapter<AdapterMedications.
 
     public interface InterfacePrescription
     {
-        public void gestionClick(int position, Prescriptions prescriptions);
+        public void gestionClick(int position, Prescription prescriptions);
     }
 
     InterfacePrescription interfacePrescription;
     private GestionPrescriptionActivity gestionMedicament;
-    private List<Prescriptions> liste;
+    private List<Prescription> liste;
 
-    public AdapterMedications(List<Prescriptions> liste, InterfacePrescription interfacePrescription) {
+    public AdapterMedications(List<Prescription> liste, InterfacePrescription interfacePrescription) {
         this.liste = liste;
         this.interfacePrescription = interfacePrescription;
     }
@@ -40,7 +40,7 @@ public class AdapterMedications extends RecyclerView.Adapter<AdapterMedications.
 
     @Override
     public void onBindViewHolder(@NonNull MonViewHolder holder, int position) {
-        Prescriptions prescription = liste.get(position);
+        Prescription prescription = liste.get(position);
         holder.tvNom.setText(prescription.getNameOfPrescription());
     }
 

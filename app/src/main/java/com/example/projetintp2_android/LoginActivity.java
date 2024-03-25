@@ -25,15 +25,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class LoginActivity extends AppCompatActivity  {
+public class LoginActivity extends AppCompatActivity {
 
+    boolean isChecked;
     private EditText editTextEmail, editTextPassword;
-    private CheckBox checkBoxRememberMe ;
+    private CheckBox checkBoxRememberMe;
     private Button buttonLogin;
     private TextView textViewForgotPassword, textViewCreateAccount;
-    boolean isChecked;
-
-    private String email,password;
+    private String email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class LoginActivity extends AppCompatActivity  {
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
         textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
-       checkBoxRememberMe = findViewById(R.id.checkBoxRememberMe);
+        checkBoxRememberMe = findViewById(R.id.checkBoxRememberMe);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,10 +72,10 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
     }
-    protected void onStart()
-    {
+
+    protected void onStart() {
         super.onStart();
-        if(isChecked=checkBoxRememberMe.isChecked()) {
+        if (isChecked = checkBoxRememberMe.isChecked()) {
             if (SharedPrefManager.getInstance(this).isLoggedIn()) {
                 Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -90,16 +89,15 @@ public class LoginActivity extends AppCompatActivity  {
 
     // methode qui verifie la conxion
 
-    private void checkLogin()
-        {
-            email=editTextEmail.getText().toString().trim();
-            password=editTextPassword.getText().toString().trim();
-            if(email.isEmpty()| password.isEmpty()){
-                alertFail("email et mot de passe requis.");
-            }
-            else {
-                sendLogin();
-            }
+    private void checkLogin() {
+        sendLogin();
+  /*      email = editTextEmail.getText().toString().trim();
+        password = editTextPassword.getText().toString().trim();
+        if (email.isEmpty() | password.isEmpty()) {
+            alertFail("email et mot de passe requis.");
+        } else {
+            sendLogin();
+        }*/
 
     }
 
@@ -109,8 +107,9 @@ public class LoginActivity extends AppCompatActivity  {
 
         // Users  request = new Users( name, courriel,password);
         String locale = "en";
-
-        Call<APIResponse> call = serveur.login(locale,email,password);
+        email = "123@123";
+        password = "123";
+        Call<APIResponse> call = serveur.login(locale, email, password);
 
         call.enqueue(new Callback<APIResponse>() {
 
@@ -118,24 +117,23 @@ public class LoginActivity extends AppCompatActivity  {
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 APIResponse loginResponse = response.body();
 
-                try{
+                try {
 
                     UserV2 user = loginResponse.getData().getUser();
                     String token = loginResponse.getData().getToken();
 
-                    Log.d("user",user.toString());
-                    Log.d("token",token.toString());
+                    Log.d("user", user.toString());
+                    Log.d("token", token);
                     SharedPrefManager.getInstance(LoginActivity.this).SaveUserV2(user);
                     SharedPrefManager.getInstance(LoginActivity.this).saveToken(token);
-                    Intent intent = new Intent(LoginActivity.this,GestionPrescriptionActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    Intent intent = new Intent(LoginActivity.this, GestionPrescriptionActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 
                     //Changer l'intent pour aller vers la page d'accueil(prescriptions)
 
 
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -144,7 +142,7 @@ public class LoginActivity extends AppCompatActivity  {
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                Toast.makeText(LoginActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
 
 
             }
@@ -152,7 +150,7 @@ public class LoginActivity extends AppCompatActivity  {
         });
 
 
-       // Toast.makeText(this,"Envoyé",Toast.LENGTH_LONG).show();
+        // Toast.makeText(this,"Envoyé",Toast.LENGTH_LONG).show();
     }
 
     private void alertFail(String s) {

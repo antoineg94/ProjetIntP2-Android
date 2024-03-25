@@ -15,10 +15,9 @@ import com.example.projetintp2_android.Classes.Objects.Calendars;
 import com.example.projetintp2_android.Classes.Objects.Devices;
 import com.example.projetintp2_android.Classes.Objects.Logs;
 import com.example.projetintp2_android.Classes.Objects.Medications;
-import com.example.projetintp2_android.Classes.Objects.Prescriptions;
-import com.example.projetintp2_android.Classes.Objects.Devices;
+import com.example.projetintp2_android.Classes.Objects.Prescription;
 
-@Database(entities = { Medications.class, Prescriptions.class, Devices.class, Logs.class, Calendars.class, Alerts.class  }, version = 1)
+@Database(entities = { Medications.class, Prescription.class, Devices.class, Logs.class, Calendars.class, Alerts.class  }, version = 1)
 @TypeConverters({CustomTypeConverters.class})
 public abstract class MainDB extends androidx.room.RoomDatabase  {
 

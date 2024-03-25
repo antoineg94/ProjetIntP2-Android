@@ -22,9 +22,9 @@ public class Calendars {
             @SerializedName("id")
     int id;
     @SerializedName("dateOfIntake")
-    Date dateOfIntake;
+    String dateOfIntake;
     @SerializedName("timeOfIntake")
-    LocalTime timeOfIntake;
+    String timeOfIntake;
     @SerializedName("active")
     Boolean active;
     @SerializedName("prescription_id")
@@ -34,7 +34,7 @@ public class Calendars {
     @SerializedName("updated_at")
     String updated_at;
 
-    public Calendars(int id, Date dateOfIntake, LocalTime timeOfIntake, Boolean active, int prescription_id, String created_at, String updated_at) {
+    public Calendars(int id, String dateOfIntake, String timeOfIntake, Boolean active, int prescription_id, String created_at, String updated_at) {
         this.id = id;
         this.dateOfIntake = dateOfIntake;
         this.timeOfIntake = timeOfIntake;
@@ -52,19 +52,19 @@ public class Calendars {
         this.id = id;
     }
 
-    public Date getDateOfIntake() {
+    public String getDateOfIntake() {
         return dateOfIntake;
     }
 
-    public void setDateOfIntake(Date dateOfIntake) {
+    public void setDateOfIntake(String dateOfIntake) {
         this.dateOfIntake = dateOfIntake;
     }
 
-    public LocalTime getTimeOfIntake() {
+    public String getTimeOfIntake() {
         return timeOfIntake;
     }
 
-    public void setTimeOfIntake(LocalTime timeOfIntake) {
+    public void setTimeOfIntake(String timeOfIntake) {
         this.timeOfIntake = timeOfIntake;
     }
 

@@ -16,12 +16,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
+import com.example.projetintp2_android.Classes.Databases.MainDB;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
+import com.example.projetintp2_android.Classes.Objects.Prescription;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedications;
 import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
-import com.example.projetintp2_android.Classes.Databases.PrescriptionDB;
-import com.example.projetintp2_android.Classes.Objects.Prescriptions;
 import com.example.projetintp2_android.Classes.RetrofitInstance;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -34,16 +34,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GestionPrescriptionActivity extends AppCompatActivity implements AdapterMedications.InterfacePrescription{
+public class GestionPrescriptionActivity extends AppCompatActivity implements AdapterMedications.InterfacePrescription {
 
-    PrescriptionDB pdb;
+    MainDB mainDB;
     PrescriptionDAO pdao;
-    RecyclerView rvMedicaments;
+    RecyclerView rvPrescriptions;
     AdapterMedications adapter;
     FloatingActionButton btAdd;
-    List<Prescriptions> listePrescriptions;
+    List<Prescription> listePrescriptions;
     UserV2 user;
-    String token,locale;
+    String token, locale;
 
 
     // Formatter for dates
@@ -54,19 +54,13 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_medicament);
 
-        pdb = Room.databaseBuilder(this, PrescriptionDB.class, "PrescriptionsDB")
-                .allowMainThreadQueries()
-                .build();
+        createLocalDB();
 
-        pdao = pdb.pdao();
         LoadUserProfil();
+
         locale = "fr";
         btAdd = findViewById(R.id.btAdd);
-
-        rvMedicaments = findViewById(R.id.rvListeMedicaments);
-        rvMedicaments.setHasFixedSize(true);
-        rvMedicaments.setLayoutManager(new LinearLayoutManager(this));
-        listePrescriptions = new ArrayList<>();
+        rvPrescriptions = findViewById(R.id.rvListeMedicaments);
 
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +70,9 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             }
         });
 
-        getMedicaments();
+        getPrescriptions();
+
+
     }
 
     @Override
@@ -96,39 +92,51 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             Intent intent = new Intent(this, GestionDispositifsActivity.class);
             startActivity(intent);
             return true;
+        } else if (item.getItemId() == R.id.itProfil) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+            return true;
+
+        } else if (item.getItemId() == R.id.itDeconnexion) {
+            SharedPrefManager.getInstance(this).clear();
+            logout();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void getMedicaments() {
-        InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = serveur.getPrescriptions(locale,token);
-        Log.d("Locale", "Locale : " + locale);
-        Log.d("Token", "Token : " + token);
+    private void createLocalDB() {
+        mainDB = Room.databaseBuilder(this, MainDB.class, "PrescriptionsDB")
+                .allowMainThreadQueries()
+                .build();
+        pdao = mainDB.pdao();
+    }
 
+    private void getPrescriptions() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.getPrescriptions(locale, "Bearer " + token);
         call.enqueue(new Callback<APIResponse>() {
-            APIResponse apiResponse = new APIResponse(null,null,null,null);
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                    apiResponse  = response.body();
-                    listePrescriptions = apiResponse.getData().getPrescriptionsList();
-                    Log.d("Prescriptions", "Liste des prescriptions : " + listePrescriptions.toString());
-                    pdao.insertAllPrescriptions(listePrescriptions);
-                    adapter = new AdapterMedications(listePrescriptions, GestionPrescriptionActivity.this);
-                    rvMedicaments.setAdapter(adapter);
+                if (response.body().getData().getPrescriptionsList() != null) {
+                    listePrescriptions = response.body().getData().getPrescriptionsList();
+                    LoadPrescriptionsToLocalDB(listePrescriptions);
+                    getApdaterPrescription();
+                    Log.d("Prescriptions", listePrescriptions.toString());
 
+                }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                
-                Toast.makeText(GestionPrescriptionActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
-                Log.e("API_ERROR", "Erreur de connexion au serveur : " + t.toString());
+                Log.e("Erreur", t.getMessage());
             }
         });
     }
+
+
     @Override
-    public void gestionClick(int position, Prescriptions prescriptions) {
+    public void gestionClick(int position, Prescription prescriptions) {
         Intent intent = new Intent(this, ZoomPrescriptionActivity.class);
         intent.putExtra("nom", prescriptions.getNameOfPrescription());
         intent.putExtra("dateP", prescriptions.getDateOfPrescription());
@@ -141,8 +149,48 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         startActivity(intent);
     }
 
-    private  void LoadUserProfil(){
+    private void LoadUserProfil() {
         token = SharedPrefManager.getInstance(this).getToken();
+    }
 
+    private void LoadPrescriptionsToLocalDB(List<Prescription> list) {
+        try {
+            pdao.insertAllPrescriptions(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void setAdapterPrescription(AdapterMedications adapter) {
+        rvPrescriptions.setAdapter(adapter);
+        rvPrescriptions.setHasFixedSize(true);
+        rvPrescriptions.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void getApdaterPrescription() {
+        List<Prescription> list = pdao.getAllPrescriptions();
+        adapter = new AdapterMedications(list, this);
+        setAdapterPrescription(adapter);
+    }
+    private void logout() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.logout(locale, "Bearer " + token);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if (response.body().getStatus().equals("success")) {
+                    SharedPrefManager.getInstance(GestionPrescriptionActivity.this).clear();
+                    Intent intent = new Intent(GestionPrescriptionActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("Erreur", t.getMessage());
+            }
+        });
     }
 }
