@@ -1,7 +1,9 @@
 package com.example.projetintp2_android.Classes.Databases;
 
 import androidx.room.Database;
+import androidx.room.TypeConverters;
 
+import com.example.projetintp2_android.Classes.CustomTypeConverters;
 import com.example.projetintp2_android.Classes.DAO.AlertDAO;
 import com.example.projetintp2_android.Classes.DAO.CalendarDAO;
 import com.example.projetintp2_android.Classes.DAO.DeviceDAO;
@@ -17,6 +19,7 @@ import com.example.projetintp2_android.Classes.Objects.Prescriptions;
 import com.example.projetintp2_android.Classes.Objects.Devices;
 
 @Database(entities = { Medications.class, Prescriptions.class, Devices.class, Logs.class, Calendars.class, Alerts.class  }, version = 1)
+@TypeConverters({CustomTypeConverters.class})
 public abstract class MainDB extends androidx.room.RoomDatabase  {
 
     public abstract MedicationDAO mdao();

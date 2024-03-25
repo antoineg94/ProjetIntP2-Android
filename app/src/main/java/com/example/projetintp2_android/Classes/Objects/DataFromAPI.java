@@ -10,14 +10,19 @@ public class DataFromAPI {
     List<Medications> medicationsList;
     List<Alerts> alertsList;
     List<Logs> logsList;
+    List<Calendars> calendarsList;
+    List<Devices> devicesList;
 
-    public DataFromAPI(UserV2 user, String token, List<Prescriptions> prescriptionsList, List<Medications> medicationsList, List<Alerts> alertsList, List<Logs> logsList) {
+
+    public DataFromAPI(UserV2 user, String token, List<Prescriptions> prescriptionsList, List<Medications> medicationsList, List<Alerts> alertsList, List<Logs> logsList, List<Calendars> calendarsList, List<Devices> devicesList) {
         this.user = user;
         this.token = token;
         this.prescriptionsList = prescriptionsList;
         this.medicationsList = medicationsList;
         this.alertsList = alertsList;
         this.logsList = logsList;
+        this.calendarsList = calendarsList;
+        this.devicesList = devicesList;
     }
 
     public UserV2 getUser() {

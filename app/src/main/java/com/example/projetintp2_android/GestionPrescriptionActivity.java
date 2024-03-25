@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
+import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedications;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
 import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
@@ -40,6 +42,9 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     AdapterMedications adapter;
     FloatingActionButton btAdd;
     List<Prescriptions> listePrescriptions;
+    UserV2 user;
+    String token,locale;
+
 
     // Formatter for dates
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -54,7 +59,8 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                 .build();
 
         pdao = pdb.pdao();
-
+        LoadUserProfil();
+        locale = "fr";
         btAdd = findViewById(R.id.btAdd);
 
         rvMedicaments = findViewById(R.id.rvListeMedicaments);
@@ -95,8 +101,8 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     }
 
     public void getMedicaments() {
-        InterfaceServeur serveur = Retrofit.getInstance().create(InterfaceServeur.class);
-        Call<List<Prescriptions>> call = serveur.getMedicaments();
+        InterfaceAPI_V2 serveur = Retrofit.getInstance().create(InterfaceAPI_V2.class);
+        Call<List<Prescriptions>> call = serveur.getPrescriptions(locale,token);
 
         call.enqueue(new Callback<List<Prescriptions>>() {
             @Override
@@ -105,6 +111,8 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     listePrescriptions = response.body();
                     adapter = new AdapterMedications(listePrescriptions, GestionPrescriptionActivity.this);
                     rvMedicaments.setAdapter(adapter);
+                    pdao.insertAllPrescriptions(listePrescriptions);
+
                 } else {
                     Toast.makeText(GestionPrescriptionActivity.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();
                     Log.d("TAG", "Code d'erreur : " + response.code());
@@ -130,5 +138,10 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         intent.putExtra("fJours", prescriptions.getFrequencyOfIntakeInDays());
         intent.putExtra("fParJours", prescriptions.getFrequencyPerDay());
         startActivity(intent);
+    }
+
+    private  void LoadUserProfil(){
+        token = SharedPrefManager.getInstance(this).getToken();
+
     }
 }
