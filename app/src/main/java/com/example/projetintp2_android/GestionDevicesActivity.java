@@ -118,6 +118,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
                     Log.d("Device list", list.toString());
                 } catch (Exception e) {
                     Log.e("Erreur", e.getMessage());
+                    Toast.makeText(GestionDevicesActivity.this, "Erreur lors du chargement locale des informations", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -157,6 +158,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
                     getDevicesFromLocalDB();
                 } catch (Exception e) {
                     Log.e("addDeviceToLocalDB", e.getMessage());
+                    Toast.makeText(GestionDevicesActivity.this, "Erreur lors du chargement locale des informations", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -196,10 +198,16 @@ public class GestionDevicesActivity extends AppCompatActivity {
             etAsssociatedPatientFullName.setError("Le nom du patient associé doit contenir au maximum 50 caractères");
             return;
         }
+        if(etAsssociatedPatientFullName.getText().toString().matches(".*[1234567890/*!@#$%^&*()_+|}{:?><,./;].*")){
+            etAsssociatedPatientFullName.setError("Le nom du patient associé ne doit pas contenir de caractères spéciaux ou de chiffres");
+            return;
+        }
 
         createDevice();
 
     }
+
+
 
     private void createDevice() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
@@ -239,6 +247,8 @@ public class GestionDevicesActivity extends AppCompatActivity {
     private void resetEditText() {
         etNoSerie.setText("");
         etAsssociatedPatientFullName.setText("");
+        etNoSerie.setError(null);
+        etAsssociatedPatientFullName.setError(null);
     }
 
 
@@ -260,6 +270,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 Log.e("logout", t.getMessage());
+                Toast.makeText(GestionDevicesActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

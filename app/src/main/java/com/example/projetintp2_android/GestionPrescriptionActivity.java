@@ -449,12 +449,16 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
-
+                else {
+                    Log.e("logout", response.body().getMessage());
+                    Toast.makeText(GestionPrescriptionActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                Log.e("Erreur", t.getMessage());
+                Log.e("logout", t.getMessage());
+                Toast.makeText(GestionPrescriptionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
