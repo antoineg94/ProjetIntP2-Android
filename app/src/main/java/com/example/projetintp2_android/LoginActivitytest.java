@@ -1,5 +1,6 @@
 package com.example.projetintp2_android;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -62,6 +63,8 @@ public class LoginActivitytest extends AppCompatActivity  {
         textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(LoginActivitytest.this, ResetPasswordActivity.class);
+                startActivity(intent);
                 // Redirection vers la page de réinitialisation du mot de passe
             }
         });
@@ -80,7 +83,7 @@ public class LoginActivitytest extends AppCompatActivity  {
     protected void onStart()
     {
         super.onStart();
-
+/*
             if (SharedPrefManager.getInstance(this).isLoggedIn()) {
                 Intent intent = new Intent(LoginActivitytest.this, ProfileActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -88,7 +91,7 @@ public class LoginActivitytest extends AppCompatActivity  {
 
 
                 //if()
-            }
+            }*/
     }
 
     // methode qui verifie la conxion
@@ -97,8 +100,10 @@ public class LoginActivitytest extends AppCompatActivity  {
         {
             email=editTextEmail.getText().toString().trim();
             password=editTextPassword.getText().toString().trim();
+            boolean valide = true;
             if(email.isEmpty()| password.isEmpty()){
                 alertFail("email et mot de passe requis.");
+                valide = false;
             }
             else {
                 sendLogin();
@@ -114,6 +119,7 @@ public class LoginActivitytest extends AppCompatActivity  {
         String locale = "en";
 
         Call<APIResponse> call = serveur.login(locale,email,password);
+
 
         call.enqueue(new Callback<APIResponse>() {
 
@@ -147,7 +153,8 @@ public class LoginActivitytest extends AppCompatActivity  {
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                Toast.makeText(LoginActivitytest.this,t.getMessage(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivitytest.this,t.getMessage(),Toast.LENGTH_LONG).show();
+                alertFail("Aucun compte trouvé ");
 
 
             }

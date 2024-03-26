@@ -182,6 +182,11 @@ public class ProfileActivity extends AppCompatActivity {
                             etCourriel.setError("Entrez votre courriel");
                             valide = false;
                         }
+                        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(courriel).matches()) {
+                            etCourriel.setError("Entrez une adresse email valide");
+                            valide = false;
+                        }
+
                         if (valide) {
                             InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
                             // Users  request = new Users( name, courriel,password);
@@ -199,6 +204,7 @@ public class ProfileActivity extends AppCompatActivity {
                                         SharedPrefManager.getInstance(ProfileActivity.this).updateEmail(courriel);
                                         UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
                                         //  user.getName();
+                                        tvCourriel.setText(user.getEmail());
                                         tvCourriel.setVisibility(View.VISIBLE);
                                         Courriel.setVisibility(View.VISIBLE);
                                         ivModifCourriel.setVisibility(View.VISIBLE);
@@ -274,12 +280,21 @@ public class ProfileActivity extends AppCompatActivity {
                             etNouveauMotPasse.setError("Entrez votre nouveau mot de passe");
                             valide = false;
                         }
+                        if (motdepasse.length() < 8) {
+                            etNouveauMotPasse.setError("Le mot de passe doit contenir minimum 8 caractères");
+                            valide = false;
+                        }
                         if (confirmMotPasse.isEmpty()) {
                             etConfirmMotPasse.setError("confirmez votre mot de passe");
                             valide = false;
                         }
+                        if (confirmMotPasse.length() < 8) {
+                            etNouveauMotPasse.setError("Le mot de passe doit contenir minimum 8 caractères");
+                            valide = false;
+                        }
                         if (!confirmMotPasse.equals(motdepasse)) {
-
+                            valide = false;
+                            etNouveauMotPasse.setError("les mots de passe doivent etre identiques");
                             etConfirmMotPasse.setError("les mots de passe doivent etre identiques");
                         }
                         if (valide) {
@@ -444,6 +459,7 @@ public class ProfileActivity extends AppCompatActivity {
                 logoutResponse = response.body();
                 Log.d("logout", logoutResponse.getMessage());
                 if (logoutResponse.getStatus().equals("success")) {
+
                     Intent intent = new Intent(ProfileActivity.this, LoginActivitytest.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

@@ -60,6 +60,13 @@ public interface InterfaceAPI_V2 {
                                   @Header("Authorization") String token,
                                   @Field("email") String email);
 
+
+    @POST("{locale}/forgotPassword")
+    @FormUrlEncoded
+    Call<APIResponse> forgotPassword(@Path("locale") String locale,
+                                  @Field("email") String email);
+
+
     @PATCH("{locale}/updatePassword")
     @FormUrlEncoded
     Call<APIResponse> updatePassword(@Path("locale") String locale,
