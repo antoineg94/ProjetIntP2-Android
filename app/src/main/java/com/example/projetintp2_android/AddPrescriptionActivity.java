@@ -33,7 +33,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AddMedicamentActivity extends AppCompatActivity {
+public class AddPrescriptionActivity extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
     EditText edDateDebut, edDateFin, edNom, edDate;
@@ -64,9 +64,9 @@ public class AddMedicamentActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     chHebdomadaire.setChecked(false);
-                    Toast.makeText(AddMedicamentActivity.this, "CheckBox cochée", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPrescriptionActivity.this, "CheckBox cochée", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(AddMedicamentActivity.this, "CheckBox décochée", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPrescriptionActivity.this, "CheckBox décochée", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -104,8 +104,8 @@ public class AddMedicamentActivity extends AppCompatActivity {
         builder.setCancelable(false);
         builder.setTitle("Sélectionner les jours");
 
-        RecyclerView recyclerView = new RecyclerView(AddMedicamentActivity.this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(AddMedicamentActivity.this));
+        RecyclerView recyclerView = new RecyclerView(AddPrescriptionActivity.this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(AddPrescriptionActivity.this));
         List<String> daysOfWeek = new ArrayList<>();
         daysOfWeek.add("Lundi");
         daysOfWeek.add("Mardi");
@@ -192,7 +192,7 @@ public class AddMedicamentActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Intent intent = new Intent(this, GestionDispositifsActivity.class);
+            Intent intent = new Intent(this, GestionDevicesActivity.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.menu_language_switch) {

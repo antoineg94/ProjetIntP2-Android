@@ -29,48 +29,32 @@ public class DataFromAPI {
         return user;
     }
 
-    public void setUser(UserV2 user) {
-        this.user = user;
-    }
-
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public List<Prescription> getPrescriptionsList() {
+    public List<Prescription> getPrescriptions() {
         return prescriptions;
     }
 
-    public void setPrescriptionsList(List<Prescription> prescriptionsList) {
-        this.prescriptions = prescriptionsList;
-    }
-
-    public List<Medications> getMedicationsList() {
+    public List<Medications> getMedications() {
         return medications;
     }
 
-    public void setMedicationsList(List<Medications> medicationsList) {
-        this.medications = medicationsList;
-    }
-
-    public List<Alerts> getAlertsList() {
+    public List<Alerts> getAlerts() {
         return alerts;
     }
 
-    public void setAlertsList(List<Alerts> alertsList) {
-        this.alerts = alertsList;
-    }
-
-    public List<Logs> getLogsList() {
+    public List<Logs> getLogs() {
         return logs;
     }
 
-    public void setLogsList(List<Logs> logsList) {
-        this.logs = logsList;
+    public List<Calendars> getCalendars() {
+        return calendars;
+    }
+
+    public List<Devices> getDevices() {
+        return devices;
     }
 
     @Override

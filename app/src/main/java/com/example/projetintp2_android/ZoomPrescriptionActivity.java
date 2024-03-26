@@ -87,7 +87,7 @@ public class ZoomPrescriptionActivity extends AppCompatActivity {
             Toast.makeText(this, "Vous êtes déjà dans la gestion des médicaments", Toast.LENGTH_SHORT).show();
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Intent intent = new Intent(this, GestionDispositifsActivity.class);
+            Intent intent = new Intent(this, GestionDevicesActivity.class);
             startActivity(intent);
             return true;
         }

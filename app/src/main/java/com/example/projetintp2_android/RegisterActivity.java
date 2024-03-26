@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide;
 import java.io.IOException;
 
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
-import com.example.projetintp2_android.Classes.RetrofitInstance;
+import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

@@ -18,7 +18,8 @@ import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 
 import com.example.projetintp2_android.Classes.Objects.UserV2;
-import com.example.projetintp2_android.Classes.RetrofitInstance;
+import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
+import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -120,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
 
                     UserV2 user = loginResponse.getData().getUser();
-                    String token = loginResponse.getData().getToken();
+                    String token = "Bearer "+loginResponse.getData().getToken();
 
                     Log.d("user", user.toString());
                     Log.d("token", token);

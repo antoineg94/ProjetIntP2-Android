@@ -1,4 +1,4 @@
-package com.example.projetintp2_android.Classes;
+package com.example.projetintp2_android.Classes.Retrofit;
 
 import java.security.cert.CertificateException;
 

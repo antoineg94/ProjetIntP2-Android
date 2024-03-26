@@ -47,10 +47,10 @@
             android:exported="false"
             android:parentActivityName=".GestionPrescriptionActivity"/>
         <activity
-            android:name=".GestionDispositifsActivity"
+            android:name=".GestionDevicesActivity"
             android:exported="false" />
         <activity
-            android:name=".AddMedicamentActivity"
+            android:name=".AddPrescriptionActivity"
             android:exported="false"
             android:parentActivityName=".GestionPrescriptionActivity" />
         <activity

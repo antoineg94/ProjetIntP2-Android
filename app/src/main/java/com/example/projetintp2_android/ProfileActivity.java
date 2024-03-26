@@ -27,7 +27,8 @@ import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.Objects.Users;
-import com.example.projetintp2_android.Classes.RetrofitInstance;
+import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
+import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

@@ -16,17 +16,27 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
+import com.example.projetintp2_android.Classes.DAO.AlertDAO;
+import com.example.projetintp2_android.Classes.DAO.CalendarDAO;
+import com.example.projetintp2_android.Classes.DAO.DeviceDAO;
+import com.example.projetintp2_android.Classes.DAO.LogDAO;
+import com.example.projetintp2_android.Classes.DAO.MedicationDAO;
 import com.example.projetintp2_android.Classes.Databases.MainDB;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
+import com.example.projetintp2_android.Classes.Objects.Alerts;
+import com.example.projetintp2_android.Classes.Objects.Calendars;
+import com.example.projetintp2_android.Classes.Objects.Devices;
+import com.example.projetintp2_android.Classes.Objects.Logs;
+import com.example.projetintp2_android.Classes.Objects.Medications;
 import com.example.projetintp2_android.Classes.Objects.Prescription;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedications;
 import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
-import com.example.projetintp2_android.Classes.RetrofitInstance;
+import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
+import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,6 +48,11 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     MainDB mainDB;
     PrescriptionDAO pdao;
+    MedicationDAO mdao;
+    CalendarDAO cdao;
+    AlertDAO adao;
+    DeviceDAO ddao;
+    LogDAO ldao;
     RecyclerView rvPrescriptions;
     AdapterMedications adapter;
     FloatingActionButton btAdd;
@@ -65,7 +80,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GestionPrescriptionActivity.this, AddMedicamentActivity.class);
+                Intent intent = new Intent(GestionPrescriptionActivity.this, AddPrescriptionActivity.class);
                 startActivity(intent);
             }
         });
@@ -89,7 +104,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             Toast.makeText(this, "Vous êtes déjà dans la gestion des médicaments", Toast.LENGTH_SHORT).show();
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Intent intent = new Intent(this, GestionDispositifsActivity.class);
+            Intent intent = new Intent(this, GestionDevicesActivity.class);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.itProfil) {
@@ -110,20 +125,122 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                 .allowMainThreadQueries()
                 .build();
         pdao = mainDB.pdao();
+        mdao = mainDB.mdao();
+        cdao = mainDB.cdao();
+        adao = mainDB.adao();
+        ddao = mainDB.ddao();
+        ldao = mainDB.ldao();
+
     }
 
     private void getPrescriptions() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getPrescriptions(locale, "Bearer " + token);
+        Call<APIResponse> call = api.getPrescriptions(locale, token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                if (response.body().getData().getPrescriptionsList() != null) {
-                    listePrescriptions = response.body().getData().getPrescriptionsList();
+                if (response.body().getData().getPrescriptions() != null) {
+                    listePrescriptions = response.body().getData().getPrescriptions();
                     LoadPrescriptionsToLocalDB(listePrescriptions);
                     getApdaterPrescription();
                     Log.d("Prescriptions", listePrescriptions.toString());
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("Erreur", t.getMessage());
+            }
+        });
+    }
+
+    private void getMedications() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.getMedications(locale, token);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if (response.body().getData().getMedications() != null) {
+                    LoadMedicationsToLocalDB(response.body().getData().getMedications());
+                    Log.d("Medications", response.body().getData().getMedications().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("Erreur", t.getMessage());
+            }
+        });
+    }
+
+    private void getCalendars() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.getCalendars(locale, token);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if (response.body().getData().getCalendars() != null) {
+                    LoadCalendarsToLocalDB(response.body().getData().getCalendars());
+                    Log.d("Calendars", response.body().getData().getCalendars().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("Erreur", t.getMessage());
+
+            }
+        });
+    }
+
+    private void getAlerts() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.getAlerts(locale, token);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if (response.body().getData().getAlerts() != null) {
+                    LoadAlertsToLocalDB(response.body().getData().getAlerts());
+                    Log.d("Alerts", response.body().getData().getAlerts().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("Erreur", t.getMessage());
+            }
+        });
+    }
+
+    private void getDevices() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.getDevices(locale, token);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if (response.body().getData().getDevices() != null) {
+                    LoadDevicesToLocalDB(response.body().getData().getDevices());
+                    Log.d("Devices", response.body().getData().getDevices().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("Erreur", t.getMessage());
+            }
+        });
+    }
+
+    private void getLogs() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.getLogs(locale, token);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if (response.body().getData().getLogs() != null) {
+                    LoadLogsToLocalDB(response.body().getData().getLogs());
+                    Log.d("Logs", response.body().getData().getLogs().toString());
                 }
             }
 
@@ -162,6 +279,47 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     }
 
+    private void LoadMedicationsToLocalDB(List<Medications> list) {
+        try {
+            mdao.insertAllMedications(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void LoadCalendarsToLocalDB(List<Calendars> list) {
+        try {
+            cdao.insertAllCalendars(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void LoadAlertsToLocalDB(List<Alerts> list) {
+        try {
+            adao.insertAllAlerts(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void LoadDevicesToLocalDB(List<Devices> list) {
+        try {
+            ddao.insertAllDevices(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void LoadLogsToLocalDB(List<Logs> list) {
+        try {
+            ldao.insertAllLogs(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+
     private void setAdapterPrescription(AdapterMedications adapter) {
         rvPrescriptions.setAdapter(adapter);
         rvPrescriptions.setHasFixedSize(true);
@@ -173,6 +331,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         adapter = new AdapterMedications(list, this);
         setAdapterPrescription(adapter);
     }
+
     private void logout() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
         Call<APIResponse> call = api.logout(locale, "Bearer " + token);

@@ -17,7 +17,7 @@ import com.example.projetintp2_android.Classes.Objects.Devices;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestionDispositifsActivity extends AppCompatActivity {
+public class GestionDevicesActivity extends AppCompatActivity {
 
     RecyclerView rvDispositifs;
     AdapterDevices adapter;
@@ -55,7 +55,7 @@ public class GestionDispositifsActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Intent intent = new Intent(this, GestionDispositifsActivity.class);
+            Intent intent = new Intent(this, GestionDevicesActivity.class);
             startActivity(intent);
             return true;
         }

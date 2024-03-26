@@ -1,5 +1,7 @@
 package com.example.projetintp2_android.Classes.Interfaces;
 
+import androidx.room.Update;
+
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 
 
@@ -77,4 +79,38 @@ public interface InterfaceAPI_V2 {
                                         @Field("frequencyBetweenDosesInHours") int frequencyBetweenDosesInHours,
                                         @Field("frequencyOfIntakeInDays") int frequencyOfIntakeInDays,
                                         @Field("frequencyPerDay") int frequencyPerDay);
+    @GET("{locale}/medications")
+    Call<APIResponse> getMedications(@Path("locale") String locale,
+                                     @Header("Authorization") String token);
+
+    @GET("{locale}/alerts")
+    Call<APIResponse> getAlerts(@Path("locale") String locale,
+                                @Header("Authorization") String token);
+    @Update
+    @POST("{locale}/alerts")
+    @FormUrlEncoded
+    Call<APIResponse> updateAlerts(@Path("locale") String locale,
+                                   @Header("Authorization") String token,
+                                   @Field("isMedicationTaken") boolean isMedicationTaken
+                                   );
+
+    @GET("{locale}/calendars")
+    Call<APIResponse> getCalendars(@Path("locale") String locale,
+                                   @Header("Authorization") String token);
+
+    @GET("{locale}/devices")
+    Call<APIResponse> getDevices(@Path("locale") String locale,
+                                 @Header("Authorization") String token);
+    @Update
+    @POST("{locale}/devices")
+    @FormUrlEncoded
+    Call<APIResponse> updateDevices(@Path("locale") String locale,
+                                    @Header("Authorization") String token,
+                                    @Field("associatedPatientFullName") String associatedPatientFullName
+
+                                    );
+    @GET("{locale}/logs")
+    Call<APIResponse> getLogs(@Path("locale") String locale,
+                              @Header("Authorization") String token);
+
 }
