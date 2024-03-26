@@ -47,6 +47,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_dispositifs);
+        rvDispositifs = findViewById(R.id.rvListeDispositifs);
 
         /*liste.add(new Devices(1,"123123", "JS", 1,null,null));
         liste.add(new Devices(2,"456456", "BS", 2,null,null));
@@ -88,8 +89,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
     }
 
     private void createLocalDB() {
-        mainDB = Room.inMemoryDatabaseBuilder(this, MainDB.class)
-                .build();
+        mainDB = MainDB.getDatabase(this);
         ddao = mainDB.ddao();
 
     }
@@ -101,7 +101,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    list =  ddao.getAllDevices();
+                    list = ddao.getAllDevices();
                     Log.d("Device list", list.toString());
                 } catch (Exception e) {
                     Log.e("Erreur", e.getMessage());
@@ -132,6 +132,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
     private void LoadUserProfil() {
         token = SharedPrefManager.getInstance(this).getToken();
     }
+
     private void addDeviceToLocalDB(Devices device) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
@@ -147,23 +148,33 @@ public class GestionDevicesActivity extends AppCompatActivity {
             }
         });
     }
-    private void validateEditText(){
-        if(etNoSerie.getText().toString().isEmpty() || etAsssociatedPatientFullName.getText().toString().isEmpty()){
+
+    private void validateEditText() {
+        if (etNoSerie.getText().toString().isEmpty()) {
+            etNoSerie.setError("Veuillez entrer le numéro de série");
+            return;
+        }
+        if (etAsssociatedPatientFullName.getText().toString().isEmpty()) {
+            etAsssociatedPatientFullName.setError("Veuillez entrer le nom du patient associé");
             return;
         }
         createDevice();
 
     }
+
     private void createDevice() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
         String noSerie = etNoSerie.getText().toString();
         String associatedPatientFullName = etAsssociatedPatientFullName.getText().toString();
-        Call<APIResponse> call = api.postDevices(locale, "Bearer " + token,noSerie,associatedPatientFullName);
+        Call<APIResponse> call = api.postDevices(locale, "Bearer " + token, noSerie, associatedPatientFullName);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 if (response.body().getStatus().equals("success")) {
-                    getDevicesFromLocalDB();
+                    List<Devices> list = response.body().getData().getDevices();
+                    for (Devices device : list) {
+                        addDeviceToLocalDB(device);
+                    }
                 }
             }
 

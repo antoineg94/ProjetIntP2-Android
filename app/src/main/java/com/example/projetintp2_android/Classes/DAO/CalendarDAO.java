@@ -13,7 +13,7 @@ import java.util.List;
 public interface CalendarDAO {
 
     @Query("SELECT * FROM Table_Calendars")
-    List<Calendars> getAfficherC();
+    List<Calendars> GetAllCalendars();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCalendar(Calendars calendar);
