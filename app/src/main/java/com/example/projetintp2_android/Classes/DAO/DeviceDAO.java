@@ -14,7 +14,7 @@ import java.util.List;
 public interface DeviceDAO {
 
     @Query("SELECT * FROM Table_Devices")
-    List<Devices> getAfficherD();
+    List<Devices> getAllDevices();
 
     @Query("SELECT * FROM Table_Devices WHERE id = :id")
     Devices getDeviceById(int id);
