@@ -101,6 +101,12 @@ public interface InterfaceAPI_V2 {
     @GET("{locale}/devices")
     Call<APIResponse> getDevices(@Path("locale") String locale,
                                  @Header("Authorization") String token);
+    @POST("{locale}/devices")
+    @FormUrlEncoded
+    Call<APIResponse> postDevices(@Path("locale") String locale,
+                                  @Header("Authorization") String token,
+                                  @Field("noSerie") String noSerie,
+                                  @Field("associatedPatientFullName") String associatedPatientFullName);
     @Update
     @POST("{locale}/devices")
     @FormUrlEncoded

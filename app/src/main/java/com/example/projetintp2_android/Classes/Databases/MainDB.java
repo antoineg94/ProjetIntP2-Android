@@ -17,7 +17,7 @@ import com.example.projetintp2_android.Classes.Objects.Logs;
 import com.example.projetintp2_android.Classes.Objects.Medications;
 import com.example.projetintp2_android.Classes.Objects.Prescription;
 
-@Database(entities = { Medications.class, Prescription.class, Devices.class, Logs.class, Calendars.class, Alerts.class  }, version = 1)
+@Database(entities = { Medications.class, Prescription.class, Devices.class, Logs.class, Calendars.class, Alerts.class  }, version = 2, exportSchema = true)
 @TypeConverters({CustomTypeConverters.class})
 public abstract class MainDB extends androidx.room.RoomDatabase  {
 

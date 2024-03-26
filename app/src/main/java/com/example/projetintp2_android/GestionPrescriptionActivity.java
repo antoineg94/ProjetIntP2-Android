@@ -85,8 +85,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             }
         });
 
-        getPrescriptions();
-
+        loadAllDataToLocalDB();
 
     }
 
@@ -95,15 +94,13 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         setTitle("Gestion des prescriptions");
+        menu.getItem(0).setVisible(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.itGestionMedic) {
-            Toast.makeText(this, "Vous êtes déjà dans la gestion des médicaments", Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (item.getItemId() == R.id.itDispositif) {
+         if (item.getItemId() == R.id.itDispositif) {
             Intent intent = new Intent(this, GestionDevicesActivity.class);
             startActivity(intent);
             return true;
@@ -131,6 +128,14 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         ddao = mainDB.ddao();
         ldao = mainDB.ldao();
 
+    }
+    private void loadAllDataToLocalDB() {
+        getPrescriptions();
+        getMedications();
+        getCalendars();
+        getAlerts();
+        getDevices();
+        //getLogs();
     }
 
     private void getPrescriptions() {
@@ -242,6 +247,9 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     LoadLogsToLocalDB(response.body().getData().getLogs());
                     Log.d("Logs", response.body().getData().getLogs().toString());
                 }
+                else {
+                    Log.d("Logs", "User don't have logs yet.");
+                }
             }
 
             @Override
@@ -327,8 +335,8 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     }
 
     private void getApdaterPrescription() {
-        List<Prescription> list = pdao.getAllPrescriptions();
-        adapter = new AdapterMedications(list, this);
+        listePrescriptions = pdao.getAllPrescriptions();
+        adapter = new AdapterMedications(listePrescriptions, this);
         setAdapterPrescription(adapter);
     }
 
@@ -351,5 +359,11 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                 Log.e("Erreur", t.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }
