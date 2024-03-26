@@ -122,7 +122,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     UserV2 user = loginResponse.getData().getUser();
                     String token = loginResponse.getData().getToken();
-
                     Log.d("user", user.toString());
                     Log.d("token", token);
                     SharedPrefManager.getInstance(LoginActivity.this).SaveUserV2(user);
