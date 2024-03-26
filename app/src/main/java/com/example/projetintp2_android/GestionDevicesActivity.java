@@ -167,10 +167,36 @@ public class GestionDevicesActivity extends AppCompatActivity {
             etNoSerie.setError("Veuillez entrer le numéro de série");
             return;
         }
+        if(etNoSerie.getText().toString().length() < 6){
+            etNoSerie.setError("Le numéro de série doit contenir au moins 6 caractères");
+            return;
+        }
+        if(etNoSerie.getText().toString().length() > 20){
+            etNoSerie.setError("Le numéro de série doit contenir au maximum 50 caractères");
+            return;
+        }
+        if(etNoSerie.getText().toString().contains(" ")){
+            etNoSerie.setError("Le numéro de série ne doit pas contenir d'espaces");
+            return;
+        }
+        if(etNoSerie.getText().toString().startsWith("-")){
+            etNoSerie.setError("Le numéro de série ne peut pas être un nombre négatif");
+            return;
+        }
         if (etAsssociatedPatientFullName.getText().toString().isEmpty()) {
             etAsssociatedPatientFullName.setError("Veuillez entrer le nom du patient associé");
             return;
         }
+
+        if(etAsssociatedPatientFullName.getText().toString().length() < 6){
+            etAsssociatedPatientFullName.setError("Le nom du patient associé doit contenir au moins 6 caractères");
+            return;
+        }
+        if(etAsssociatedPatientFullName.getText().toString().length() > 60){
+            etAsssociatedPatientFullName.setError("Le nom du patient associé doit contenir au maximum 50 caractères");
+            return;
+        }
+
         createDevice();
 
     }
@@ -197,6 +223,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
                     resetEditText();
 
                     getDevicesFromLocalDB();
+                    Toast.makeText(GestionDevicesActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -214,50 +241,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
         etAsssociatedPatientFullName.setText("");
     }
 
-    private void deleteDeviceFromLocalDB(Devices device) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ddao.deleteDevice(device);
-                    getDevicesFromLocalDB();
-                } catch (Exception e) {
-                    Log.e("deleteDeviceFromLocalDB", e.getMessage());
-                }
-            }
-        });
-    }
-
-    private void deleteDevice() {
-        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.deleteDevices(locale, "Bearer " + token, 3 );
-        call.enqueue(new Callback<APIResponse>() {
-            @Override
-            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                if (response.body().getStatus().equals("error")) {
-                    Toast.makeText(GestionDevicesActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    onFailure(call, new Throwable(response.body().getMessage()));
-                    return;
-                }
-
-                if (response.body().getData() != null) {
-                    Devices device = response.body().getData().getDevice();
-                    Log.d("deleteDeviceServer", device.toString());
-
-                    deleteDeviceFromLocalDB(device);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<APIResponse> call, Throwable t) {
-                Log.e("deleteDeviceError", t.getMessage());
-                Toast.makeText(GestionDevicesActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
     private void logout() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);

@@ -82,6 +82,7 @@ public class AdapterDevices extends RecyclerView.Adapter {
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 if (response.body().getData() == null) {
                     deleteDeviceFromLocalDB(device, position);
+                    Toast.makeText(parentContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(parentContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
