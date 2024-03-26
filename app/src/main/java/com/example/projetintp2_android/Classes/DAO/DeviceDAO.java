@@ -2,6 +2,7 @@ package com.example.projetintp2_android.Classes.DAO;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Insert;
 import androidx.room.Update;
@@ -14,15 +15,15 @@ import java.util.List;
 public interface DeviceDAO {
 
     @Query("SELECT * FROM Table_Devices")
-    List<Devices> getAfficherD();
+    List<Devices> getAllDevices();
 
     @Query("SELECT * FROM Table_Devices WHERE id = :id")
     Devices getDeviceById(int id);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertDevice(Devices device);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllDevices(List<Devices> devices);
     @Update
     void updateDevice(Devices device);

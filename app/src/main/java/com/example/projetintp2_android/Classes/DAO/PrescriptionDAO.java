@@ -3,6 +3,7 @@ package com.example.projetintp2_android.Classes.DAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -17,9 +18,9 @@ public interface PrescriptionDAO {
     List<Prescription> getAllPrescriptions();
     @Query("SELECT * FROM Table_Prescriptions WHERE id = :id")
     Prescription getPrescriptionById(int id);
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPrescription(Prescription prescription);
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllPrescriptions(List<Prescription> prescriptions);
     @Update
     void updatePrescription(Prescription prescription);

@@ -12,7 +12,7 @@ public class Alerts {
 
     int id;
     @SerializedName("isTheMedicationTaken")
-    Boolean isTheMedicationTaken;
+    int isTheMedicationTaken;
     @SerializedName("calendar_id")
     int calendar_id;
     @SerializedName("created_at")
@@ -20,7 +20,7 @@ public class Alerts {
     @SerializedName("updated_at")
     String updated_at;
 
-    public Alerts(int id, Boolean isTheMedicationTaken, int calendar_id, String created_at, String updated_at) {
+    public Alerts(int id, int isTheMedicationTaken, int calendar_id, String created_at, String updated_at) {
         this.id = id;
         this.isTheMedicationTaken = isTheMedicationTaken;
         this.calendar_id = calendar_id;
@@ -36,12 +36,12 @@ public class Alerts {
         this.id = id;
     }
 
-    public Boolean getTheMedicationTaken() {
+    public int getIsTheMedicationTaken() {
         return isTheMedicationTaken;
     }
 
-    public void setTheMedicationTaken(Boolean theMedicationTaken) {
-        isTheMedicationTaken = theMedicationTaken;
+    public void setIsTheMedicationTaken(int isTheMedicationTaken) {
+        this.isTheMedicationTaken = isTheMedicationTaken;
     }
 
     public int getCalendar_id() {

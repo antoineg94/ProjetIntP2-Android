@@ -10,13 +10,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvListeDispositifs"
         android:layout_width="411dp"
-        android:layout_height="285dp"
+        android:layout_height="305dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         android:paddingStart="16dp"
         android:paddingLeft="16dp"
-        android:paddingTop="16dp" >
+        android:paddingTop="16dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -31,16 +31,29 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginTop="16dp"
         android:hint="Numéro de série">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNoSerie"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:paddingStart="16dp" />
+            android:layout_height="match_parent"
+            android:inputType="text" />
 
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_marginTop="16dp"
+        android:hint="Nom du patient">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAssociatedPatientFullName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
