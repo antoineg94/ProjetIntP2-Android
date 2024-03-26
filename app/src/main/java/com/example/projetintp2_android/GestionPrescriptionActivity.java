@@ -39,6 +39,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,7 +86,8 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             }
         });
 
-        getPrescriptions();
+        loadAllDataToLocalDB();
+
     }
 
     @Override
@@ -91,15 +95,13 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         setTitle("Gestion des prescriptions");
+        menu.getItem(0).setVisible(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.itGestionMedic) {
-            Toast.makeText(this, "Vous êtes déjà dans la gestion des médicaments", Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (item.getItemId() == R.id.itDispositif) {
+        if (item.getItemId() == R.id.itDispositif) {
             Intent intent = new Intent(this, GestionDevicesActivity.class);
             startActivity(intent);
             return true;
@@ -117,9 +119,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     }
 
     private void createLocalDB() {
-        mainDB = Room.databaseBuilder(this, MainDB.class, "MainDB")
-                .allowMainThreadQueries()
-                .build();
+        mainDB = MainDB.getDatabase(this);
         pdao = mainDB.pdao();
         mdao = mainDB.mdao();
         cdao = mainDB.cdao();
@@ -129,9 +129,18 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     }
 
+    private void loadAllDataToLocalDB() {
+        getPrescriptions();
+        getMedications();
+        getCalendars();
+        getAlerts();
+        getDevices();
+        //getLogs();
+    }
+
     private void getPrescriptions() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getPrescriptions(locale,"Bearer "+ token);
+        Call<APIResponse> call = api.getPrescriptions(locale, "Bearer " + token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -141,19 +150,23 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     getApdaterPrescription();
                     Log.d("Prescriptions", listePrescriptions.toString());
 
+                } else {
+                    Log.d("Prescriptions", "User don't have prescriptions yet.");
+                    onFailure(call, new Throwable("User don't have prescriptions yet."));
                 }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 Log.e("Erreur", t.getMessage());
+                Toast.makeText(GestionPrescriptionActivity.this, "Erreur de chargement des prescriptions", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void getMedications() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getMedications(locale,"Bearer "+ token);
+        Call<APIResponse> call = api.getMedications(locale, "Bearer " + token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -161,18 +174,23 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     LoadMedicationsToLocalDB(response.body().getData().getMedications());
                     Log.d("Medications", response.body().getData().getMedications().toString());
                 }
+                else {
+                    Log.d("Medications", "User don't have medications yet.");
+                    onFailure(call, new Throwable("User don't have medications yet."));
+                }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 Log.e("Erreur", t.getMessage());
+                Toast.makeText(GestionPrescriptionActivity.this, "Erreur de chargement des médicaments", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void getCalendars() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getCalendars(locale,"Bearer "+ token);
+        Call<APIResponse> call = api.getCalendars(locale, "Bearer " + token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -180,11 +198,16 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     LoadCalendarsToLocalDB(response.body().getData().getCalendars());
                     Log.d("Calendars", response.body().getData().getCalendars().toString());
                 }
+                else {
+                    Log.d("Calendars", "User don't have calendars yet.");
+                   onFailure(call, new Throwable("User don't have calendars yet."));
+                }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 Log.e("Erreur", t.getMessage());
+                Toast.makeText(GestionPrescriptionActivity.this, "Erreur de chargement des calendriers", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -192,7 +215,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     private void getAlerts() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getAlerts(locale,"Bearer "+ token);
+        Call<APIResponse> call = api.getAlerts(locale, "Bearer " + token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -200,18 +223,23 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     LoadAlertsToLocalDB(response.body().getData().getAlerts());
                     Log.d("Alerts", response.body().getData().getAlerts().toString());
                 }
+                else {
+                    Log.d("Alerts", "User don't have alerts yet.");
+                    onFailure(call, new Throwable("User don't have alerts yet."));
+                }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 Log.e("Erreur", t.getMessage());
+                Toast.makeText(GestionPrescriptionActivity.this, "Erreur de chargement des alertes", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void getDevices() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getDevices(locale,"Bearer "+ token);
+        Call<APIResponse> call = api.getDevices(locale, "Bearer " + token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -219,30 +247,40 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     LoadDevicesToLocalDB(response.body().getData().getDevices());
                     Log.d("Devices", response.body().getData().getDevices().toString());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<APIResponse> call, Throwable t) {
-                Log.e("Erreur", t.getMessage());
-            }
-        });
-    }
-
-    private void getLogs() {
-        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getLogs(locale,"Bearer "+ token);
-        call.enqueue(new Callback<APIResponse>() {
-            @Override
-            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                if (response.body().getData().getLogs() != null) {
-                    LoadLogsToLocalDB(response.body().getData().getLogs());
-                    Log.d("Logs", response.body().getData().getLogs().toString());
+                else {
+                    Log.d("Devices", "User don't have devices yet.");
+                    onFailure(call, new Throwable("User don't have devices yet."));
                 }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 Log.e("Erreur", t.getMessage());
+                Toast.makeText(GestionPrescriptionActivity.this, "Erreur de chargement des dispositifs", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getLogs() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.getLogs(locale, "Bearer " + token);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+
+                if (response.body().getData().getLogs() != null) {
+                    LoadLogsToLocalDB(response.body().getData().getLogs());
+                    Log.d("Logs", response.body().getData().getLogs().toString());
+                } else {
+                    Log.d("Logs", "User don't have logs yet.");
+                    onFailure(call, new Throwable("User don't have logs yet."));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("Erreur", t.getMessage());
+                Toast.makeText(GestionPrescriptionActivity.this, "Erreur de chargement des logs", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -264,47 +302,117 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         token = SharedPrefManager.getInstance(this).getToken();
     }
     private void LoadPrescriptionsToLocalDB(List<Prescription> list) {
-        try {
-            pdao.insertAllPrescriptions(list);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    pdao.insertAllPrescriptions(list);
+                    Log.d("Prescriptions", pdao.getAllPrescriptions().toString());
+                } catch (Exception e) {
+                    Log.e("Erreur", e.getMessage());
+                }
+            }
+        });
+
     }
     private void LoadMedicationsToLocalDB(List<Medications> list) {
-        try {
-            mdao.insertAllMedications(list);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mdao.insertAllMedications(list);
+                    Log.d("Medications", mdao.getAfficherM().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
     private void LoadCalendarsToLocalDB(List<Calendars> list) {
-        try {
-            cdao.insertAllCalendars(list);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    cdao.insertAllCalendars(list);
+                    Log.d("Calendars", cdao.GetAllCalendars().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
     private void LoadAlertsToLocalDB(List<Alerts> list) {
-        try {
-            adao.insertAllAlerts(list);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    adao.insertAllAlerts(list);
+                    Log.d("Alerts", adao.getAllAlerts().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
     private void LoadDevicesToLocalDB(List<Devices> list) {
-        try {
-            ddao.insertAllDevices(list);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ddao.insertAllDevices(list);
+                    Log.d("Devices", ddao.getAllDevices().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
     private void LoadLogsToLocalDB(List<Logs> list) {
-        try {
-            ldao.insertAllLogs(list);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ldao.insertAllLogs(list);
+                    Log.d("Logs", ldao.getAllLogs().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
+    private void loadPrescriptionsFromLocalDBToAdapter() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    listePrescriptions = pdao.getAllPrescriptions();
+                    Log.d("Prescriptions", listePrescriptions.toString());
+                } catch (Exception e) {
+                    Log.e("Erreur", e.getMessage());
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getApdaterPrescription();
+                    }
+                });
+            }
+        });
+    }
+
 
     private void setAdapterPrescription(AdapterMedications adapter) {
         rvPrescriptions.setAdapter(adapter);
@@ -313,8 +421,9 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     }
 
     private void getApdaterPrescription() {
-        List<Prescription> list = pdao.getAllPrescriptions();
-        adapter = new AdapterMedications(list, this);
+
+
+        adapter = new AdapterMedications(listePrescriptions, this);
         setAdapterPrescription(adapter);
     }
 
@@ -337,5 +446,11 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                 Log.e("Erreur", t.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }
