@@ -1,5 +1,6 @@
 package com.example.projetintp2_android;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -286,6 +290,34 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        setTitle("Gestion des prescriptions");
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.itGestionMedic) {
+            Intent intent = new Intent(this, GestionPrescriptionActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.itDispositif) {
+            Intent intent = new Intent(this, GestionDevicesActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.itProfil) {
+            Toast.makeText(this, "Vous êtes déjà dans votre profil", Toast.LENGTH_SHORT).show();
+            return true;
+
+        } else if (item.getItemId() == R.id.itDeconnexion) {
+            SharedPrefManager.getInstance(this).clear();
+            Logout();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void LoadIDRefs() {
         nom = findViewById(R.id.nom);
@@ -370,7 +402,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Users  request = new Users( name, courriel,password);
         Log.d("token", "token" + token);
         Log.d("locale", "locale" + locale);
-        Call<APIResponse> call = serveur.logout(locale, "Bearer " + token);
+        Call<APIResponse> call = serveur.logout(locale,  token);
 
         call.enqueue(new Callback<APIResponse>() {
             APIResponse logoutResponse = new APIResponse(null, null, null,null);
