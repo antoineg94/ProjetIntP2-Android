@@ -1,5 +1,6 @@
 package com.example.projetintp2_android.Classes.Interfaces;
 
+import androidx.room.Delete;
 import androidx.room.Update;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
@@ -8,6 +9,7 @@ import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -86,7 +88,7 @@ public interface InterfaceAPI_V2 {
     @GET("{locale}/alerts")
     Call<APIResponse> getAlerts(@Path("locale") String locale,
                                 @Header("Authorization") String token);
-    @Update
+
     @POST("{locale}/alerts")
     @FormUrlEncoded
     Call<APIResponse> updateAlerts(@Path("locale") String locale,
@@ -107,14 +109,17 @@ public interface InterfaceAPI_V2 {
                                   @Header("Authorization") String token,
                                   @Field("noSerie") String noSerie,
                                   @Field("associatedPatientFullName") String associatedPatientFullName);
-    @Update
+
+
     @POST("{locale}/devices")
     @FormUrlEncoded
     Call<APIResponse> updateDevices(@Path("locale") String locale,
                                     @Header("Authorization") String token,
-                                    @Field("associatedPatientFullName") String associatedPatientFullName
-
-                                    );
+                                    @Field("associatedPatientFullName") String associatedPatientFullName);
+    @DELETE("{locale}/devices/{id}")
+    Call<APIResponse> deleteDevices(@Path("locale") String locale,
+                                    @Header("Authorization") String token,
+                                    @Path("id") int id);
     @GET("{locale}/logs")
     Call<APIResponse> getLogs(@Path("locale") String locale,
                               @Header("Authorization") String token);

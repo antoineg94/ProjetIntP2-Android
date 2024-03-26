@@ -12,7 +12,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.Databases.MainDB;
@@ -43,20 +46,30 @@ public class GestionDevicesActivity extends AppCompatActivity {
 
     EditText etNoSerie, etAsssociatedPatientFullName;
 
+    Button btAjoutD;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_dispositifs);
-        rvDispositifs = findViewById(R.id.rvListeDispositifs);
-
-        /*liste.add(new Devices(1,"123123", "JS", 1,null,null));
-        liste.add(new Devices(2,"456456", "BS", 2,null,null));
-        liste.add(new Devices(3,"789789", "JD", 3,null,null));*/
+        loadRefsForUI();
         LoadUserProfil();
         createLocalDB();
         getDevicesFromLocalDB();
 
 
+    }
+
+    private void loadRefsForUI() {
+        rvDispositifs = findViewById(R.id.rvListeDispositifs);
+        etNoSerie = findViewById(R.id.etNoSerie);
+        etAsssociatedPatientFullName = findViewById(R.id.etAssociatedPatientFullName);
+        btAjoutD = findViewById(R.id.btAjoutD);
+        btAjoutD.setOnClickListener(this::ajouterDispositif);
+    }
+
+    private void ajouterDispositif(View view) {
+        validateEditText();
     }
 
     @Override
@@ -143,7 +156,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
                     ddao.insertDevice(device);
                     getDevicesFromLocalDB();
                 } catch (Exception e) {
-                    Log.e("Erreur", e.getMessage());
+                    Log.e("addDeviceToLocalDB", e.getMessage());
                 }
             }
         });
@@ -170,17 +183,78 @@ public class GestionDevicesActivity extends AppCompatActivity {
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                if (response.body().getStatus().equals("success")) {
-                    List<Devices> list = response.body().getData().getDevices();
-                    for (Devices device : list) {
-                        addDeviceToLocalDB(device);
-                    }
+                if (response.body().getStatus().equals("error")) {
+                    Toast.makeText(GestionDevicesActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    onFailure(call, new Throwable(response.body().getMessage()));
+                    return;
                 }
+
+                if (response.body().getData() != null) {
+                    Devices device = response.body().getData().getDevice();
+                    Log.d("createDeviceServer", device.toString());
+
+                    addDeviceToLocalDB(device);
+                    resetEditText();
+
+                    getDevicesFromLocalDB();
+                }
+
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                Log.e("Erreur", t.getMessage());
+                Log.e("createDeviceError", t.getMessage());
+                Toast.makeText(GestionDevicesActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void resetEditText() {
+        etNoSerie.setText("");
+        etAsssociatedPatientFullName.setText("");
+    }
+
+    private void deleteDeviceFromLocalDB(Devices device) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ddao.deleteDevice(device);
+                    getDevicesFromLocalDB();
+                } catch (Exception e) {
+                    Log.e("deleteDeviceFromLocalDB", e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void deleteDevice() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.deleteDevices(locale, "Bearer " + token, 3 );
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if (response.body().getStatus().equals("error")) {
+                    Toast.makeText(GestionDevicesActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    onFailure(call, new Throwable(response.body().getMessage()));
+                    return;
+                }
+
+                if (response.body().getData() != null) {
+                    Devices device = response.body().getData().getDevice();
+                    Log.d("deleteDeviceServer", device.toString());
+
+                    deleteDeviceFromLocalDB(device);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("deleteDeviceError", t.getMessage());
+                Toast.makeText(GestionDevicesActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -201,7 +275,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                Log.e("Erreur", t.getMessage());
+                Log.e("logout", t.getMessage());
             }
         });
     }
