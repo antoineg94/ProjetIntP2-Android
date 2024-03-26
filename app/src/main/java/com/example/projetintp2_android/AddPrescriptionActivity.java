@@ -46,12 +46,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddPrescriptionActivity extends AppCompatActivity  {
+public class AddPrescriptionActivity extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
     EditText edDateDebut, edDateFin, edNom, edDate;
@@ -111,12 +113,14 @@ public class AddPrescriptionActivity extends AppCompatActivity  {
         });
         getPrescriptions();
     }
+
     private void createLocalDB() {
         mainDB = Room.databaseBuilder(this, MainDB.class, "MainDB")
                 .allowMainThreadQueries()
                 .build();
         mdao = mainDB.mdao();
     }
+
     private void DateDebut() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -132,6 +136,7 @@ public class AddPrescriptionActivity extends AppCompatActivity  {
 
         datePickerDialog.show();
     }
+
     private void DateFin() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -150,7 +155,7 @@ public class AddPrescriptionActivity extends AppCompatActivity  {
 
     private void getPrescriptions() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getMedications(locale,"Bearer "+ token);
+        Call<APIResponse> call = api.getMedications(locale, "Bearer " + token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -170,6 +175,7 @@ public class AddPrescriptionActivity extends AppCompatActivity  {
                     Log.e("Erreur", "Réponse non réussie: " + response.code());
                 }
             }
+
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 // Afficher un message d'erreur ou traiter le cas où l'appel de l'API a échoué
@@ -181,21 +187,34 @@ public class AddPrescriptionActivity extends AppCompatActivity  {
     private void LoadUserProfil() {
         token = SharedPrefManager.getInstance(this).getToken();
     }
+
     private void LoadMedicationsToLocalDB(List<Medications> list) {
-        try {
-            mdao.insertAllMedications(list);
-            Log.d("AddPrescriptionActivity", "Données insérées avec succès dans la base de données locale.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("AddPrescriptionActivity", "Erreur lors de l'insertion des données dans la base de données locale: " + e.getMessage());
-        }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    listeMedications = mdao.getAfficherM();
+                    Log.d("Medications", mdao.getAfficherM().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getAdapterMedicament();
+                    }
+                });
+            }
+        });
     }
+
     private void setAdapterMedicament(AdapterPrescriptions adapter) {
         rvM.setAdapter(adapter);
         rvM.setHasFixedSize(true);
         rvM.setLayoutManager(new LinearLayoutManager(this));
 
-        spinner.setOnTouchListener((v, event) -> {
+        /*spinner.setOnTouchListener((v, event) -> {
             // Afficher ou masquer le RecyclerView en fonction de l'état actuel
             if (rvM.getVisibility() == View.VISIBLE) {
                 rvM.setVisibility(View.GONE);
@@ -204,11 +223,11 @@ public class AddPrescriptionActivity extends AppCompatActivity  {
                 rvM.setVisibility(View.VISIBLE);
             }
             return false;
-        });
+        });*/
     }
+
     private void getAdapterMedicament() {
-        List<Medications> list = mdao.getAfficherM();
-        adapter = new AdapterPrescriptions(list);
+        adapter = new AdapterPrescriptions(listeMedications);
         setAdapterMedicament(adapter);
     }
 
@@ -219,6 +238,7 @@ public class AddPrescriptionActivity extends AppCompatActivity  {
         setTitle("Ajouter une prescription");
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -246,16 +266,19 @@ public class AddPrescriptionActivity extends AppCompatActivity  {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void saveLanguage(String language) {
         SharedPreferences preferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(PREF_LANGUAGE_KEY, language);
         editor.apply();
     }
+
     private String getSavedLanguage() {
         SharedPreferences preferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         return preferences.getString(PREF_LANGUAGE_KEY, "fr");
     }
+
     private void setLocale(String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
