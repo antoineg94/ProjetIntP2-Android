@@ -8,10 +8,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="378dp"
+        android:layout_width="match_parent"
         android:layout_height="581dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,10 +32,10 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:text="@string/ajNom"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/edNom"
+                android:id="@+id/edNameOfPrescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tx1"
@@ -98,13 +99,13 @@
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_calendar" />
 
-                <EditText
-                    android:id="@+id/edDate"
+                <DatePicker
+                    android:id="@+id/edDateOfPrescription"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_weight="10"
                     android:focusable="false"
-                    android:inputType="none" />
+                    android:inputType="date" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -134,13 +135,13 @@
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_calendar" />
 
-                <EditText
-                    android:id="@+id/edDateDebut"
+                <DatePicker
+                    android:id="@+id/edDateOfStart"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_weight="10"
                     android:focusable="false"
-                    android:inputType="none" />
+                    android:inputType="date" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -154,15 +155,15 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:text="@string/ajDF"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/edDateFin"
+                android:id="@+id/edDurationOfPrescriptionInDays"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tx7"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="number" />
 
         </RelativeLayout>
 
@@ -176,17 +177,46 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:text="@string/ajInter"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/editTextTime"
+            <TimePicker
+                android:id="@+id/edFrequencyBetweenDosesInHours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_below="@id/tx5"
+                android:ems="10"
                 android:inputType="time" />
 
         </RelativeLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/frequencyOfIntakeInDays"
+            app:counterEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edFrequencyOfIntakeInDays"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/firstintakehour">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edFirstIntakeHour"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="time">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

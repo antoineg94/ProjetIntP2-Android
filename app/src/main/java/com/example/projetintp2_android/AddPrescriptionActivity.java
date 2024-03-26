@@ -1,7 +1,6 @@
 package com.example.projetintp2_android;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,7 +8,6 @@ import androidx.room.Room;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -24,7 +22,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.DAO.AlertDAO;
@@ -36,13 +35,10 @@ import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
 import com.example.projetintp2_android.Classes.Databases.MainDB;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 import com.example.projetintp2_android.Classes.Objects.Medications;
-import com.example.projetintp2_android.Classes.Objects.Prescription;
-import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedications;
 import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterPrescriptions;
 import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
 import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +52,10 @@ import retrofit2.Response;
 public class AddPrescriptionActivity extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
-    EditText edDateDebut, edDateFin, edNom, edDate;
+    EditText edNameOfPrescription, edDurationOfPrescriptionInDays,
+            edFrequencyBetweenDosesInHours, edFrequencyOfIntakeInDays;
+    DatePicker edDateOfPrescription,edDateOfStart;
+    TimePicker edFirstIntakeHour;
     Context context;
     Button btAjoutM;
     String token, locale;
@@ -84,27 +83,12 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         LoadUserProfil();
 
         locale = "fr";
+        LoadRefsForUI();
 
-        edDateDebut = findViewById(R.id.edDateDebut);
-        edDateFin = findViewById(R.id.edDateFin);
-        edDate = findViewById(R.id.edDate);
-        edNom = findViewById(R.id.edNom);
         btAjoutM = findViewById(R.id.btAjoutM);
         spinner = findViewById(R.id.spinner);
         rvM = findViewById(R.id.rvM);
         context = this;
-        edDateDebut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DateDebut();
-            }
-        });
-        edDateFin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DateFin();
-            }
-        });
         btAjoutM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +98,16 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         getPrescriptions();
     }
 
+    private void LoadRefsForUI() {
+        edNameOfPrescription = findViewById(R.id.edNameOfPrescription);
+        edDateOfPrescription = findViewById(R.id.edDateOfPrescription);
+        edDateOfStart = findViewById(R.id.edDateOfStart);
+        edDurationOfPrescriptionInDays = findViewById(R.id.edDurationOfPrescriptionInDays);
+        edFrequencyBetweenDosesInHours = findViewById(R.id.edFrequencyBetweenDosesInHours);
+        edFrequencyOfIntakeInDays = findViewById(R.id.edFrequencyOfIntakeInDays);
+        edFirstIntakeHour = findViewById(R.id.edFirstIntakeHour);
+    }
+
     private void createLocalDB() {
         mainDB = Room.databaseBuilder(this, MainDB.class, "MainDB")
                 .allowMainThreadQueries()
@@ -121,37 +115,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         mdao = mainDB.mdao();
     }
 
-    private void DateDebut() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                edDateDebut.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
-            }
-        }, year, month, dayOfMonth);
-
-        datePickerDialog.show();
-    }
-
-    private void DateFin() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                edDateFin.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
-            }
-        }, year, month, dayOfMonth);
-
-        datePickerDialog.show();
-    }
 
     private void getPrescriptions() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
@@ -198,6 +162,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                     Log.d("Medications", mdao.getAfficherM().toString());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(context, "Erreur lors de la récupération des médicaments", Toast.LENGTH_SHORT).show();
                 }
                 runOnUiThread(new Runnable() {
                     @Override
