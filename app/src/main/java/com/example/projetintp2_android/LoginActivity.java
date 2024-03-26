@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
 
                     UserV2 user = loginResponse.getData().getUser();
-                    String token = "Bearer "+loginResponse.getData().getToken();
+                    String token = loginResponse.getData().getToken();
 
                     Log.d("user", user.toString());
                     Log.d("token", token);

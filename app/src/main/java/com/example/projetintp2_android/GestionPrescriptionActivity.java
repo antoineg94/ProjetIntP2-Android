@@ -135,7 +135,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     private void getPrescriptions() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getPrescriptions(locale, token);
+        Call<APIResponse> call = api.getPrescriptions(locale,"Bearer"+ token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -157,7 +157,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     private void getMedications() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getMedications(locale, token);
+        Call<APIResponse> call = api.getMedications(locale,"Bearer"+ token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -176,7 +176,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     private void getCalendars() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getCalendars(locale, token);
+        Call<APIResponse> call = api.getCalendars(locale,"Bearer"+ token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -196,7 +196,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     private void getAlerts() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getAlerts(locale, token);
+        Call<APIResponse> call = api.getAlerts(locale,"Bearer"+ token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -215,7 +215,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     private void getDevices() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getDevices(locale, token);
+        Call<APIResponse> call = api.getDevices(locale,"Bearer"+ token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -234,7 +234,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
     private void getLogs() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getLogs(locale, token);
+        Call<APIResponse> call = api.getLogs(locale,"Bearer"+ token);
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
