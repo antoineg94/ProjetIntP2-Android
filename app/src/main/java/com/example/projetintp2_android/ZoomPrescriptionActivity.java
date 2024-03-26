@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class ZoomPrescriptionActivity extends AppCompatActivity {
 
-    TextView tvNomP, tvDateP, tvDateDP, tvDateFP, tvDoseP, tvFrequenceHP, tvFrequenceJours, tvFrequenceJP;
+    TextView tvNomP, tvDateP, tvDateD, tvDateF, tvDoseP, tvFrequenceHP, tvFrequenceJours, tvFrequenceJP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class ZoomPrescriptionActivity extends AppCompatActivity {
 
         tvNomP = findViewById(R.id.tvNomP);
         tvDateP = findViewById(R.id.tvDateP);
-        tvDateDP = findViewById(R.id.tvDateDP);
-        tvDateFP = findViewById(R.id.tvDateFP);
+        tvDateD = findViewById(R.id.tvDateDP);
+        tvDateF = findViewById(R.id.tvDateFP);
         tvDoseP = findViewById(R.id.tvDoseP);
         tvFrequenceHP = findViewById(R.id.tvFrequenceHP);
         tvFrequenceJours = findViewById(R.id.tvFrequenceJours);
@@ -38,35 +38,19 @@ public class ZoomPrescriptionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String nom = intent.getStringExtra("nom");
-
-        long timestamp1 = intent.getLongExtra("dateP", 0);
-        Calendar dateP = Calendar.getInstance();
-        dateP.setTimeInMillis(timestamp1);
-
-        long timestamp2 = intent.getLongExtra("dateD", 0);
-        Date dateDP = new Date(timestamp2);
-
-        int dateFP = intent.getIntExtra("dateF", 0);
-
-        long timestamp4 = intent.getLongExtra("dose", 0);
-        if (timestamp4 != 0) {
-            Time dose = new Time(timestamp4);
-            tvDoseP.setText(dose.toString());
-        } else {
-            tvDoseP.setText("Valeur de dose indisponible");
-        }
-
+        String dateP = intent.getStringExtra("dateP");
+        String dateD = intent.getStringExtra("dateD");
+        int dateF = intent.getIntExtra("dateF", 0);
+        String dose = intent.getStringExtra("dose");
         int fHeures = intent.getIntExtra("fHeures", 0);
         int fJours = intent.getIntExtra("fJours", 0);
         int fParJours = intent.getIntExtra("fParJours", 0);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
         tvNomP.setText(nom);
-        tvDateP.setText(dateFormat.format(dateP.getTime()));
-        tvDateDP.setText(dateFormat.format(dateDP));
-        tvDateFP.setText(String.valueOf(dateFP));
-
+        tvDateP.setText(dateP);
+        tvDateD.setText(dateD);
+        tvDateF.setText(String.valueOf(dateF));
+        tvDoseP.setText(dose);
         tvFrequenceHP.setText(String.valueOf(fHeures));
         tvFrequenceJours.setText(String.valueOf(fJours));
         tvFrequenceJP.setText(String.valueOf(fParJours));
@@ -94,3 +78,4 @@ public class ZoomPrescriptionActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+//Super-Gestion-Orange3

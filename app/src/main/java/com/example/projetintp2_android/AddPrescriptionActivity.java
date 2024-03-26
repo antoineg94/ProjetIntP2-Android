@@ -37,7 +37,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
     EditText edDateDebut, edDateFin, edNom, edDate;
-    CheckBox chQuotidien, chHebdomadaire;
     Context context;
     TextView tvJours;
     Button btAjoutM;
@@ -54,32 +53,8 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         edDateFin = findViewById(R.id.edDateFin);
         edDate = findViewById(R.id.edDate);
         edNom = findViewById(R.id.edNom);
-        chQuotidien = findViewById(R.id.chQuotidien);
-        //chHebdomadaire = findViewById(R.id.chHebdomadaire);
-        //tvJours = findViewById(R.id.tvJours);
         btAjoutM = findViewById(R.id.btAjoutM);
         context = this;
-
-        chQuotidien.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    chHebdomadaire.setChecked(false);
-                    Toast.makeText(AddPrescriptionActivity.this, "CheckBox cochée", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(AddPrescriptionActivity.this, "CheckBox décochée", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        chHebdomadaire.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    chQuotidien.setChecked(false);
-                    afficherFenetreDialogueSelectionJours();
-                } else {
-                    tvJours.setText("");
-                }
-            }
-        });
         edDateDebut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,52 +73,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
             }
         });
-    }
-    private void afficherFenetreDialogueSelectionJours() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setCancelable(false);
-        builder.setTitle("Sélectionner les jours");
-
-        RecyclerView recyclerView = new RecyclerView(AddPrescriptionActivity.this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(AddPrescriptionActivity.this));
-        List<String> daysOfWeek = new ArrayList<>();
-        daysOfWeek.add("Lundi");
-        daysOfWeek.add("Mardi");
-        daysOfWeek.add("Mercredi");
-        daysOfWeek.add("Jeudi");
-        daysOfWeek.add("Vendredi");
-        daysOfWeek.add("Samedi");
-        daysOfWeek.add("Dimanche");
-        DaysAdapter adapter = new DaysAdapter(daysOfWeek);
-        recyclerView.setAdapter(adapter);
-
-        builder.setView(recyclerView);
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                List<String> selectedDays = adapter.getSelectedDays();
-                StringBuilder selectedDaysText = new StringBuilder();
-                for (String day : selectedDays) {
-                    selectedDaysText.append(day).append(", ");
-                }
-                String daysText = selectedDaysText.toString();
-                if (daysText.length() > 0) {
-                    daysText = daysText.substring(0, daysText.length() - 2);
-                }
-                tvJours.setText(daysText);
-            }
-        });
-
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
     private void DateDebut() {
         Calendar calendar = Calendar.getInstance();

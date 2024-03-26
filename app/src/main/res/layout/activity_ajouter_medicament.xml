@@ -178,47 +178,6 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tx6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:text="@string/ajFr"
-            android:textSize="16sp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="10dp">
-
-            <CheckBox
-                android:id="@+id/chQuotidien"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/aj_tv_Q" />
-
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/chHebdomadaire"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/aj_tv_H" />
-
-                <TextView
-                    android:id="@+id/tvJours"
-                    android:layout_width="221dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp" />
-            </LinearLayout>-->
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <Button
