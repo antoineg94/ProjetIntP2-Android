@@ -19,13 +19,13 @@ public class Medications {
     @SerializedName("function")
     private String function;
     @SerializedName("canBeInPillBox")
-    private boolean canBeInPillBox;
+    private int canBeInPillBox;
     @SerializedName("created_at")
     private String created_at;
     @SerializedName("updated_at")
     private String updated_at;
 
-    public Medications(int id, String name, String function, boolean canBeInPillBox, String created_at, String updated_at) {
+    public Medications(int id, String name, String function, int canBeInPillBox, String created_at, String updated_at) {
         this.id = id;
         this.name = name;
         this.function = function;
@@ -51,11 +51,11 @@ public class Medications {
         this.name = name;
     }
 
-    public boolean isCanBeInPillBox() {
+    public int getCanBeInPillBox() {
         return canBeInPillBox;
     }
 
-    public void setCanBeInPillBox(boolean canBeInPillBox) {
+    public void setCanBeInPillBox(int canBeInPillBox) {
         this.canBeInPillBox = canBeInPillBox;
     }
 

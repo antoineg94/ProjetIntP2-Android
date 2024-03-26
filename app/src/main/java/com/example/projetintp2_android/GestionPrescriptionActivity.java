@@ -60,7 +60,6 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     UserV2 user;
     String token, locale;
 
-
     // Formatter for dates
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
@@ -70,7 +69,6 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         setContentView(R.layout.activity_gestion_medicament);
 
         createLocalDB();
-
         LoadUserProfil();
 
         locale = "fr";
@@ -86,8 +84,6 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
         });
 
         getPrescriptions();
-
-
     }
 
     @Override
@@ -250,8 +246,6 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             }
         });
     }
-
-
     @Override
     public void gestionClick(int position, Prescription prescriptions) {
         Intent intent = new Intent(this, ZoomPrescriptionActivity.class);
@@ -269,16 +263,13 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     private void LoadUserProfil() {
         token = SharedPrefManager.getInstance(this).getToken();
     }
-
     private void LoadPrescriptionsToLocalDB(List<Prescription> list) {
         try {
             pdao.insertAllPrescriptions(list);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
     private void LoadMedicationsToLocalDB(List<Medications> list) {
         try {
             mdao.insertAllMedications(list);
@@ -286,7 +277,6 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             e.printStackTrace();
         }
     }
-
     private void LoadCalendarsToLocalDB(List<Calendars> list) {
         try {
             cdao.insertAllCalendars(list);
@@ -294,7 +284,6 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             e.printStackTrace();
         }
     }
-
     private void LoadAlertsToLocalDB(List<Alerts> list) {
         try {
             adao.insertAllAlerts(list);
@@ -302,7 +291,6 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             e.printStackTrace();
         }
     }
-
     private void LoadDevicesToLocalDB(List<Devices> list) {
         try {
             ddao.insertAllDevices(list);
@@ -310,7 +298,6 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             e.printStackTrace();
         }
     }
-
     private void LoadLogsToLocalDB(List<Logs> list) {
         try {
             ldao.insertAllLogs(list);
@@ -318,7 +305,6 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             e.printStackTrace();
         }
     }
-    
 
     private void setAdapterPrescription(AdapterMedications adapter) {
         rvPrescriptions.setAdapter(adapter);
