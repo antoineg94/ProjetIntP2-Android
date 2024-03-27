@@ -170,7 +170,9 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     private void addPrescriptionToDistantDB() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.postPrescriptions(locale, token, nameOfPrescription, dateOfPrescription.toString(), dateOfStart.toString(), firstIntakeHour.toString(), durationOfPrescriptionInDays, frequencyBetweenDosesInHours, frequencyOfIntakeInDays);
+        Call<APIResponse> call = api.postPrescriptions(locale, token, nameOfPrescription, dateOfPrescription,
+                dateOfStart, durationOfPrescriptionInDays, frequencyBetweenDosesInHours, frequencyOfIntakeInDays,
+                firstIntakeHour, listeMedications.get(spinner.getSelectedItemPosition()).getId());
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {

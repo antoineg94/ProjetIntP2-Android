@@ -5,6 +5,9 @@ import androidx.room.Update;
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 
 
+import java.sql.Date;
+import java.sql.Time;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
@@ -71,14 +74,14 @@ public interface InterfaceAPI_V2 {
     @FormUrlEncoded
     Call<APIResponse> postPrescriptions(@Path("locale") String locale,
                                         @Header("Authorization") String token,
-                                        @Field("name") String name,
-                                        @Field("date") String date,
-                                        @Field("start") String start,
-                                        @Field("duration") int duration,
-                                        @Field("firstIntakeHour") String firstIntakeHour,
+                                        @Field("nameOfPrescription") String nameOfPrescription,
+                                        @Field("dateOfPrescription") Date dateOfPrescription,
+                                        @Field("dateOfStart") Date dateOfStart,
+                                        @Field("durationOfPrescriptionInDays") int durationOfPrescriptionInDays,
                                         @Field("frequencyBetweenDosesInHours") int frequencyBetweenDosesInHours,
                                         @Field("frequencyOfIntakeInDays") int frequencyOfIntakeInDays,
-                                        @Field("frequencyPerDay") int frequencyPerDay);
+                                        @Field("firstIntakeHour") Time firstIntakeHour,
+                                        @Field("medication_id") int medication_id);
     @GET("{locale}/medications")
     Call<APIResponse> getMedications(@Path("locale") String locale,
                                      @Header("Authorization") String token);
