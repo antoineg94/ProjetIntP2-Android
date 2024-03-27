@@ -36,7 +36,7 @@
 
             <EditText
                 android:id="@+id/edNameOfPrescription"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tx1"
                 android:ems="10"
@@ -181,11 +181,12 @@
 
             <TimePicker
                 android:id="@+id/edFrequencyBetweenDosesInHours"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="366dp"
+                android:layout_height="55dp"
                 android:layout_below="@id/tx5"
+                android:layout_marginTop="20dp"
                 android:ems="10"
-                android:inputType="time" />
+                 />
 
         </RelativeLayout>
 

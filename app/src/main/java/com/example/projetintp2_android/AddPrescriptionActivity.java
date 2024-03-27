@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,11 +34,13 @@ import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
 import com.example.projetintp2_android.Classes.Databases.MainDB;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 import com.example.projetintp2_android.Classes.Objects.Medications;
+import com.example.projetintp2_android.Classes.Objects.Prescription;
 import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterPrescriptions;
 import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
 import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
 
-import java.util.Calendar;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
@@ -52,13 +53,12 @@ import retrofit2.Response;
 public class AddPrescriptionActivity extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
-    EditText edNameOfPrescription, edDurationOfPrescriptionInDays,
-            edFrequencyBetweenDosesInHours, edFrequencyOfIntakeInDays;
-    DatePicker edDateOfPrescription,edDateOfStart;
-    TimePicker edFirstIntakeHour;
+    EditText edNameOfPrescription, edDurationOfPrescriptionInDays, edFrequencyOfIntakeInDays;
+    DatePicker edDateOfPrescription, edDateOfStart;
+    TimePicker edFrequencyBetweenDosesInHours, edFirstIntakeHour;
     Context context;
     Button btAjoutM;
-    String token, locale;
+
     List<Medications> listeMedications;
     MainDB mainDB;
     PrescriptionDAO pdao;
@@ -70,11 +70,17 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     AdapterPrescriptions adapter;
     Spinner spinner;
     RecyclerView rvM;
+    String nameOfPrescription, locale, token;
+    Date dateOfPrescription, dateOfStart;
+    Time firstIntakeHour;
+    int durationOfPrescriptionInDays,
+            frequencyBetweenDosesInHours, frequencyOfIntakeInDays;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ajouter_medicament);
+        setContentView(R.layout.activity_ajouter_prescription);
 
         String savedLanguage = getSavedLanguage();
         setLocale(savedLanguage);
@@ -95,58 +101,26 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
             }
         });
-        getPrescriptions();
+
     }
 
     private void LoadRefsForUI() {
         edNameOfPrescription = findViewById(R.id.edNameOfPrescription);
-        edDateOfPrescription = findViewById(R.id.edDateOfPrescription);
-        edDateOfStart = findViewById(R.id.edDateOfStart);
         edDurationOfPrescriptionInDays = findViewById(R.id.edDurationOfPrescriptionInDays);
         edFrequencyBetweenDosesInHours = findViewById(R.id.edFrequencyBetweenDosesInHours);
         edFrequencyOfIntakeInDays = findViewById(R.id.edFrequencyOfIntakeInDays);
+        edDateOfPrescription = findViewById(R.id.edDateOfPrescription);
+        edDateOfStart = findViewById(R.id.edDateOfStart);
         edFirstIntakeHour = findViewById(R.id.edFirstIntakeHour);
+
     }
 
     private void createLocalDB() {
-        mainDB = Room.databaseBuilder(this, MainDB.class, "MainDB")
-                .allowMainThreadQueries()
-                .build();
+        mainDB = MainDB.getDatabase(this);
         mdao = mainDB.mdao();
+        pdao = mainDB.pdao();
     }
 
-
-
-    private void getPrescriptions() {
-        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.getMedications(locale, "Bearer " + token);
-        call.enqueue(new Callback<APIResponse>() {
-            @Override
-            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                if (response.isSuccessful()) {
-                    APIResponse apiResponse = response.body();
-                    if (apiResponse != null && apiResponse.getData() != null && apiResponse.getData().getMedications() != null) {
-                        listeMedications = apiResponse.getData().getMedications();
-                        LoadMedicationsToLocalDB(listeMedications);
-                        getAdapterMedicament();
-                        Log.d("Médicaments", listeMedications.toString());
-                    } else {
-                        // Afficher un message d'erreur ou traiter le cas où les données sont nulles
-                        Log.e("Erreur", "Les données reçues sont nulles ou incomplètes");
-                    }
-                } else {
-                    // Afficher un message d'erreur ou traiter le cas où la réponse n'est pas réussie
-                    Log.e("Erreur", "Réponse non réussie: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<APIResponse> call, Throwable t) {
-                // Afficher un message d'erreur ou traiter le cas où l'appel de l'API a échoué
-                Log.e("Erreur", "Échec de l'appel de l'API: " + t.getMessage());
-            }
-        });
-    }
 
     private void LoadUserProfil() {
         token = SharedPrefManager.getInstance(this).getToken();
@@ -170,6 +144,52 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                         getAdapterMedicament();
                     }
                 });
+            }
+        });
+    }
+
+    private void addPrescriptionToLocalDB(Prescription prescription) {
+
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Medications medication = mdao.getMedicationById(spinner.getSelectedItemPosition());
+                pdao.insertPrescription(prescription);
+                Toast.makeText(context, "Prescription ajoutée", Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "Prescription ajoutée", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
+    private void addPrescriptionToDistantDB() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.postPrescriptions(locale, token, nameOfPrescription, dateOfPrescription.toString(), dateOfStart.toString(), firstIntakeHour.toString(), durationOfPrescriptionInDays, frequencyBetweenDosesInHours, frequencyOfIntakeInDays);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if (response.body().getStatus().equals("error")) {
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (response.body().getData() != null) {
+                    Prescription prescription = response.body().getData().getPrescriptions().get(0);
+                    addPrescriptionToLocalDB(prescription);
+                } else {
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Toast.makeText(context, "Erreur lors de l'ajout de la prescription", Toast.LENGTH_SHORT).show();
             }
         });
     }
