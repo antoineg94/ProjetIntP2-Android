@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,8 @@ import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.RetrofitInstance;
 import com.google.gson.Gson;
 
+import java.util.Locale;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +37,7 @@ public class LoginActivitytest extends AppCompatActivity  {
 
     private EditText editTextEmail, editTextPassword;
     private CheckBox checkBoxRememberMe ;
-    private Button buttonLogin;
+    private Button buttonLogin,buttonLanguage;
     private TextView textViewForgotPassword, textViewCreateAccount;
     boolean isChecked;
     //private FirebaseAuth auth;
@@ -50,6 +54,15 @@ public class LoginActivitytest extends AppCompatActivity  {
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
         textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
+
+        buttonLanguage = findViewById(R.id.btlangue);
+
+        buttonLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLanguage("fr");
+            }
+        });
 
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +93,15 @@ public class LoginActivitytest extends AppCompatActivity  {
             }
         });
     }
+    private void changeLanguage(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        recreate(); // Recharge l'activité pour appliquer la nouvelle langue.
+    }
     protected void onStart()
     {
         super.onStart();
@@ -102,7 +124,7 @@ public class LoginActivitytest extends AppCompatActivity  {
             password=editTextPassword.getText().toString().trim();
             boolean valide = true;
             if(email.isEmpty()| password.isEmpty()){
-                alertFail("email et mot de passe requis.");
+                alertFail(R.string.requis);
                 valide = false;
             }
             else {
@@ -154,7 +176,7 @@ public class LoginActivitytest extends AppCompatActivity  {
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 //Toast.makeText(LoginActivitytest.this,t.getMessage(),Toast.LENGTH_LONG).show();
-                alertFail("Aucun compte trouvé ");
+                alertFail(R.string.aucun);
 
 
             }
@@ -165,9 +187,9 @@ public class LoginActivitytest extends AppCompatActivity  {
        // Toast.makeText(this,"Envoyé",Toast.LENGTH_LONG).show();
     }
 
-    private void alertFail(String s) {
+    private void alertFail(int s) {
         new AlertDialog.Builder(this)
-                .setTitle("Echec")
+                .setTitle(R.string.echec)
                 .setIcon(R.drawable.ic_loginwarning24)
                 .setMessage(s)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {

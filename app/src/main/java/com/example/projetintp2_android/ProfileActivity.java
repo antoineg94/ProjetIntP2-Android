@@ -52,6 +52,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_activity_profile);
+        getSupportActionBar().setTitle(R.string.profilemanagement);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         LoadIDRefs();
         LoadUserProfil();
@@ -87,7 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Nom = etNom.getText().toString().trim();
                         boolean valide = true;
                         if (Nom.isEmpty()) {
-                            etNom.setError("Entrez votre nom complet");
+                            etNom.setError(getString(R.string.erreur_nom_complet));
                             valide = false;
                         }
 
@@ -179,11 +181,11 @@ public class ProfileActivity extends AppCompatActivity {
                         courriel = etCourriel.getText().toString().trim();
                         boolean valide = true;
                         if (courriel.isEmpty()) {
-                            etCourriel.setError("Entrez votre courriel");
+                            etCourriel.setError(getString(R.string.erreur_courriel));
                             valide = false;
                         }
                         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(courriel).matches()) {
-                            etCourriel.setError("Entrez une adresse email valide");
+                            etCourriel.setError(getString(R.string.erreur_courriel_valide));
                             valide = false;
                         }
 
@@ -273,29 +275,29 @@ public class ProfileActivity extends AppCompatActivity {
                         confirmMotPasse = etConfirmMotPasse.getText().toString().trim();
                         boolean valide = true;
                         if (ancienMotPasse.isEmpty()) {
-                            etAncienMotPasse.setError("Entrez votre ancien mot de passe");
+                            etAncienMotPasse.setError(getString(R.string.ancien_mot_passe));
                             valide = false;
                         }
                         if (motdepasse.isEmpty()) {
-                            etNouveauMotPasse.setError("Entrez votre nouveau mot de passe");
+                            etNouveauMotPasse.setError(getString(R.string.nouveau_mot_passe));
                             valide = false;
                         }
                         if (motdepasse.length() < 8) {
-                            etNouveauMotPasse.setError("Le mot de passe doit contenir minimum 8 caractères");
+                            etNouveauMotPasse.setError(getString(R.string.caracteres_mot_passe));
                             valide = false;
                         }
                         if (confirmMotPasse.isEmpty()) {
-                            etConfirmMotPasse.setError("confirmez votre mot de passe");
+                            etConfirmMotPasse.setError(getString(R.string.confirmez_le_mot_de_passe));
                             valide = false;
                         }
                         if (confirmMotPasse.length() < 8) {
-                            etNouveauMotPasse.setError("Le mot de passe doit contenir minimum 8 caractères");
+                            etNouveauMotPasse.setError(getString(R.string.caracteres_mot_passe));
                             valide = false;
                         }
                         if (!confirmMotPasse.equals(motdepasse)) {
                             valide = false;
-                            etNouveauMotPasse.setError("les mots de passe doivent etre identiques");
-                            etConfirmMotPasse.setError("les mots de passe doivent etre identiques");
+                            etNouveauMotPasse.setError(getString(R.string.mot_passe_identique));
+                            etConfirmMotPasse.setError(getString(R.string.mot_passe_identique));
                         }
                         if (valide) {
                             // si valide ici
@@ -401,7 +403,7 @@ public class ProfileActivity extends AppCompatActivity {
         token = SharedPrefManager.getInstance(this).getToken();
         tvNomComplet.setText(user.getName());
         tvCourriel.setText(user.getEmail());
-        tvPassword.setText("mot de passe");
+        tvPassword.setText(getString(R.string.mot_de_passe));
 
     }
 
@@ -517,7 +519,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void alertFail(String s) {
         new AlertDialog.Builder(this)
-                .setTitle("Echec")
+                .setTitle(R.string.echec)
                 .setIcon(R.drawable.ic_loginwarning24)
                 .setMessage(s)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {

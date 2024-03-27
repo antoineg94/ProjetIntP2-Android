@@ -31,4 +31,35 @@
     <string name="aj_tv_A">Yearly</string>
 
     <string name="ajBt">Validate</string>
+
+    <string name="adresse_mail">email address</string>
+    <string name="mot_de_passe">password</string>
+    <string name="connexion">login</string>
+    <string name="mot_de_passe_oublie">forgot password ?</string>
+    <string name="creer_un_compte">Create an account</string>
+    <string name="nom">Last Name</string>
+    <string name="prenom">First Name</string>
+    <string name="confirmation_de_mot_de_passe">Password Confirmation</string>
+
+    <string name="entrez_le_nouveau_mot_de_passe">Enter your new password</string>
+    <string name="confirmez_le_mot_de_passe">Enter your new password confirmation</string>
+    <string name="enregistrer">Save</string>
+    <string name="annuler">Cancel</string>
+    <string name="requis">email and password required</string>
+    <string name="echec">Fail</string>
+    <string name="aucun">No Account found</string>
+    <string name="creation">Setting up an account</string>
+    <string name="profilemanagement">Profil Management</string>
+    <string name="champs_creation_compte">the Last Name, First Name,Email and Password fields are required for account creation</string>
+    <string name="mot_passe_identique">Passwords must be the same </string>
+    <string name="erreur_nom_complet">Enter your full name</string>
+    <string name="erreur_courriel">Enter your mail address</string>
+    <string name="erreur_courriel_valide">Please enter a valid email address</string>
+    <string name="ancien_mot_passe"> Enter your old password</string>
+    <string name="nouveau_mot_passe">Enter your new password</string>
+    <string name="caracteres_mot_passe">the password must contain a minimum of 8 characters</string>
+    <string name="nom_complet">Full name</string>
+    <string name="entrez_votre_ancien_mot_de_passe">Enter your old password</string>
+
+
 </resources>

@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        getSupportActionBar().setTitle(("Création de compte"));
+        getSupportActionBar().setTitle(R.string.creation);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -102,11 +102,11 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(Nom.isEmpty()||prenom.isEmpty()||email.isEmpty()||motPasse.isEmpty())
             {
-                alertFail ("les champs nom,prenom,email et mot de passe sont requis pour la création de compte");
+                alertFail (R.string.champs_creation_compte);
             }
             else if (!motPasse.equals(confirmation))
             {
-                alertFail("les mots de passes doivent etre identiques");
+                alertFail(R.string.mot_passe_identique);
             }
             else
             {
@@ -162,9 +162,9 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }*/
 
-    private void alertFail(String s) {
+    private void alertFail(int s) {
         new AlertDialog.Builder(this)
-                .setTitle("Echec")
+                .setTitle(R.string.echec)
                 .setIcon(R.drawable.ic_loginwarning24)
                 .setMessage(s)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
