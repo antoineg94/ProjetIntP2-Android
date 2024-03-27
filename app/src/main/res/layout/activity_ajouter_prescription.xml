@@ -24,23 +24,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tx1"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:paddingTop="10dp"-->
-            <!--                android:text="@string/ajNom"-->
-            <!--                android:textSize="16sp" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/edNameOfPrescription"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_below="@id/tx1"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="text" />-->
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -60,7 +45,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
 
             <TextView
                 android:id="@+id/tx2"
@@ -83,15 +69,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!--            <TextView
-                            android:id="@+id/tx4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="5dp"
-                            android:text="@string/ajD"
-                            android:textSize="16sp" />-->
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,13 +84,6 @@
                     android:layout_weight="9"
                     app:srcCompat="@drawable/ic_calendar" />
 
-                <!--   <EditText
-                       android:id="@+id/edDateOfPrescription"
-                       android:layout_width="match_parent"
-                       android:layout_height="56dp"
-                       android:layout_weight="1"
-                       android:focusable="false"
-                       android:inputType="date" />-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -133,15 +105,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!--      <TextView
-                      android:id="@+id/tx3"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:paddingTop="5dp"
-                      android:text="@string/ajDD"
-                      android:textSize="16sp" />-->
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -155,11 +120,6 @@
                     android:layout_weight="9"
                     app:srcCompat="@drawable/ic_calendar" />
 
-                <!--       <EditText
-                           android:id="@+id/edDateOfStart"
-                           android:layout_width="match_parent"
-                           android:layout_height="56dp"
-                           android:layout_weight="1" />-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -178,23 +138,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <!--
-                        <TextView
-                            android:id="@+id/tx7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="5dp"
-                            android:text="@string/ajDF"
-                            android:textSize="16sp" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
 
-                        <EditText
-                            android:id="@+id/edDurationOfPrescriptionInDays"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tx7"
-                            android:ems="10"
-                            android:inputType="number" />-->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -212,66 +158,63 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
 
-      <!--      <TextView
-                android:id="@+id/tx5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:text="@string/ajInter"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/edFrequencyBetweenDosesInHours"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_below="@id/tx5"
-                android:layout_marginTop="10dp"
-                android:ems="1"
-                android:inputType="none" />-->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ajInter"
                 app:counterEnabled="false">
+
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edFrequencyBetweenDosesInHours"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/edFrequencyBetweenDosesInHours"
                     android:ems="1"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </RelativeLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/frequencyOfIntakeInDays"
-            app:counterEnabled="false">
+            android:paddingBottom="10dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edFrequencyOfIntakeInDays"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="number">
+                android:layout_height="wrap_content"
+                android:hint="@string/frequencyOfIntakeInDays"
+                app:counterEnabled="false">
 
-            </com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edFrequencyOfIntakeInDays"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number">
 
-        <com.google.android.material.textfield.TextInputLayout
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/firstintakehour">
+            android:paddingBottom="10dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edFirstIntakeHour"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:hint="@string/firstintakehour">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edFirstIntakeHour"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <Button
