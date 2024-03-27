@@ -40,6 +40,7 @@ import com.example.projetintp2_android.Classes.Objects.Prescription;
 import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterPrescriptions;
 import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
 import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -56,13 +57,9 @@ import retrofit2.Response;
 public class AddPrescriptionActivity extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
-    EditText edNameOfPrescription, edDurationOfPrescriptionInDays, edFrequencyOfIntakeInDays;
-    DatePicker edDateOfPrescription, edDateOfStart;
-    DatePickerDialog dDatePickerDialog;
-    TimePicker edFrequencyBetweenDosesInHours, edFirstIntakeHour;
+    TextInputEditText edNameOfPrescription, edDurationOfPrescriptionInDays, edFrequencyOfIntakeInDays, edDateOfPrescription, edDateOfStart, edFrequencyBetweenDosesInHours, edFirstIntakeHour;
     Context context;
     Button btAjoutM;
-
     List<Medications> listeMedications;
     MainDB mainDB;
     PrescriptionDAO pdao;
@@ -73,13 +70,12 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     LogDAO ldao;
     AdapterPrescriptions adapter;
     Spinner spinner;
-    RecyclerView rvM;
+
     String nameOfPrescription, locale, token;
     Date dateOfPrescription, dateOfStart;
     Time firstIntakeHour;
     int durationOfPrescriptionInDays,
             frequencyBetweenDosesInHours, frequencyOfIntakeInDays;
-
 
 
     @Override
@@ -98,7 +94,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
         btAjoutM = findViewById(R.id.btAjoutM);
         spinner = findViewById(R.id.spinner);
-        rvM = findViewById(R.id.rvM);
         context = this;
         btAjoutM.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +112,12 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         edDateOfPrescription = findViewById(R.id.edDateOfPrescription);
         edDateOfStart = findViewById(R.id.edDateOfStart);
         edFirstIntakeHour = findViewById(R.id.edFirstIntakeHour);
+
+        edFrequencyBetweenDosesInHours.setOnClickListener(v -> showTimePickerDialog(edFrequencyBetweenDosesInHours));
+        edFirstIntakeHour.setOnClickListener(v -> showTimePickerDialog(edFirstIntakeHour));
+        edDateOfPrescription.setOnClickListener(v -> showDatePickerDialog(edDateOfPrescription));
+        edDateOfStart.setOnClickListener(v -> showDatePickerDialog(edDateOfStart));
+
 
     }
 
@@ -147,24 +148,58 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                       populateSpinner();
+                        populateSpinner();
                     }
                 });
             }
         });
     }
-    private void showDatePickerDialog(DatePicker datePicker) {
-        dDatePickerDialog = new DatePickerDialog(
-                this,
-                (view, year, month, dayOfMonth) -> {
-                    // Do something with the date
-                },
-                Calendar.getInstance().get(Calendar.YEAR),
-                Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        );
-        dDatePickerDialog.show();
+
+    private void showDatePickerDialog(EditText editText) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, selectedYear, selectedMonth, selectedDayOfMonth) -> {
+            String date = selectedDayOfMonth + "-" + (selectedMonth + 1) + "-" + selectedYear;
+            editText.setText(date);
+        }, year, month, dayOfMonth);
+
+
+        datePickerDialog.show();
     }
+
+    private void showDatePickerDialog(EditText editText, boolean hasMaxDate, boolean hasMinDate, long minDate, long maxDate) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, selectedYear, selectedMonth, selectedDayOfMonth) -> {
+                    String date = selectedDayOfMonth + "-" + (selectedMonth + 1) + "-" + selectedYear;
+                    editText.setText(date);
+                }, year, month, dayOfMonth);
+
+        if (hasMaxDate) {
+            datePickerDialog.getDatePicker().setMaxDate(maxDate);
+        }
+        if (hasMinDate) {
+            datePickerDialog.getDatePicker().setMinDate(minDate);
+        }
+        datePickerDialog.show();
+    }
+
+    private void showTimePickerDialog(EditText editText) {
+        TimePicker timePicker = new TimePicker(this);
+        timePicker.setIs24HourView(true);
+        timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
+            String time = hourOfDay + ":" + minute;
+            editText.setText(time);
+        });
+    }
+
     private void populateSpinner() {
         ArrayAdapter<Medications> spinnerAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, listeMedications);
@@ -173,8 +208,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     }
 
     private void addPrescriptionToLocalDB(Prescription prescription) {
-
-
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
             @Override
@@ -185,6 +218,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
                         Toast.makeText(context, "Prescription ajoutée", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -220,28 +254,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         });
     }
 
-    private void setAdapterMedicament(AdapterPrescriptions adapter) {
-        rvM.setAdapter(adapter);
-        rvM.setHasFixedSize(true);
-        rvM.setLayoutManager(new LinearLayoutManager(this));
-
-        /*spinner.setOnTouchListener((v, event) -> {
-            // Afficher ou masquer le RecyclerView en fonction de l'état actuel
-            if (rvM.getVisibility() == View.VISIBLE) {
-                rvM.setVisibility(View.GONE);
-                Log.d("Médicaments", "sdfdsfsdf donnée récupérée");
-            } else {
-                rvM.setVisibility(View.VISIBLE);
-            }
-            return false;
-        });*/
-    }
-
-    private void getAdapterMedicament() {
-        adapter = new AdapterPrescriptions(listeMedications);
-        setAdapterMedicament(adapter);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -274,9 +286,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
             recreate();
             return true;
-        }
-        else if (id == R.id.itDeconnexion) {
-
+        } else if (id == R.id.itDeconnexion) {
             logout();
             return true;
         }
@@ -312,6 +322,52 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         // Redémarrez votre activité pour appliquer les modifications
         recreate();*/
     }
+
+    private void ValidateInputs() {
+        nameOfPrescription = edNameOfPrescription.getText().toString();
+        durationOfPrescriptionInDays = Integer.parseInt(edDurationOfPrescriptionInDays.getText().toString());
+        frequencyBetweenDosesInHours = Integer.parseInt(edFrequencyBetweenDosesInHours.getText().toString());
+        frequencyOfIntakeInDays = Integer.parseInt(edFrequencyOfIntakeInDays.getText().toString());
+        firstIntakeHour = Time.valueOf(edFirstIntakeHour.getText().toString());
+        dateOfPrescription = Date.valueOf(edDateOfPrescription.getText().toString());
+        dateOfStart = Date.valueOf(edDateOfStart.getText().toString());
+
+        if (verifyEmptyInput(edNameOfPrescription) == 1 || verifyEmptyInput(edDurationOfPrescriptionInDays) == 1 || verifyEmptyInput(edFrequencyBetweenDosesInHours) == 1 || verifyEmptyInput(edFrequencyOfIntakeInDays) == 1 || verifyEmptyInput(edFirstIntakeHour) == 1 || verifyEmptyInput(edDateOfPrescription) == 1 || verifyEmptyInput(edDateOfStart) == 1) {
+            return;
+        }
+
+        if (dateOfPrescription.after(dateOfStart)) {
+            edDateOfPrescription.setError("La date de prescription doit être antérieure à la date de début");
+            edDateOfStart.setError("La date de début doit être postérieure à la date de prescription");
+            Toast.makeText(context, "La date de prescription doit être antérieure à la date de début", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (verifyNumberInputForPositiveIntegers(edDurationOfPrescriptionInDays) == 1 || verifyNumberInputForPositiveIntegers(edFrequencyBetweenDosesInHours) == 1 || verifyNumberInputForPositiveIntegers(edFrequencyOfIntakeInDays) == 1) {
+            return;
+        }
+
+        addPrescriptionToDistantDB();
+
+    }
+
+    private int verifyNumberInputForPositiveIntegers(EditText editText) {
+        if (Integer.parseInt(editText.getText().toString()) < 0) {
+            editText.setError("Le nombre ne peut pas être négatif");
+            Toast.makeText(context, "Veuillez entrer une valeur correcte", Toast.LENGTH_SHORT).show();
+            return 1;
+        }
+        return 0;
+    }
+
+    private int verifyEmptyInput(EditText editText) {
+        if (editText.getText().toString().isEmpty()) {
+            editText.setError("Le champ est requis");
+            Toast.makeText(context, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+            return 1;
+        }
+        return 0;
+    }
+
     private void logout() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
         Call<APIResponse> call = api.logout(locale, "Bearer " + token);
