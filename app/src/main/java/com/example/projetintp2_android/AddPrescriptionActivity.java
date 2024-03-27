@@ -47,6 +47,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -76,7 +79,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     String nameOfPrescription, locale, token;
     Date dateOfPrescription, dateOfStart;
-    Time firstIntakeHour;
+    LocalTime firstIntakeHour;
     int durationOfPrescriptionInDays,
             frequencyBetweenDosesInHours, frequencyOfIntakeInDays;
 
@@ -236,7 +239,19 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     private void addPrescriptionToDistantDB() {
         InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-        Call<APIResponse> call = api.postPrescriptions(locale, token, nameOfPrescription, dateOfPrescription,
+        Log.d("ADDP_locale", locale);
+        Log.d("ADDP_Token", "Bearer " + token);
+        Log.d("ADDP_Name", nameOfPrescription);
+        Log.d("ADDP_dateOfPrescription", dateOfPrescription.toString());
+        Log.d("ADDP_dateOfStart", dateOfStart.toString());
+        Log.d("ADDP_durationOfPrescriptionInDays", String.valueOf(durationOfPrescriptionInDays));
+        Log.d("ADDP_frequencyBetweenDosesInHours", String.valueOf(frequencyBetweenDosesInHours));
+        Log.d("ADDP_frequencyOfIntakeInDays", String.valueOf(frequencyOfIntakeInDays));
+        Log.d("ADDP_firstIntakeHour", firstIntakeHour.toString());
+        Log.d("ADDP_medication_id", String.valueOf(listeMedications.get(spinner.getSelectedItemPosition()).getId()));
+
+
+        Call<APIResponse> call = api.postPrescriptions(locale, "Bearer " + token, nameOfPrescription, dateOfPrescription,
                 dateOfStart, durationOfPrescriptionInDays, frequencyBetweenDosesInHours, frequencyOfIntakeInDays,
                 firstIntakeHour, listeMedications.get(spinner.getSelectedItemPosition()).getId());
         call.enqueue(new Callback<APIResponse>() {
@@ -340,10 +355,10 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         }
 
         nameOfPrescription = edNameOfPrescription.getText().toString();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         try {
-            firstIntakeHour = new Time(sdf.parse(edFirstIntakeHour.getText().toString()).getTime());
-        } catch (ParseException e) {
+             firstIntakeHour = LocalTime.parse(edFirstIntakeHour.getText().toString(), formatter);
+        } catch (DateTimeParseException e) {
             e.printStackTrace();
             Toast.makeText(context, "Erreur lors de la conversion de l'heure", Toast.LENGTH_SHORT).show();
         }

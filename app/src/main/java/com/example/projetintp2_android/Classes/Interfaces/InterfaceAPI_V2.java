@@ -7,6 +7,7 @@ import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -80,7 +81,7 @@ public interface InterfaceAPI_V2 {
                                         @Field("durationOfPrescriptionInDays") int durationOfPrescriptionInDays,
                                         @Field("frequencyBetweenDosesInHours") int frequencyBetweenDosesInHours,
                                         @Field("frequencyOfIntakeInDays") int frequencyOfIntakeInDays,
-                                        @Field("firstIntakeHour") Time firstIntakeHour,
+                                        @Field("firstIntakeHour") LocalTime firstIntakeHour,
                                         @Field("medication_id") int medication_id);
     @GET("{locale}/medications")
     Call<APIResponse> getMedications(@Path("locale") String locale,
