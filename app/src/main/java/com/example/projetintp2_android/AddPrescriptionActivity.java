@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +45,8 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -88,8 +91,9 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
         createLocalDB();
         LoadUserProfil();
+        LoadMedicationsFromLocalDB();
 
-        locale = "fr";
+        locale = Locale.getDefault().getLanguage();
         LoadRefsForUI();
 
         btAjoutM = findViewById(R.id.btAjoutM);
@@ -98,7 +102,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         btAjoutM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ValidateInputs();
             }
         });
 
@@ -113,7 +117,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         edDateOfStart = findViewById(R.id.edDateOfStart);
         edFirstIntakeHour = findViewById(R.id.edFirstIntakeHour);
 
-        edFrequencyBetweenDosesInHours.setOnClickListener(v -> showTimePickerDialog(edFrequencyBetweenDosesInHours));
+        //edFrequencyBetweenDosesInHours.setOnClickListener(v -> showTimePickerDialog(edFrequencyBetweenDosesInHours));
         edFirstIntakeHour.setOnClickListener(v -> showTimePickerDialog(edFirstIntakeHour));
         edDateOfPrescription.setOnClickListener(v -> showDatePickerDialog(edDateOfPrescription));
         edDateOfStart.setOnClickListener(v -> showDatePickerDialog(edDateOfStart));
@@ -132,7 +136,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         token = SharedPrefManager.getInstance(this).getToken();
     }
 
-    private void LoadMedicationsFromLocalDB(List<Medications> list) {
+    private void LoadMedicationsFromLocalDB() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
             @Override
@@ -162,7 +166,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, selectedYear, selectedMonth, selectedDayOfMonth) -> {
-            String date = selectedDayOfMonth + "-" + (selectedMonth + 1) + "-" + selectedYear;
+            String date = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDayOfMonth;
             editText.setText(date);
         }, year, month, dayOfMonth);
 
@@ -178,7 +182,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (view, selectedYear, selectedMonth, selectedDayOfMonth) -> {
-                    String date = selectedDayOfMonth + "-" + (selectedMonth + 1) + "-" + selectedYear;
+                    String date = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDayOfMonth;
                     editText.setText(date);
                 }, year, month, dayOfMonth);
 
@@ -192,12 +196,16 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     }
 
     private void showTimePickerDialog(EditText editText) {
-        TimePicker timePicker = new TimePicker(this);
-        timePicker.setIs24HourView(true);
-        timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-            String time = hourOfDay + ":" + minute;
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, selectedMinute) -> {
+            String time = hourOfDay + ":" + selectedMinute;
             editText.setText(time);
-        });
+        }, hour, minute, true);
+
+        timePickerDialog.show();
     }
 
     private void populateSpinner() {
@@ -236,6 +244,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 if (response.body().getStatus().equals("error")) {
                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("AddPrescriptionError", response.body().getMessage());
                     return;
                 }
 
@@ -249,6 +258,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("AddPrescriptionFailure", t.getMessage());
                 Toast.makeText(context, "Erreur lors de l'ajout de la prescription", Toast.LENGTH_SHORT).show();
             }
         });
@@ -324,17 +334,32 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     }
 
     private void ValidateInputs() {
-        nameOfPrescription = edNameOfPrescription.getText().toString();
-        durationOfPrescriptionInDays = Integer.parseInt(edDurationOfPrescriptionInDays.getText().toString());
-        frequencyBetweenDosesInHours = Integer.parseInt(edFrequencyBetweenDosesInHours.getText().toString());
-        frequencyOfIntakeInDays = Integer.parseInt(edFrequencyOfIntakeInDays.getText().toString());
-        firstIntakeHour = Time.valueOf(edFirstIntakeHour.getText().toString());
-        dateOfPrescription = Date.valueOf(edDateOfPrescription.getText().toString());
-        dateOfStart = Date.valueOf(edDateOfStart.getText().toString());
 
         if (verifyEmptyInput(edNameOfPrescription) == 1 || verifyEmptyInput(edDurationOfPrescriptionInDays) == 1 || verifyEmptyInput(edFrequencyBetweenDosesInHours) == 1 || verifyEmptyInput(edFrequencyOfIntakeInDays) == 1 || verifyEmptyInput(edFirstIntakeHour) == 1 || verifyEmptyInput(edDateOfPrescription) == 1 || verifyEmptyInput(edDateOfStart) == 1) {
             return;
         }
+
+        nameOfPrescription = edNameOfPrescription.getText().toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        try {
+            firstIntakeHour = new Time(sdf.parse(edFirstIntakeHour.getText().toString()).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Erreur lors de la conversion de l'heure", Toast.LENGTH_SHORT).show();
+        }
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            dateOfPrescription = new Date(sdf2.parse(edDateOfPrescription.getText().toString()).getTime());
+            dateOfStart = new Date(sdf2.parse(edDateOfStart.getText().toString()).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Erreur lors de la conversion de la date", Toast.LENGTH_SHORT).show();
+        }
+
+        durationOfPrescriptionInDays = Integer.parseInt(edDurationOfPrescriptionInDays.getText().toString());
+        frequencyBetweenDosesInHours = Integer.parseInt(edFrequencyBetweenDosesInHours.getText().toString());
+        frequencyOfIntakeInDays = Integer.parseInt(edFrequencyOfIntakeInDays.getText().toString());
 
         if (dateOfPrescription.after(dateOfStart)) {
             edDateOfPrescription.setError("La date de prescription doit être antérieure à la date de début");
@@ -350,6 +375,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     }
 
+
     private int verifyNumberInputForPositiveIntegers(EditText editText) {
         if (Integer.parseInt(editText.getText().toString()) < 0) {
             editText.setError("Le nombre ne peut pas être négatif");
@@ -362,7 +388,9 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     private int verifyEmptyInput(EditText editText) {
         if (editText.getText().toString().isEmpty()) {
             editText.setError("Le champ est requis");
-            Toast.makeText(context, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+            String editTextName = editText.getHint().toString();
+            String fillInputMessage = getResources().getString(R.string.fillTheInput);
+            Toast.makeText(context, fillInputMessage + editTextName, Toast.LENGTH_SHORT).show();
             return 1;
         }
         return 0;

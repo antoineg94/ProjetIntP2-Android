@@ -85,7 +85,12 @@ public class Medications {
 
     @Override
     public String toString() {
-        return "Medicaments{" +
+        return
+                name;
+    }
+
+    public String AllDetails() {
+        return "Medications{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", function='" + function + '\'' +
