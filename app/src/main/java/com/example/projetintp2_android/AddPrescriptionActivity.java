@@ -3,13 +3,27 @@ package com.example.projetintp2_android;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import android.Manifest;
+import android.content.pm.PackageManager;
+
+
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +32,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -47,6 +62,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -58,6 +74,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     private static final String PREF_LANGUAGE_KEY = "pref_language";
     TextInputEditText edNameOfPrescription, edDurationOfPrescriptionInDays, edFrequencyOfIntakeInDays, edDateOfPrescription, edDateOfStart, edFrequencyBetweenDosesInHours, edFirstIntakeHour;
+    ImageView ivTime, ivDate, ivDateD;
     Context context;
     Button btAjoutM;
     List<Medications> listeMedications;
@@ -70,13 +87,16 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     LogDAO ldao;
     AdapterMedications adapter;
     Spinner spinner;
-
+    private static final int PERMISSION_REQUEST_WRITE_CALENDAR = 1;
     String nameOfPrescription, locale, token;
     Date dateOfPrescription, dateOfStart;
     LocalTime firstIntakeHour;
     int durationOfPrescriptionInDays,
             frequencyBetweenDosesInHours, frequencyOfIntakeInDays;
 
+
+    int hour ;
+    int minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +122,35 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 ValidateInputs();
             }
         });
+    }
 
+    private void generateEvent() {
+        Calendar startTime = Calendar.getInstance();
+        //startTime.setTime(dateOfStart); // Date de début de la prescription
+        startTime.setTime(dateOfStart);
+        startTime.set(Calendar.HOUR_OF_DAY, hour); // Heure de la première prise
+        startTime.set(Calendar.MINUTE, minute);
+
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setData(CalendarContract.Events.CONTENT_URI);
+
+        intent.putExtra(CalendarContract.Events.TITLE, edNameOfPrescription.getText().toString()) // Simple title
+                .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,startTime.getTimeInMillis());
+
+
+        startActivity(intent);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_WRITE_CALENDAR) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                generateEvent();
+            } else {
+                Toast.makeText(this, "Permission refusée, impossible d'ajouter l'événement au calendrier", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void LoadRefsForUI() {
@@ -113,11 +161,14 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         edDateOfPrescription = findViewById(R.id.edDateOfPrescription);
         edDateOfStart = findViewById(R.id.edDateOfStart);
         edFirstIntakeHour = findViewById(R.id.edFirstIntakeHour);
+        ivTime = findViewById(R.id.ivTime);
+        ivDate = findViewById(R.id.ivDate);
+        ivDateD = findViewById(R.id.ivDateD);
 
         //edFrequencyBetweenDosesInHours.setOnClickListener(v -> showTimePickerDialog(edFrequencyBetweenDosesInHours));
-        edFirstIntakeHour.setOnClickListener(v -> showTimePickerDialog(edFirstIntakeHour));
-        edDateOfPrescription.setOnClickListener(v -> showDatePickerDialog(edDateOfPrescription));
-        edDateOfStart.setOnClickListener(v -> showDatePickerDialog(edDateOfStart));
+        ivTime.setOnClickListener(v -> showTimePickerDialog(edFirstIntakeHour));
+        ivDate.setOnClickListener(v -> showDatePickerDialog(edDateOfPrescription));
+        ivDateD.setOnClickListener(v -> showDatePickerDialog(edDateOfStart));
 
 
     }
@@ -127,7 +178,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         mdao = mainDB.mdao();
         pdao = mainDB.pdao();
     }
-
 
     private void LoadUserProfil() {
         token = SharedPrefManager.getInstance(this).getToken();
@@ -171,6 +221,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+
     private void showDatePickerDialog(EditText editText, boolean hasMaxDate, boolean hasMinDate, long minDate, long maxDate) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -194,8 +245,8 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     private void showTimePickerDialog(EditText editText) {
         Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, selectedMinute) -> {
             String time = hourOfDay + ":" + selectedMinute;
@@ -351,7 +402,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         nameOfPrescription = edNameOfPrescription.getText().toString();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         try {
-             firstIntakeHour = LocalTime.parse(edFirstIntakeHour.getText().toString(), formatter);
+            firstIntakeHour = LocalTime.parse(edFirstIntakeHour.getText().toString(), formatter);
         } catch (DateTimeParseException e) {
             e.printStackTrace();
             Toast.makeText(context, "Erreur lors de la conversion de l'heure", Toast.LENGTH_SHORT).show();
@@ -370,17 +421,38 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         frequencyBetweenDosesInHours = Integer.parseInt(edFrequencyBetweenDosesInHours.getText().toString());
         frequencyOfIntakeInDays = Integer.parseInt(edFrequencyOfIntakeInDays.getText().toString());
 
+        if (durationOfPrescriptionInDays > 365) {
+            edDurationOfPrescriptionInDays.setError("La durée maximale de la prescription est de 365 jours");
+            return;
+        }
+
+        if (frequencyBetweenDosesInHours > 24) {
+            edFrequencyBetweenDosesInHours.setError("La fréquence maximale entre les doses est de 24 heures");
+            return;
+        }
+
+        if (frequencyOfIntakeInDays > 31) {
+            edFrequencyOfIntakeInDays.setError("La fréquence maximale d'intake est de 31 jours");
+            return;
+        }
+
         if (dateOfPrescription.after(dateOfStart)) {
             edDateOfPrescription.setError("La date de prescription doit être antérieure à la date de début");
             edDateOfStart.setError("La date de début doit être postérieure à la date de prescription");
             Toast.makeText(context, "La date de prescription doit être antérieure à la date de début", Toast.LENGTH_SHORT).show();
             return;
         }
+        else{
+            edDateOfPrescription.setError(null);
+            edDateOfStart.setError(null);
+        }
         if (verifyNumberInputForPositiveIntegers(edDurationOfPrescriptionInDays) == 1 || verifyNumberInputForPositiveIntegers(edFrequencyBetweenDosesInHours) == 1 || verifyNumberInputForPositiveIntegers(edFrequencyOfIntakeInDays) == 1) {
             return;
         }
 
+
         addPrescriptionToDistantDB();
+        generateEvent();
 
     }
 

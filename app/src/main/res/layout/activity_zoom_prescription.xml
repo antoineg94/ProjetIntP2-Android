@@ -19,64 +19,134 @@
         android:paddingBottom="8dp" />
 
     <TextView
+        android:id="@+id/tvTitleDateP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
+        android:text="@string/zD"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="@string/zD" />
+
+    <TextView
         android:id="@+id/tvDateP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date de la prescription"
-        android:textSize="20sp"
+        android:paddingBottom="8dp"
         android:textColor="@android:color/black"
-        android:paddingBottom="8dp" />
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvTitleDateDP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
+        android:text="@string/zDD"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="@string/zDD" />
 
     <TextView
         android:id="@+id/tvDateDP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date de début de la prescription"
         android:textSize="20sp"
         android:textColor="@android:color/black"
         android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvTitleDateFP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
+        android:text="@string/zDF"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="@string/zDF" />
 
     <TextView
         android:id="@+id/tvDateFP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date de fin de la prescription"
         android:textSize="20sp"
         android:textColor="@android:color/black"
         android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvTitleDoseP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
+        android:text="@string/zFi"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="@string/zFi" />
 
     <TextView
         android:id="@+id/tvDoseP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dose de la prescription"
         android:textSize="20sp"
         android:textColor="@android:color/black"
         android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvTitleFrequenceHP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
+        android:text="@string/zH"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="@string/zH" />
 
     <TextView
         android:id="@+id/tvFrequenceHP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fréquence hebdomadaire de la prescription"
         android:textSize="20sp"
         android:textColor="@android:color/black"
         android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvTitleFrequenceJours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
+        android:text="@string/zQ"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="@string/zQ" />
 
     <TextView
         android:id="@+id/tvFrequenceJours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fréquence quotidienne de la prescription"
         android:textSize="20sp"
         android:textColor="@android:color/black"
         android:paddingBottom="8dp" />
 
     <TextView
+        android:id="@+id/tvTitleFrequenceJP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
+        android:text="@string/zJ"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="@string/zJ" />
+
+    <TextView
         android:id="@+id/tvFrequenceJP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fréquence par jour de la prescription"
         android:textSize="20sp"
         android:textColor="@android:color/black"
         android:paddingBottom="8dp" />
