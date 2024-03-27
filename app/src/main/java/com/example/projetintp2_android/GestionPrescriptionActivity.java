@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,7 +29,7 @@ import com.example.projetintp2_android.Classes.Objects.Logs;
 import com.example.projetintp2_android.Classes.Objects.Medications;
 import com.example.projetintp2_android.Classes.Objects.Prescription;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
-import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedications;
+import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterPrescriptions;
 import com.example.projetintp2_android.Classes.DAO.PrescriptionDAO;
 import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
 import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
@@ -39,7 +38,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -47,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GestionPrescriptionActivity extends AppCompatActivity implements AdapterMedications.InterfacePrescription {
+public class GestionPrescriptionActivity extends AppCompatActivity implements AdapterPrescriptions.InterfacePrescription {
 
     MainDB mainDB;
     PrescriptionDAO pdao;
@@ -57,7 +55,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     DeviceDAO ddao;
     LogDAO ldao;
     RecyclerView rvPrescriptions;
-    AdapterMedications adapter;
+    AdapterPrescriptions adapter;
     FloatingActionButton btAdd;
     List<Prescription> listePrescriptions;
     UserV2 user;
@@ -414,7 +412,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     }
 
 
-    private void setAdapterPrescription(AdapterMedications adapter) {
+    private void setAdapterPrescription(AdapterPrescriptions adapter) {
         rvPrescriptions.setAdapter(adapter);
         rvPrescriptions.setHasFixedSize(true);
         rvPrescriptions.setLayoutManager(new LinearLayoutManager(this));
@@ -423,7 +421,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     private void getApdaterPrescription() {
 
 
-        adapter = new AdapterMedications(listePrescriptions, this);
+        adapter = new AdapterPrescriptions(listePrescriptions, this);
         setAdapterPrescription(adapter);
     }
 

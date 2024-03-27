@@ -1,47 +1,43 @@
 package com.example.projetintp2_android.Classes.RecyclerViewAdapter;
 
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projetintp2_android.Classes.Objects.Prescription;
-import com.example.projetintp2_android.GestionPrescriptionActivity;
+import com.example.projetintp2_android.Classes.Objects.Medications;
 import com.example.projetintp2_android.R;
 
 import java.util.List;
 
-public class AdapterMedications extends RecyclerView.Adapter<AdapterMedications.MonViewHolder> {
+public class AdapterMedications extends RecyclerView.Adapter<AdapterMedications.MyViewHolder> {
 
-    public interface InterfacePrescription
-    {
-        public void gestionClick(int position, Prescription prescriptions);
-    }
+    private List<Medications> liste;
+    private SparseBooleanArray checkedItems = new SparseBooleanArray();
 
-    InterfacePrescription interfacePrescription;
-    private GestionPrescriptionActivity gestionMedicament;
-    private List<Prescription> liste;
-
-    public AdapterMedications(List<Prescription> liste, InterfacePrescription interfacePrescription) {
+    public AdapterMedications(List<Medications> liste) {
         this.liste = liste;
-        this.interfacePrescription = interfacePrescription;
     }
 
     @NonNull
     @Override
-    public MonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.layout_card, parent, false);
-        return new MonViewHolder(view);
+        View view = inflater.inflate(R.layout.layout_rv_medicament, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MonViewHolder holder, int position) {
-        Prescription prescription = liste.get(position);
-        holder.tvNom.setText(prescription.getNameOfPrescription());
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Medications medications = liste.get(position);
+        holder.tvNomM.setText(medications.getName());
+        holder.checkBox.setChecked(checkedItems.get(position, false));
     }
 
     @Override
@@ -49,30 +45,43 @@ public class AdapterMedications extends RecyclerView.Adapter<AdapterMedications.
         return liste.size();
     }
 
-    public void supprimerMedicament(int position) {
-        liste.remove(position);
-        notifyItemRemoved(position);
-    }
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView tvNomM;
+        CheckBox checkBox;
 
-    public class MonViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNom;
-        ImageView icSupprimer;
-
-        public MonViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNom = itemView.findViewById(R.id.tvNom);
-            icSupprimer = itemView.findViewById(R.id.icSupprimer);
+            tvNomM = itemView.findViewById(R.id.tvNomM);
+            checkBox = itemView.findViewById(R.id.checkBox);
 
-            tvNom.setOnClickListener(new View.OnClickListener() {
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View view) {
-                    interfacePrescription.gestionClick(getLayoutPosition(), liste.get(getLayoutPosition()));
-                }
-            });
-            icSupprimer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    supprimerMedicament(getAdapterPosition());
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    final int adapterPosition = getAdapterPosition();
+                    if (isChecked) {
+                        // Décocher les autres cases
+                        for (int i = 0; i < checkedItems.size(); i++) {
+                            if (checkedItems.keyAt(i) != adapterPosition) {
+                                checkedItems.put(checkedItems.keyAt(i), false);
+                                final int finalI = i;
+                                checkBox.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        notifyItemChanged(checkedItems.keyAt(finalI));
+                                    }
+                                });
+                            }
+                        }
+                        checkedItems.put(adapterPosition, true);
+                    } else {
+                        checkedItems.put(adapterPosition, false);
+                    }
+                    checkBox.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyDataSetChanged();
+                        }
+                    });
                 }
             });
         }

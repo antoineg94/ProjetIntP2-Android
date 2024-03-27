@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -68,9 +69,6 @@ public interface InterfaceAPI_V2 {
     Call<APIResponse> getPrescriptions(@Path("locale") String locale,
                                        @Header("Authorization") String token);
 
-    @GET("{locale}/prescriptions")
-    Call<ResponseBody> getPrescriptions2(@Path("locale") String locale,
-                                         @Header("Authorization") String token);
     @POST("{locale}/prescriptions")
     @FormUrlEncoded
     Call<APIResponse> postPrescriptions(@Path("locale") String locale,
@@ -83,6 +81,12 @@ public interface InterfaceAPI_V2 {
                                         @Field("frequencyOfIntakeInDays") int frequencyOfIntakeInDays,
                                         @Field("firstIntakeHour") LocalTime firstIntakeHour,
                                         @Field("medication_id") int medication_id);
+
+    @DELETE("{locale}/prescriptions/{id}")
+    Call<APIResponse> deletePrescriptions(@Path("locale") String locale,
+                                          @Header("Authorization") String token,
+                                          @Path("id") int id);
+
     @GET("{locale}/medications")
     Call<APIResponse> getMedications(@Path("locale") String locale,
                                      @Header("Authorization") String token);
@@ -90,13 +94,13 @@ public interface InterfaceAPI_V2 {
     @GET("{locale}/alerts")
     Call<APIResponse> getAlerts(@Path("locale") String locale,
                                 @Header("Authorization") String token);
-    @Update
+
     @POST("{locale}/alerts")
     @FormUrlEncoded
     Call<APIResponse> updateAlerts(@Path("locale") String locale,
                                    @Header("Authorization") String token,
                                    @Field("isMedicationTaken") boolean isMedicationTaken
-                                   );
+    );
 
     @GET("{locale}/calendars")
     Call<APIResponse> getCalendars(@Path("locale") String locale,
@@ -105,20 +109,22 @@ public interface InterfaceAPI_V2 {
     @GET("{locale}/devices")
     Call<APIResponse> getDevices(@Path("locale") String locale,
                                  @Header("Authorization") String token);
+
     @POST("{locale}/devices")
     @FormUrlEncoded
     Call<APIResponse> postDevices(@Path("locale") String locale,
                                   @Header("Authorization") String token,
                                   @Field("noSerie") String noSerie,
                                   @Field("associatedPatientFullName") String associatedPatientFullName);
-    @Update
+
     @POST("{locale}/devices")
     @FormUrlEncoded
     Call<APIResponse> updateDevices(@Path("locale") String locale,
                                     @Header("Authorization") String token,
                                     @Field("associatedPatientFullName") String associatedPatientFullName
 
-                                    );
+    );
+
     @GET("{locale}/logs")
     Call<APIResponse> getLogs(@Path("locale") String locale,
                               @Header("Authorization") String token);

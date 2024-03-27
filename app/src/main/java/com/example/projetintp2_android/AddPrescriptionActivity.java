@@ -2,9 +2,6 @@ package com.example.projetintp2_android;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -20,11 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
@@ -38,13 +33,12 @@ import com.example.projetintp2_android.Classes.Databases.MainDB;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 import com.example.projetintp2_android.Classes.Objects.Medications;
 import com.example.projetintp2_android.Classes.Objects.Prescription;
-import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterPrescriptions;
+import com.example.projetintp2_android.Classes.RecyclerViewAdapter.AdapterMedications;
 import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
 import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -74,7 +68,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     AlertDAO adao;
     DeviceDAO ddao;
     LogDAO ldao;
-    AdapterPrescriptions adapter;
+    AdapterMedications adapter;
     Spinner spinner;
 
     String nameOfPrescription, locale, token;
