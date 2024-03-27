@@ -43,5 +43,5 @@
 
     <string name="ajBt">Valider</string>
     <string name="frequencyOfIntakeInDays">La fréquence de prise en jours</string>
-    <string name="firstintakehour">firstIntakeHour</string>
+    <string name="firstintakehour">La première heure de prise du médicament</string>
 </resources>

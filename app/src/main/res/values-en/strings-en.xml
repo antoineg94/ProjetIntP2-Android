@@ -33,4 +33,6 @@
     <string name="aj_tv_A">Yearly</string>
 
     <string name="ajBt">Validate</string>
+    <string name="frequencyOfIntakeInDays">Frequency of intake in days</string>
+    <string name="firstintakehour">First intake hour of the medication</string>
 </resources>
