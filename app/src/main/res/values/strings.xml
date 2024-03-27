@@ -42,6 +42,4 @@
     <string name="aj_tv_A">Annuelle</string>
 
     <string name="ajBt">Valider</string>
-    <string name="frequencyOfIntakeInDays">La fréquence de prise en jours</string>
-    <string name="firstintakehour">firstIntakeHour</string>
 </resources>
