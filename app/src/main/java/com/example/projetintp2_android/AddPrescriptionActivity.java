@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -41,6 +43,7 @@ import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
@@ -55,6 +58,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     private static final String PREF_LANGUAGE_KEY = "pref_language";
     EditText edNameOfPrescription, edDurationOfPrescriptionInDays, edFrequencyOfIntakeInDays;
     DatePicker edDateOfPrescription, edDateOfStart;
+    DatePickerDialog dDatePickerDialog;
     TimePicker edFrequencyBetweenDosesInHours, edFirstIntakeHour;
     Context context;
     Button btAjoutM;
@@ -75,6 +79,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     Time firstIntakeHour;
     int durationOfPrescriptionInDays,
             frequencyBetweenDosesInHours, frequencyOfIntakeInDays;
+
 
 
     @Override
@@ -126,7 +131,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         token = SharedPrefManager.getInstance(this).getToken();
     }
 
-    private void LoadMedicationsToLocalDB(List<Medications> list) {
+    private void LoadMedicationsFromLocalDB(List<Medications> list) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
             @Override
@@ -134,6 +139,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 try {
                     listeMedications = mdao.getAfficherM();
                     Log.d("Medications", mdao.getAfficherM().toString());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(context, "Erreur lors de la récupération des médicaments", Toast.LENGTH_SHORT).show();
@@ -141,11 +147,29 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        getAdapterMedicament();
+                       populateSpinner();
                     }
                 });
             }
         });
+    }
+    private void showDatePickerDialog(DatePicker datePicker) {
+        dDatePickerDialog = new DatePickerDialog(
+                this,
+                (view, year, month, dayOfMonth) -> {
+                    // Do something with the date
+                },
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        dDatePickerDialog.show();
+    }
+    private void populateSpinner() {
+        ArrayAdapter<Medications> spinnerAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, listeMedications);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
     }
 
     private void addPrescriptionToLocalDB(Prescription prescription) {
@@ -251,6 +275,11 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             recreate();
             return true;
         }
+        else if (id == R.id.itDeconnexion) {
+
+            logout();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -282,5 +311,26 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
         // Redémarrez votre activité pour appliquer les modifications
         recreate();*/
+    }
+    private void logout() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.logout(locale, "Bearer " + token);
+        call.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                if (response.body().getStatus().equals("success")) {
+                    SharedPrefManager.getInstance(AddPrescriptionActivity.this).clear();
+                    Intent intent = new Intent(AddPrescriptionActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("logout", t.getMessage());
+                Toast.makeText(AddPrescriptionActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

@@ -123,7 +123,7 @@
                 android:textSize="16sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tx3"
                 android:orientation="horizontal">
@@ -138,10 +138,8 @@
                 <DatePicker
                     android:id="@+id/edDateOfStart"
                     android:layout_width="wrap_content"
-                    android:layout_height="56dp"
-                    android:layout_weight="10"
-                    android:focusable="false"
-                    android:inputType="date" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -181,12 +179,11 @@
 
             <TimePicker
                 android:id="@+id/edFrequencyBetweenDosesInHours"
-                android:layout_width="366dp"
-                android:layout_height="55dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_below="@id/tx5"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                 />
+                android:layout_marginTop="10dp"
+                android:ems="1" />
 
         </RelativeLayout>
 
@@ -210,13 +207,11 @@
             android:layout_height="wrap_content"
             android:hint="@string/firstintakehour">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <TimePicker
                 android:id="@+id/edFirstIntakeHour"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="time">
-
-            </com.google.android.material.textfield.TextInputEditText>
+                android:inputType="time" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
