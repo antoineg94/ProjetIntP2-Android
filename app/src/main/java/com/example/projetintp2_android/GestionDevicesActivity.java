@@ -217,19 +217,15 @@ public class GestionDevicesActivity extends AppCompatActivity {
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                if (response.body().getStatus().equals("error")) {
-                    Toast.makeText(GestionDevicesActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    onFailure(call, new Throwable(response.body().getMessage()));
-                    return;
-                }
-
                 if (response.body().getData() != null) {
                     Devices device = response.body().getData().getDevice();
-                    Log.d("createDeviceServer", device.toString());
-
-                    addDeviceToLocalDB(device);
+                    if (device != null) {
+                        Log.d("createDeviceServer", device.toString());
+                        addDeviceToLocalDB(device);
+                    } else {
+                        Log.d("createDeviceServer", "Device is null");
+                    }
                     resetEditText();
-
                     getDevicesFromLocalDB();
                     Toast.makeText(GestionDevicesActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                 }
