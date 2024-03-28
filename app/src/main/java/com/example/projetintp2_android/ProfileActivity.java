@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 
 import java.io.IOException;
 
@@ -42,7 +41,7 @@ import retrofit2.Response;
 public class ProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     TextView tvWelcome;
-    ImageView ivLogout, ivEnregistrerNom, ivSupNom, ivSaveCourriel, ivSupCourriel;
+    ImageView ivEnregistrerNom, ivSupNom, ivSaveCourriel, ivSupCourriel;
     Button ivSavePassword, ivAnnulerPassword;
     ImageView ivModifNom, ivModifCourriel, ivModifMotPasse;
     TextView tvNomComplet, tvCourriel, tvPassword, nom, Courriel;
@@ -62,12 +61,6 @@ public class ProfileActivity extends AppCompatActivity {
         LoadIDRefs();
         LoadUserProfil();
         SetLocale("en");
-        ivLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Logout();
-            }
-        });
 
 
         ivModifNom.setOnClickListener(new View.OnClickListener() {
@@ -404,7 +397,7 @@ public class ProfileActivity extends AppCompatActivity {
         nom = findViewById(R.id.nom);
         Courriel = findViewById(R.id.courriel);
 
-        ivLogout = findViewById(R.id.ivLogout);
+
         ivEnregistrerNom = findViewById(R.id.ivEnregistrer);
         ivSupNom = findViewById(R.id.ivAnnuller);
 
@@ -462,20 +455,7 @@ public class ProfileActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                Glide.with(this).load(bitmap).into(imageViewProfile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public void Logout() {
         InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);

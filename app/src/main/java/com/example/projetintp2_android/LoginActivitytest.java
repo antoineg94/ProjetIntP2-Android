@@ -22,7 +22,8 @@ import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 
 import com.example.projetintp2_android.Classes.Objects.Token;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
-import com.example.projetintp2_android.Classes.RetrofitInstance;
+import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
+import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
 import com.google.gson.Gson;
 
 import java.util.Locale;
@@ -55,14 +56,9 @@ public class LoginActivitytest extends AppCompatActivity  {
         textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
         textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
 
-        buttonLanguage = findViewById(R.id.btlangue);
 
-        buttonLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeLanguage("fr");
-            }
-        });
+
+
 
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -93,15 +89,7 @@ public class LoginActivitytest extends AppCompatActivity  {
             }
         });
     }
-    private void changeLanguage(String languageCode) {
-        Locale locale = new Locale(languageCode);
-        Locale.setDefault(locale);
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.locale = locale;
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-        recreate(); // Recharge l'activité pour appliquer la nouvelle langue.
-    }
+
     protected void onStart()
     {
         super.onStart();
@@ -158,7 +146,7 @@ public class LoginActivitytest extends AppCompatActivity  {
                     Log.d("token",token.toString());
                     SharedPrefManager.getInstance(LoginActivitytest.this).SaveUserV2(user);
                     SharedPrefManager.getInstance(LoginActivitytest.this).saveToken(token);
-                    Intent intent = new Intent(LoginActivitytest.this,ProfileActivity.class);
+                    Intent intent = new Intent(LoginActivitytest.this,GestionPrescriptionActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 

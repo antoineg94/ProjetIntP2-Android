@@ -485,7 +485,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 if (response.body().getStatus().equals("success")) {
                     SharedPrefManager.getInstance(AddPrescriptionActivity.this).clear();
-                    Intent intent = new Intent(AddPrescriptionActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(AddPrescriptionActivity.this, LoginActivitytest.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }

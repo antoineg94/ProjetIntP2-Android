@@ -21,18 +21,15 @@
             android:name=".ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ResetPassword"
-            android:exported="false" />
-        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
-        <activity
+      <!--  <activity
             android:name=".ListeUsersActivity"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".RegisterActivity"
             android:exported="true"
-            android:parentActivityName=".LoginActivity">
+            android:parentActivityName=".LoginActivitytest">
 
             <!--
      <intent-filter>
@@ -51,7 +48,7 @@
         <activity
             android:name=".ZoomPrescriptionActivity"
             android:exported="false"
-            android:parentActivityName=".GestionMedicamentActivity" />
+            android:parentActivityName=".GestionPrescriptionActivity" />
         <activity
             android:name=".GestionDevicesActivity"
             android:exported="false" />
@@ -63,7 +60,7 @@
             android:name=".GestionPrescriptionActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginActivitytest"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

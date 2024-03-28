@@ -433,7 +433,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 if (response.body().getStatus().equals("success")) {
                     SharedPrefManager.getInstance(GestionPrescriptionActivity.this).clear();
-                    Intent intent = new Intent(GestionPrescriptionActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(GestionPrescriptionActivity.this, LoginActivitytest.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }

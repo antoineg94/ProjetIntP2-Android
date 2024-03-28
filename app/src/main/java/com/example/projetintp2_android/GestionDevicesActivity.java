@@ -193,7 +193,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 if (response.body().getStatus().equals("success")) {
                     SharedPrefManager.getInstance(GestionDevicesActivity.this).clear();
-                    Intent intent = new Intent(GestionDevicesActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(GestionDevicesActivity.this, LoginActivitytest.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }

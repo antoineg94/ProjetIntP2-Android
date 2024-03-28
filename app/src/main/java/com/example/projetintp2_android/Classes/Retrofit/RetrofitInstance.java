@@ -26,7 +26,7 @@ public class RetrofitInstance {
         if(retrofit == null)
         {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(DevServerURL)
+                    .baseUrl(ProdServerURL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
