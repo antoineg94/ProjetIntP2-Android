@@ -56,6 +56,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_activity_profile);
+        getSupportActionBar().setTitle(R.string.profilemanagement);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         LoadIDRefs();
         LoadUserProfil();
@@ -63,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logout();
+                logout();
             }
         });
 
@@ -80,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
                 ivEnregistrerNom.setVisibility(View.VISIBLE);
                 ivSupNom.setVisibility(View.VISIBLE);
 
-
+                UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
                 etNom.setText(user.getName());
                 //    etCourriel.setText(user.getEmail());
                 //    etMotdepasse.setText("ppppppppp");
@@ -91,22 +93,44 @@ public class ProfileActivity extends AppCompatActivity {
                         Nom = etNom.getText().toString().trim();
                         boolean valide = true;
                         if (Nom.isEmpty()) {
-                            etNom.setError("Entrez votre nom complet");
+                            etNom.setError(getString(R.string.erreur_nom_complet));
                             valide = false;
                         }
+
+
                         if (valide) {
-                            InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                            InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
 
-                            Call<ResponseBody> call = serveur.updateName(Nom);
+                            Log.d("token", "token" + token);
+                            Log.d("locale", "locale" + locale);
+                            Call<APIResponse> call = serveur.updateName(locale,"Bearer " + token,Nom);
 
-                            call.enqueue(new Callback<ResponseBody>() {
+                            call.enqueue(new Callback<APIResponse>() {
                                 @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    ResponseBody resultat = response.body();
+                                public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                                    APIResponse resultat = response.body();
+                                    Log.d("updateName", resultat.getMessage());
+                                    if (resultat.getStatus().equals("success")) {
+                                        SharedPrefManager.getInstance(ProfileActivity.this).updateName(Nom);
+                                        UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
+                                        //  user.getName();
+                                        tvNomComplet.setText(user.getName());
+                                        tvNomComplet.setVisibility(View.VISIBLE);
+                                        nom.setVisibility(View.VISIBLE);
+                                        ivModifNom.setVisibility(View.VISIBLE);
+                                        // rend visible ce qui est cache
+                                        etNom.setVisibility(View.INVISIBLE);
+                                        ivEnregistrerNom.setVisibility(View.INVISIBLE);
+                                        ivSupNom.setVisibility(View.INVISIBLE);
+
+                                    } else {
+                                        alertFail(resultat.getMessage());
+                                    }
+
                                 }
 
                                 @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                public void onFailure(Call<APIResponse> call, Throwable t) {
                                     Toast.makeText(ProfileActivity.this, "une erreur", Toast.LENGTH_LONG).show();
 
                                 }
@@ -149,6 +173,7 @@ public class ProfileActivity extends AppCompatActivity {
                 ivSaveCourriel.setVisibility(View.VISIBLE);
                 ivSupCourriel.setVisibility(View.VISIBLE);
 
+                UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
                 etCourriel.setText(user.getEmail());
 
 
@@ -160,18 +185,44 @@ public class ProfileActivity extends AppCompatActivity {
                         courriel = etCourriel.getText().toString().trim();
                         boolean valide = true;
                         if (courriel.isEmpty()) {
-                            etCourriel.setError("Entrez votre courriel");
+                            etCourriel.setError(getString(R.string.erreur_courriel));
                             valide = false;
                         }
+                        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(courriel).matches()) {
+                            etCourriel.setError(getString(R.string.erreur_courriel_valide));
+                            valide = false;
+                        }
+
                         if (valide) {
                             InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+                            // Users  request = new Users( name, courriel,password);
+                            Log.d("token", "token" + token);
+                            Log.d("locale", "locale" + locale);
+                            Call<APIResponse> call = serveur.updateEmail(locale, "Bearer " + token,courriel);
 
-                            Call<APIResponse> call = serveur.updateEmail(locale, token, courriel);
 
                             call.enqueue(new Callback<APIResponse>() {
                                 @Override
                                 public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                                     APIResponse resultat = response.body();
+                                    Log.d("updateEmail", resultat.getMessage());
+                                    if (resultat.getStatus().equals("success")) {
+                                        SharedPrefManager.getInstance(ProfileActivity.this).updateEmail(courriel);
+                                        UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
+                                        //  user.getName();
+                                        tvCourriel.setText(user.getEmail());
+                                        tvCourriel.setVisibility(View.VISIBLE);
+                                        Courriel.setVisibility(View.VISIBLE);
+                                        ivModifCourriel.setVisibility(View.VISIBLE);
+
+                                        // rend visible ce qui est cache
+                                        etCourriel.setVisibility(View.INVISIBLE);
+                                        ivSaveCourriel.setVisibility(View.INVISIBLE);
+                                        ivSupCourriel.setVisibility(View.INVISIBLE);
+
+                                    } else {
+                                        alertFail(resultat.getMessage());
+                                    }
                                 }
 
                                 @Override
@@ -228,35 +279,65 @@ public class ProfileActivity extends AppCompatActivity {
                         confirmMotPasse = etConfirmMotPasse.getText().toString().trim();
                         boolean valide = true;
                         if (ancienMotPasse.isEmpty()) {
-                            etAncienMotPasse.setError("Entrez votre ancien mot de passe");
+                            etAncienMotPasse.setError(getString(R.string.ancien_mot_passe));
                             valide = false;
                         }
                         if (motdepasse.isEmpty()) {
-                            etNouveauMotPasse.setError("Entrez votre nouveau mot de passe");
+                            etNouveauMotPasse.setError(getString(R.string.nouveau_mot_passe));
+                            valide = false;
+                        }
+                        if (motdepasse.length() < 8) {
+                            etNouveauMotPasse.setError(getString(R.string.caracteres_mot_passe));
                             valide = false;
                         }
                         if (confirmMotPasse.isEmpty()) {
-                            etConfirmMotPasse.setError("confirmez votre mot de passe");
+                            etConfirmMotPasse.setError(getString(R.string.confirmez_le_mot_de_passe));
                             valide = false;
                         }
-                        if (confirmMotPasse.equals(motdepasse)) {
-                            etNouveauMotPasse.setError("les mot de passe doivet etre identiques");
-                            etConfirmMotPasse.setError("les mots de passe doivent etre identiques");
+                        if (confirmMotPasse.length() < 8) {
+                            etNouveauMotPasse.setError(getString(R.string.caracteres_mot_passe));
+                            valide = false;
+                        }
+                        if (!confirmMotPasse.equals(motdepasse)) {
+                            valide = false;
+                            etNouveauMotPasse.setError(getString(R.string.mot_passe_identique));
+                            etConfirmMotPasse.setError(getString(R.string.mot_passe_identique));
                         }
                         if (valide) {
                             // si valide ici
-                            InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                            InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+                            Log.d("token", "token" + token);
+                            Log.d("locale", "locale" + locale);
 
-                            Call<ResponseBody> call = serveur.updatePassword(motdepasse);
+                            Call<APIResponse> call = serveur.updatePassword(locale,"Bearer " + token,ancienMotPasse,motdepasse,confirmMotPasse);
 
-                            call.enqueue(new Callback<ResponseBody>() {
+                            call.enqueue(new Callback<APIResponse>() {
                                 @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    ResponseBody resultat = response.body();
+                                public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                                    APIResponse resultat = response.body();
+                                    Log.d("updatePassword", resultat.getMessage());
+                                    if (resultat.getStatus().equals("success")) {
+                                        SharedPrefManager.getInstance(ProfileActivity.this).updateEmail(courriel);
+                                        UserV2  user = SharedPrefManager.getInstance(ProfileActivity.this).getUserV2();
+                                        //  user.getName();
+                                        tvPassword.setVisibility(View.VISIBLE);
+                                        // Courriel.setVisibility(View.INVISIBLE);
+                                        ivModifMotPasse.setVisibility(View.VISIBLE);
+
+                                        // rend visible ce qui est cache
+                                        etAncienMotPasse.setVisibility(View.INVISIBLE);
+                                        etNouveauMotPasse.setVisibility(View.INVISIBLE);
+                                        etConfirmMotPasse.setVisibility(View.INVISIBLE);
+                                        ivAnnulerPassword.setVisibility(View.INVISIBLE);
+                                        ivSavePassword.setVisibility(View.INVISIBLE);
+
+                                    } else {
+                                        alertFail(resultat.getMessage());
+                                    }
                                 }
 
                                 @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                public void onFailure(Call<APIResponse> call, Throwable t) {
                                     Toast.makeText(ProfileActivity.this, "une erreur", Toast.LENGTH_LONG).show();
 
                                 }
@@ -295,6 +376,7 @@ public class ProfileActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         setTitle("Gestion des prescriptions");
+        menu.findItem(R.id.itProfil).setVisible(false);
         return true;
     }
     @Override
@@ -307,13 +389,9 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GestionDevicesActivity.class);
             startActivity(intent);
             return true;
-        } else if (item.getItemId() == R.id.itProfil) {
-            Toast.makeText(this, "Vous êtes déjà dans votre profil", Toast.LENGTH_SHORT).show();
-            return true;
-
-        } else if (item.getItemId() == R.id.itDeconnexion) {
+        }  else if (item.getItemId() == R.id.itDeconnexion) {
             SharedPrefManager.getInstance(this).clear();
-            Logout();
+            logout();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -354,7 +432,7 @@ public class ProfileActivity extends AppCompatActivity {
         token = SharedPrefManager.getInstance(this).getToken();
         tvNomComplet.setText(user.getName());
         tvCourriel.setText(user.getEmail());
-        tvPassword.setText("mot de passe");
+        tvPassword.setText(getString(R.string.mot_de_passe));
 
     }
 
@@ -396,52 +474,28 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void Logout() {
-        InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-
-        // Users  request = new Users( name, courriel,password);
-        Log.d("token", "token" + token);
-        Log.d("locale", "locale" + locale);
-        Call<APIResponse> call = serveur.logout(locale,  token);
-
+    private void logout() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.logout(locale, "Bearer " + token);
         call.enqueue(new Callback<APIResponse>() {
-            APIResponse logoutResponse = new APIResponse(null, null, null,null);
-
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                logoutResponse = response.body();
+                APIResponse logoutResponse = response.body();
                 Log.d("logout", logoutResponse.getMessage());
                 if (logoutResponse.getStatus().equals("success")) {
+
                     Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    finish(); // Fermer l'activité actuelle pour empêcher l'utilisateur de revenir en arrière
-                } else {
-                    alertFail(logoutResponse.getMessage());
                 }
-
-
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("logout", t.getMessage());
                 Toast.makeText(ProfileActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.e("erreur", t.getMessage());
-                Log.d("logout", logoutResponse.getMessage());
-
             }
-
         });
-
-
-        // Effacer les informations d'authentification stockées localement
-    /*        SharedPrefManager.getInstance(this).clear();
-
-            // Rediriger l'utilisateur vers la page de connexion
-            Intent intent = new Intent(this, LoginActivitytest.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish(); // Fermer l'activité actuelle pour empêcher l'utilisateur de revenir en arrière*/
     }
 
     public void update(String Nom, String courriel, String motdepasse) {
@@ -469,7 +523,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void alertFail(String s) {
         new AlertDialog.Builder(this)
-                .setTitle("Echec")
+                .setTitle(R.string.echec)
                 .setIcon(R.drawable.ic_loginwarning24)
                 .setMessage(s)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {

@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide;
 
 import java.io.IOException;
 
+import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
+import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceServeur;
 import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
 
@@ -40,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        getSupportActionBar().setTitle(("Création de compte"));
+        getSupportActionBar().setTitle(R.string.creation);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -50,8 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmailmodifie);
         etMotDePasse = findViewById(R.id.etMotDePasse);
         btCreationCompte = findViewById(R.id.btCreationCompte);
-        btChoixImage = findViewById(R.id.btChoixImage);
-        imageViewProfile = findViewById(R.id.ivImageProfil);
+
+
         etConfirmationMotDePasse = findViewById(R.id.etConfirmationMotDePasse);
 
         btCreationCompte.setOnClickListener(new View.OnClickListener() {
@@ -61,15 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         
-        btChoixImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // verifierPermission();
 
-                // methode pour aller choisir la photo de profil dans le telephone
-                openFileChooser();
-            }
-        });
     }
     /*public void verifierPermission() {
         ActivityResultLauncher<String[]> permissionsLauncher = registerForActivityResult(
@@ -94,28 +88,6 @@ public class RegisterActivity extends AppCompatActivity {
         permissionsLauncher.launch(permissions);
     }*/
 
-    private void openFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-
-            try{
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                Glide.with(this).load(bitmap).into(imageViewProfile);
-            }
-            catch ( IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     //methode de validation des champs(vérifie si tous les champs obligatoires a la creation de compte sont bien rentrés)
     public void checkRegistry() {
@@ -130,36 +102,40 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(Nom.isEmpty()||prenom.isEmpty()||email.isEmpty()||motPasse.isEmpty())
             {
-                alertFail ("les champs nom,prenom,email et mot de passe sont requis pour la création de compte");
+                alertFail (R.string.champs_creation_compte);
             }
             else if (!motPasse.equals(confirmation))
             {
-                alertFail("les mots de passes doivent etre identiques");
+                alertFail(R.string.mot_passe_identique);
             }
             else
             {
-                sendRegister(nomComplet,email,motPasse);
+                sendRegister(nomComplet,email,motPasse,confirmation);
             }
 
 
     }
 
-    public void sendRegister(String name,String courriel,String password) {
+    public void sendRegister(String name,String courriel,String password,String confirm) {
 
-        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
 
        //Users  request = new Users( name, courriel,password);
+        String locale = "en";
 
-        Call<ResponseBody> call = serveur.register(name, courriel,password);
+        Call<APIResponse> call = serveur.register(locale,name, courriel,password,confirm);
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<APIResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                ResponseBody resultat= response.body();
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resultat= response.body();
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(intent);
+
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<APIResponse> call, Throwable t) {
                 Toast.makeText(RegisterActivity.this,"une erreur",Toast.LENGTH_LONG).show();
 
 
@@ -168,61 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-/*
-        JSONObject params = new JSONObject();
-        try{
-            params.put("name",Nom);
-          //  params.put("name",prenom);
-            params.put("email",email);
-            params.put("password",motPasse);
-         //   params.put("password_confirmation",confirmation);
 
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-        String data = params.toString();
-        String url = getString(R.string.api_server)+"/register";
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Http http = new Http(RegisterActivity.this,url);
-                http.setMethod("post");
-                http.setData(data);
-                http.send();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Integer code = http.getStatusCode();
-                        if(code == 201 || code ==200 )
-                        {
-                            Toast.makeText(RegisterActivity.this,"creation de compte réussie",Toast.LENGTH_LONG).show();
-                        } else if (code == 442) {
-                            try {
-                                JSONObject response = new JSONObject(http.getResponse());
-                                String msg = response.getString("message");
-                                alertFail(msg);
-
-                            }
-                            catch (JSONException e)
-                            {
-                                e.printStackTrace();
-                            }
-                            
-                        }
-                         else {
-                             Toast.makeText(RegisterActivity.this,"Erreur"+code,Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-            }
-        }).start();
-
-*/
-
-      //  Toast.makeText(this,"creation de compte réussie",Toast.LENGTH_LONG).show();
     }
 
 /*
@@ -240,9 +162,9 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }*/
 
-    private void alertFail(String s) {
+    private void alertFail(int s) {
         new AlertDialog.Builder(this)
-                .setTitle("Echec")
+                .setTitle(R.string.echec)
                 .setIcon(R.drawable.ic_loginwarning24)
                 .setMessage(s)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {

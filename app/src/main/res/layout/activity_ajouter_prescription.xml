@@ -95,6 +95,7 @@
                         android:id="@+id/edDateOfPrescription"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:editable="false"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,6 +132,8 @@
                         android:id="@+id/edDateOfStart"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:editable="false"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -226,6 +229,7 @@
                         android:id="@+id/edFirstIntakeHour"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:editable="false"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>

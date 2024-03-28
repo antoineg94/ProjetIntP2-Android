@@ -249,7 +249,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         minute = calendar.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, selectedMinute) -> {
-            String time = hourOfDay + ":" + selectedMinute;
+            String time = String.format("%02d:%02d", hourOfDay, selectedMinute);
             editText.setText(time);
         }, hour, minute, true);
 
@@ -272,10 +272,8 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 pdao.insertPrescription(prescription);
                 Toast.makeText(context, "Prescription ajoutée", Toast.LENGTH_SHORT).show();
                 runOnUiThread(new Runnable() {
-                    @Override
                     public void run() {
-
-                        Toast.makeText(context, "Prescription ajoutée", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddPrescriptionActivity.this, "Your message", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

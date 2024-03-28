@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="250dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/ivLogout"
@@ -35,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Nom"
+            android:text="@string/nom_complet"
             android:textSize="20sp" />
 
         <TextView
@@ -70,7 +71,7 @@
             android:ems="10"
             android:gravity="start|left"
             android:inputType="text"
-            android:text="Name"
+            android:text="@string/nom"
             android:textSize="20sp"
             android:visibility="invisible"
             tools:visibility="invisible" />
@@ -109,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Courriel"
+            android:text="@string/adresse_mail"
             android:textSize="20sp" />
 
         <TextView
@@ -185,7 +186,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="textPassword"
+            android:text="@string/mot_de_passe"
             android:textSize="20sp" />
 
         <ImageView
@@ -209,7 +210,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:ems="10"
-            android:hint="Entrez votre ancien Mot de passe"
+            android:hint="@string/entrez_votre_ancien_mot_de_passe"
             android:inputType="textPassword"
             android:textSize="20sp"
             android:visibility="invisible"
@@ -222,7 +223,7 @@
             android:layout_gravity="left"
             android:layout_weight="2"
             android:ems="10"
-            android:hint="entrez le nouveau mot de passe"
+            android:hint="@string/entrez_le_nouveau_mot_de_passe"
             android:inputType="textPassword"
             android:textSize="20sp"
             android:visibility="invisible"
@@ -234,7 +235,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:ems="10"
-            android:hint="Confirmez le mot de passe"
+            android:hint="@string/confirmez_le_mot_de_passe"
             android:inputType="textPassword"
             android:textSize="20sp"
             android:visibility="invisible"
@@ -252,7 +253,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="Enregistrer"
+                android:text="@string/enregistrer"
                 android:visibility="invisible"
                 tools:visibility="invisible" />
 
@@ -264,7 +265,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:text="Annuler"
+                android:text="@string/annuler"
                 android:visibility="invisible"
                 tools:visibility="invisible" />
 
