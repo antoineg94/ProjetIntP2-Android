@@ -26,7 +26,7 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="true"
-            android:parentActivityName=".LoginActivitytest">
+            android:parentActivityName=".LoginActivity">
 
             <!--
      <intent-filter>
@@ -43,21 +43,21 @@
      android:label="string/title_activity_login" />
         -->
         <activity
-            android:name=".ZoomPrescription"
+            android:name=".ZoomPrescriptionActivity"
             android:exported="false"
-            android:parentActivityName=".GestionMedicament"/>
+            android:parentActivityName=".GestionPrescriptionActivity"/>
         <activity
-            android:name=".GestionDispositifs"
+            android:name=".GestionDevicesActivity"
             android:exported="false" />
         <activity
-            android:name=".AjouterMedicament"
+            android:name=".AddPrescriptionActivity"
             android:exported="false"
-            android:parentActivityName=".GestionMedicament" />
+            android:parentActivityName=".GestionPrescriptionActivity" />
         <activity
-            android:name=".GestionMedicament"
+            android:name=".GestionPrescriptionActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivitytest"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

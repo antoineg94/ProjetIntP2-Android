@@ -13,24 +13,12 @@
     <string name="title_activity_gestion_medicament">GestionMedicament</string>
     <string name="title_activity_dispositif">Dispositif</string>
 
-    <string-array name="months">
-        <item>Janvier</item>
-        <item>Fevrier</item>
-        <item>Mars</item>
-        <item>Avril</item>
-        <item>Mai</item>
-        <item>Juin</item>
-        <item>Juillet</item>
-        <item>Aout</item>
-        <item>Septembre</item>
-        <item>Octobre</item>
-        <item>Novembre</item>
-        <item>Decembre</item>
-    </string-array>
 
+    <string name="ajNom">Nom de la prescription</string>
     <string name="ajSearch">Sélectionnez un médicament</string>
-    <string name="ajDD">Sélectionnez une date de début</string>
-    <string name="ajDF">Sélectionnez une date de fin</string>
+    <string name="ajD">Date de la prescription</string>
+    <string name="ajDD">Date de début de la prescription</string>
+    <string name="ajDF">Durée de la prescription (en jours)</string>
     <string name="ajInter">Intervalles entre les doses (en heures)</string>
     <string name="ajFr">Périodicité</string>
 
@@ -40,4 +28,15 @@
     <string name="aj_tv_A">Annuelle</string>
 
     <string name="ajBt">Valider</string>
+    <string name="frequencyOfIntakeInDays">La fréquence de prise en jours</string>
+    <string name="firstintakehour">La première heure de prise du médicament</string>
+    <string name="fillTheInput">Veuillez remplir le champ: </string>
+
+    <string name="zD">Date de la prescription:</string>
+    <string name="zDD">Date de début de la prescription:  </string>
+    <string name="zDF">Durée de la prescription (en jours): </string>
+    <string name="zFi">La première heure de prise du médicament: </string>
+    <string name="zH">Fréquence entre les doses (en heures): </string>
+    <string name="zQ">Fréquence d\'administration (en jours): </string>
+    <string name="zJ">Fréquence par jour de la prescription: </string>
 </resources>

@@ -1,29 +1,13 @@
 package com.example.projetintp2_android;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.os.Handler;
-
-import com.example.projetintp2_android.R;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -35,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, LoginActivitytest.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         },3000);
@@ -51,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.itGestionMedic) {
-            Intent intent = new Intent(this, GestionMedicament.class);
+            Intent intent = new Intent(this, GestionPrescriptionActivity.class);
             startActivity(intent);
             return true;
         } else if (item.getItemId() == R.id.itDispositif) {
-            Intent intent = new Intent(this, GestionDispositifs.class);
+            Intent intent = new Intent(this, GestionDevicesActivity.class);
             startActivity(intent);
             return true;
         }
