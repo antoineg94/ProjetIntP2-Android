@@ -104,15 +104,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart()
     {
         super.onStart();
-/*
+
             if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-                Intent intent = new Intent(LoginActivitytest.this, ProfileActivity.class);
+                Intent intent = new Intent(LoginActivity.this, GestionPrescriptionActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
 
                 //if()
-            }*/
+            }
     }
 
     // methode qui verifie la conxion
@@ -167,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 catch (Exception e){
                     e.printStackTrace();
+                    alertFail(R.string.aucun);
                 }
 
 

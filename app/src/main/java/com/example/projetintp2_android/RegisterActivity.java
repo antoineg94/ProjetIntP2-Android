@@ -65,28 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
         
 
     }
-    /*public void verifierPermission() {
-        ActivityResultLauncher<String[]> permissionsLauncher = registerForActivityResult(
-                new ActivityResultContracts.RequestMultiplePermissions(),
-                new ActivityResultCallback<Map<String, Boolean>>() {
-                    @Override
-                    public void onActivityResult(Map<String, Boolean> result) {
-                        result.forEach((permission, reponse) -> {
-                            if (reponse) {
-                                openFileChooser();
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "Permission refusée", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }
-        );
-        String[] permissions = {
-                android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                android.Manifest.permission.CAMERA
-        };
-        permissionsLauncher.launch(permissions);
-    }*/
+
 
 
     //methode de validation des champs(vérifie si tous les champs obligatoires a la creation de compte sont bien rentrés)
@@ -109,12 +88,16 @@ public class RegisterActivity extends AppCompatActivity {
                 alertFail(R.string.mot_passe_identique);
             }
            else if(etNom.getText().toString().matches(".*[1234567890/*!@#$%^&*()_+|}{:?><,./;].*")){
-                etNom.setError("Le nom  ne doit pas contenir de caractères spéciaux ou de chiffres");
-                return;
+                etNom.setError(getString(R.string.caracteresSpeciaux));
+
             }
             else if(etPrenom.getText().toString().matches(".*[1234567890/*!@#$%^&*()_+|}{:?><,./;].*")){
-                etPrenom.setError("Le prénom  ne doit pas contenir de caractères spéciaux ou de chiffres");
-                return;
+                etPrenom.setError(getString(R.string.caracteresSpeciauxPre));
+
+            }
+            else if(motPasse.length()<8)
+            {
+                etMotDePasse.setError(getString(R.string.caracteres_mot_passe));
             }
             else
             {

@@ -60,5 +60,7 @@
     <string name="zH">Frequency Between Doses (in hours): </string>
     <string name="zQ">Frequency of Intake (in days): </string>
     <string name="zJ">Frequency per Day of Prescription: </string>
+    <string name="caracteresSpeciaux">The name must not contain any special characters or numbers</string>
+    <string name="caracteresSpeciauxPre">The first name must not contain any special characters or numbers</string>
 
 </resources>
