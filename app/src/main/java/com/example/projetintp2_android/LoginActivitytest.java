@@ -39,7 +39,7 @@ public class LoginActivitytest extends AppCompatActivity  {
     private EditText editTextEmail, editTextPassword;
     private CheckBox checkBoxRememberMe ;
     private Button buttonLogin,buttonLanguage;
-    private TextView textViewForgotPassword, textViewCreateAccount;
+    private TextView  textViewCreateAccount;
     boolean isChecked;
     //private FirebaseAuth auth;
 
@@ -53,7 +53,7 @@ public class LoginActivitytest extends AppCompatActivity  {
         editTextEmail = findViewById(R.id.etEmailmodifie);
         editTextPassword = findViewById(R.id.etMotDePasse);
         buttonLogin = findViewById(R.id.buttonLogin);
-        textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
+
         textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
 
 
@@ -69,14 +69,7 @@ public class LoginActivitytest extends AppCompatActivity  {
             }
         });
 
-        textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivitytest.this, ResetPasswordActivity.class);
-                startActivity(intent);
-                // Redirection vers la page de réinitialisation du mot de passe
-            }
-        });
+
 
         textViewCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
