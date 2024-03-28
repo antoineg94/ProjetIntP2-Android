@@ -9,21 +9,29 @@ public class DataFromAPI {
     Prescription prescription;
     List<Prescription> prescriptions;
     List<Medications> medications;
+    Alerts alert;
     List<Alerts> alerts;
     List<Logs> logs;
     List<Calendars> calendars;
+    Devices device;
     List<Devices> devices;
 
+<<<<<<< HEAD
 
     public DataFromAPI(UserV2 user, String token, Prescription prescription, List<Prescription> prescriptions, List<Medications> medications, List<Alerts> alerts, List<Logs> logs, List<Calendars> calendars, List<Devices> devices) {
+=======
+    public DataFromAPI(UserV2 user, String token, Prescription prescription, List<Prescription> prescriptions, List<Medications> medications, Alerts alert, List<Alerts> alerts, List<Logs> logs, List<Calendars> calendars, Devices device, List<Devices> devices) {
+>>>>>>> feature/Work_API_DB
         this.user = user;
         this.token = token;
         this.prescription = prescription;
         this.prescriptions = prescriptions;
         this.medications = medications;
+        this.alert = alert;
         this.alerts = alerts;
         this.logs = logs;
         this.calendars = calendars;
+        this.device = device;
         this.devices = devices;
     }
 
@@ -63,15 +71,31 @@ public class DataFromAPI {
         return devices;
     }
 
+    public Prescription getPrescription() {
+        return prescription;
+    }
+
+    public Devices getDevice() {
+        return device;
+    }
+
+    public Alerts getAlert() {
+        return alert;
+    }
+
     @Override
     public String toString() {
         return "DataFromAPI{" +
                 "user=" + user +
-                ", token=" + token +
-                ", prescriptionsList=" + prescriptions +
-                ", medicationsList=" + medications +
-                ", alertsList=" + alerts +
-                ", logsList=" + logs +
+                ", token='" + token + '\'' +
+                ", prescription=" + prescription +
+                ", prescriptions=" + prescriptions +
+                ", medications=" + medications +
+                ", alerts=" + alerts +
+                ", logs=" + logs +
+                ", calendars=" + calendars +
+                ", device=" + device +
+                ", devices=" + devices +
                 '}';
     }
 }

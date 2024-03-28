@@ -150,7 +150,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
 
                 } else {
                     Log.d("Prescriptions", "User don't have prescriptions yet.");
-                    onFailure(call, new Throwable("User don't have prescriptions yet."));
+                    onFailure(call, new Throwable(response.body().getMessage()));
                 }
             }
 
@@ -174,7 +174,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                 }
                 else {
                     Log.d("Medications", "User don't have medications yet.");
-                    onFailure(call, new Throwable("User don't have medications yet."));
+                    onFailure(call, new Throwable(response.body().getMessage()));
                 }
             }
 
@@ -198,7 +198,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                 }
                 else {
                     Log.d("Calendars", "User don't have calendars yet.");
-                   onFailure(call, new Throwable("User don't have calendars yet."));
+                   onFailure(call, new Throwable(response.body().getMessage()));
                 }
             }
 
@@ -223,7 +223,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                 }
                 else {
                     Log.d("Alerts", "User don't have alerts yet.");
-                    onFailure(call, new Throwable("User don't have alerts yet."));
+                    onFailure(call, new Throwable(response.body().getMessage()));
                 }
             }
 
@@ -247,7 +247,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                 }
                 else {
                     Log.d("Devices", "User don't have devices yet.");
-                    onFailure(call, new Throwable("User don't have devices yet."));
+                    onFailure(call, new Throwable(response.body().getMessage()));
                 }
             }
 
@@ -270,8 +270,8 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     LoadLogsToLocalDB(response.body().getData().getLogs());
                     Log.d("Logs", response.body().getData().getLogs().toString());
                 } else {
-                    Log.d("Logs", "User don't have logs yet.");
-                    onFailure(call, new Throwable("User don't have logs yet."));
+                    Log.e("Logs", "User don't have logs yet.");
+                    onFailure(call, new Throwable(response.body().getMessage()));
                 }
             }
 
@@ -437,11 +437,16 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
+                else {
+                    Log.e("logout", response.body().getMessage());
+                    Toast.makeText(GestionPrescriptionActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                Log.e("Erreur", t.getMessage());
+                Log.e("logout", t.getMessage());
+                Toast.makeText(GestionPrescriptionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

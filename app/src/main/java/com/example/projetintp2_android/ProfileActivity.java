@@ -63,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logout();
+                logout();
             }
         });
 
@@ -295,6 +295,7 @@ public class ProfileActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         setTitle("Gestion des prescriptions");
+        menu.findItem(R.id.itProfil).setVisible(false);
         return true;
     }
     @Override
@@ -307,13 +308,9 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GestionDevicesActivity.class);
             startActivity(intent);
             return true;
-        } else if (item.getItemId() == R.id.itProfil) {
-            Toast.makeText(this, "Vous êtes déjà dans votre profil", Toast.LENGTH_SHORT).show();
-            return true;
-
-        } else if (item.getItemId() == R.id.itDeconnexion) {
+        }  else if (item.getItemId() == R.id.itDeconnexion) {
             SharedPrefManager.getInstance(this).clear();
-            Logout();
+            logout();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -396,52 +393,26 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void Logout() {
-        InterfaceAPI_V2 serveur = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
-
-        // Users  request = new Users( name, courriel,password);
-        Log.d("token", "token" + token);
-        Log.d("locale", "locale" + locale);
-        Call<APIResponse> call = serveur.logout(locale,  token);
-
+    private void logout() {
+        InterfaceAPI_V2 api = RetrofitInstance.getInstance().create(InterfaceAPI_V2.class);
+        Call<APIResponse> call = api.logout(locale, "Bearer " + token);
         call.enqueue(new Callback<APIResponse>() {
-            APIResponse logoutResponse = new APIResponse(null, null, null,null);
-
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                logoutResponse = response.body();
-                Log.d("logout", logoutResponse.getMessage());
-                if (logoutResponse.getStatus().equals("success")) {
+                if (response.body().getStatus().equals("success")) {
+                    SharedPrefManager.getInstance(ProfileActivity.this).clear();
                     Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    finish(); // Fermer l'activité actuelle pour empêcher l'utilisateur de revenir en arrière
-                } else {
-                    alertFail(logoutResponse.getMessage());
                 }
-
-
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e("logout", t.getMessage());
                 Toast.makeText(ProfileActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.e("erreur", t.getMessage());
-                Log.d("logout", logoutResponse.getMessage());
-
             }
-
         });
-
-
-        // Effacer les informations d'authentification stockées localement
-    /*        SharedPrefManager.getInstance(this).clear();
-
-            // Rediriger l'utilisateur vers la page de connexion
-            Intent intent = new Intent(this, LoginActivitytest.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish(); // Fermer l'activité actuelle pour empêcher l'utilisateur de revenir en arrière*/
     }
 
     public void update(String Nom, String courriel, String motdepasse) {

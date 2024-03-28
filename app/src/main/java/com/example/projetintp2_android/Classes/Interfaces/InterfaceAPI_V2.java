@@ -1,5 +1,6 @@
 package com.example.projetintp2_android.Classes.Interfaces;
 
+import androidx.room.Delete;
 import androidx.room.Update;
 
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
@@ -117,14 +118,26 @@ public interface InterfaceAPI_V2 {
                                   @Field("noSerie") String noSerie,
                                   @Field("associatedPatientFullName") String associatedPatientFullName);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/Work_API_DB
     @POST("{locale}/devices")
     @FormUrlEncoded
     Call<APIResponse> updateDevices(@Path("locale") String locale,
                                     @Header("Authorization") String token,
+<<<<<<< HEAD
                                     @Field("associatedPatientFullName") String associatedPatientFullName
 
     );
 
+=======
+                                    @Field("associatedPatientFullName") String associatedPatientFullName);
+    @DELETE("{locale}/devices/{id}")
+    Call<APIResponse> deleteDevices(@Path("locale") String locale,
+                                    @Header("Authorization") String token,
+                                    @Path("id") int id);
+>>>>>>> feature/Work_API_DB
     @GET("{locale}/logs")
     Call<APIResponse> getLogs(@Path("locale") String locale,
                               @Header("Authorization") String token);
