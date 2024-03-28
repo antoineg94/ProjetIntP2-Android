@@ -26,14 +26,14 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
-        android:text="Ajouter un dispositif"
+        android:text="@string/ajouter_un_dispositif"
         android:textSize="20sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="16dp"
-        android:hint="Numéro de série">
+        android:hint="@string/num_ro_de_s_rie">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNoSerie"
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:layout_marginTop="16dp"
-        android:hint="Nom du patient">
+        android:hint="@string/nom_du_patient">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAssociatedPatientFullName"
@@ -64,5 +64,5 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="Valider" />
+        android:text="@string/valider" />
 </LinearLayout>

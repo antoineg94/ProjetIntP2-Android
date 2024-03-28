@@ -62,5 +62,21 @@
     <string name="zJ">Frequency per Day of Prescription: </string>
     <string name="caracteresSpeciaux">The name must not contain any special characters or numbers</string>
     <string name="caracteresSpeciauxPre">The first name must not contain any special characters or numbers</string>
+    <string name="gestion_des_prescriptions">Prescriptions Management</string>
+
+    <string name="gestion_des_dispositifs">Device Management</string>
+    <string name="profil">Profile</string>
+    <string name="guide_d_utilisation">User Guide</string>
+    <string name="d_connexion">Logout</string>
+
+    <string name="ajouter_un_dispositif">Add a device</string>
+    <string name="num_ro_de_s_rie">Serial Number</string>
+    <string name="nom_du_patient">Patient\'s Name</string>
+    <string name="valider">Validate</string>
+    <string name="nomdevicerequis">Please enter the serial number</string>
+    <string name="nomSeriesCaracteres">The serial number must be at least 6 characters long</string>
+    <string name="serie50caracteres">The serial number must be a maximum of 50 characters long</string>
+    <string name="n"
+
 
 </resources>

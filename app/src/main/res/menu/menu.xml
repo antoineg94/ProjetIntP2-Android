@@ -4,20 +4,20 @@
 
     <item
         android:id="@+id/itGestionMedic"
-        android:title="Gestion des prescriptions"
+        android:title="@string/gestion_des_prescriptions"
         app:showAsAction="collapseActionView" />
     <item
         android:id="@+id/itDispositif"
         android:icon="@drawable/ic_devices"
-        android:title="Gestion des dispositifs"
+        android:title="@string/gestion_des_dispositifs"
         app:showAsAction="collapseActionView" />
     <item
         android:id="@+id/itProfil"
-        android:title="Profil"
+        android:title="@string/profil"
         app:showAsAction="collapseActionView" />
     <item
         android:id="@+id/itGuide"
-        android:title="Guide d'utilisation"
+        android:title="@string/guide_d_utilisation"
         android:visible="false"
         app:showAsAction="collapseActionView" />
     <item
@@ -28,5 +28,5 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/itDeconnexion"
-        android:title="Déconnexion" />
+        android:title="@string/d_connexion" />
 </menu>

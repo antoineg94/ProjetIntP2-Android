@@ -76,7 +76,7 @@ public class GestionDevicesActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        setTitle("Gestion des dispositifs");
+        setTitle(R.string.gestion_des_dispositifs);
         menu.getItem(1).setVisible(false);
         return true;
     }
@@ -166,15 +166,15 @@ public class GestionDevicesActivity extends AppCompatActivity {
 
     private void validateEditText() {
         if (etNoSerie.getText().toString().isEmpty()) {
-            etNoSerie.setError("Veuillez entrer le numéro de série");
+            etNoSerie.setError(getString(R.string.nomdevicerequis));
             return;
         }
         if(etNoSerie.getText().toString().length() < 6){
-            etNoSerie.setError("Le numéro de série doit contenir au moins 6 caractères");
+            etNoSerie.setError(getString(R.string.nomSeriesCaracteres));
             return;
         }
         if(etNoSerie.getText().toString().length() > 20){
-            etNoSerie.setError("Le numéro de série doit contenir au maximum 50 caractères");
+            etNoSerie.setError(getString(R.string.serie50caracteres));
             return;
         }
         if(etNoSerie.getText().toString().contains(" ")){

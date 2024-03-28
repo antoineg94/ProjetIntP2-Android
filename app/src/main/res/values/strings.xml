@@ -70,5 +70,18 @@
     <string name="zJ">Fréquence par jour de la prescription: </string>
     <string name="caracteresSpeciaux">Le nom  ne doit pas contenir de caractères spéciaux ou de chiffres</string>
     <string name="caracteresSpeciauxPre">Le prénom  ne doit pas contenir de caractères spéciaux ou de chiffres</string>
+    <string name="gestion_des_prescriptions">Gestion des prescriptions</string>
+    <string name="gestion_des_dispositifs">Gestion des dispositifs</string>
+    <string name="profil">Profil</string>
+    <string name="guide_d_utilisation">Guide d\'utilisation</string>
+    <string name="d_connexion">Déconnexion</string>
+
+    <string name="ajouter_un_dispositif">Ajouter un dispositif</string>
+    <string name="num_ro_de_s_rie">Numéro de série</string>
+    <string name="nom_du_patient">Nom du patient</string>
+    <string name="valider">Valider</string>
+    <string name="nomdevicerequis">Veuillez entrer le numéro de série</string>
+    <string name="nomSeriesCaracteres">Le numéro de série doit contenir au moins 6 caractères</string>
+    <string name="serie50caracteres">Le numéro de série doit contenir au maximum 50 caractères</string>
 
 </resources>

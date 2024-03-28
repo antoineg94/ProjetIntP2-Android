@@ -92,7 +92,7 @@ public class GestionPrescriptionActivity extends AppCompatActivity implements Ad
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        setTitle("Gestion des prescriptions");
+        setTitle(R.string.gestion_des_prescriptions);
         menu.getItem(0).setVisible(false);
         return true;
     }
