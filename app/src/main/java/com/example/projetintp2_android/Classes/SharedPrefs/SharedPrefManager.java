@@ -45,6 +45,24 @@ public class SharedPrefManager {
         editor.putString("updated_at",user.getUpdated_at());
         editor.apply();
     }
+
+    public void updateName(String nom)
+    {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name", nom);
+        editor.apply();
+
+    }
+
+        public void updateEmail(String courriel)
+        {
+            SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("email", courriel);
+            editor.apply();
+
+        }
     public void saveToken(String token)
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
@@ -87,7 +105,7 @@ public class SharedPrefManager {
 
         );
 
-return user;
+        return user;
     }
 
     public void clear ()

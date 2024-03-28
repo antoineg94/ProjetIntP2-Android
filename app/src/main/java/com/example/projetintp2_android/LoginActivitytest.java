@@ -1,8 +1,11 @@
 package com.example.projetintp2_android;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,23 +20,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.projetintp2_android.Classes.APIResponses.APIResponse;
 import com.example.projetintp2_android.Classes.Interfaces.InterfaceAPI_V2;
 
+import com.example.projetintp2_android.Classes.Objects.Token;
 import com.example.projetintp2_android.Classes.Objects.UserV2;
-import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
-import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
+import com.example.projetintp2_android.Classes.RetrofitInstance;
+import com.google.gson.Gson;
 
+import java.util.Locale;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivitytest extends AppCompatActivity  {
 
-    boolean isChecked;
     private EditText editTextEmail, editTextPassword;
-    private CheckBox checkBoxRememberMe;
-    private Button buttonLogin;
+    private CheckBox checkBoxRememberMe ;
+    private Button buttonLogin,buttonLanguage;
     private TextView textViewForgotPassword, textViewCreateAccount;
-    private String email, password;
+    boolean isChecked;
+    //private FirebaseAuth auth;
+
+    private String email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +54,16 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
         textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
-        checkBoxRememberMe = findViewById(R.id.checkBoxRememberMe);
+
+        buttonLanguage = findViewById(R.id.btlangue);
+
+        buttonLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLanguage("fr");
+            }
+        });
+
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +76,8 @@ public class LoginActivity extends AppCompatActivity {
         textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(LoginActivitytest.this, ResetPasswordActivity.class);
+                startActivity(intent);
                 // Redirection vers la page de réinitialisation du mot de passe
             }
         });
@@ -67,38 +87,49 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Redirection vers la page de création de compte
 
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivitytest.this, RegisterActivity.class);
                 startActivity(intent);
 
             }
         });
     }
-
-    protected void onStart() {
+    private void changeLanguage(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        recreate(); // Recharge l'activité pour appliquer la nouvelle langue.
+    }
+    protected void onStart()
+    {
         super.onStart();
-        if (isChecked = checkBoxRememberMe.isChecked()) {
+/*
             if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-                Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                Intent intent = new Intent(LoginActivitytest.this, ProfileActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
 
                 //if()
-            }
-        }
+            }*/
     }
 
     // methode qui verifie la conxion
 
-    private void checkLogin() {
-        sendLogin();
-  /*      email = editTextEmail.getText().toString().trim();
-        password = editTextPassword.getText().toString().trim();
-        if (email.isEmpty() | password.isEmpty()) {
-            alertFail("email et mot de passe requis.");
-        } else {
-            sendLogin();
-        }*/
+    private void checkLogin()
+        {
+            email=editTextEmail.getText().toString().trim();
+            password=editTextPassword.getText().toString().trim();
+            boolean valide = true;
+            if(email.isEmpty()| password.isEmpty()){
+                alertFail(R.string.requis);
+                valide = false;
+            }
+            else {
+                sendLogin();
+            }
 
     }
 
@@ -108,9 +139,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // Users  request = new Users( name, courriel,password);
         String locale = "en";
-        email = "123@123";
-        password = "123";
-        Call<APIResponse> call = serveur.login(locale, email, password);
+
+        Call<APIResponse> call = serveur.login(locale,email,password);
+
 
         call.enqueue(new Callback<APIResponse>() {
 
@@ -118,22 +149,24 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 APIResponse loginResponse = response.body();
 
-                try {
+                try{
 
                     UserV2 user = loginResponse.getData().getUser();
                     String token = loginResponse.getData().getToken();
-                    Log.d("user", user.toString());
-                    Log.d("token", token);
-                    SharedPrefManager.getInstance(LoginActivity.this).SaveUserV2(user);
-                    SharedPrefManager.getInstance(LoginActivity.this).saveToken(token);
-                    Intent intent = new Intent(LoginActivity.this, GestionPrescriptionActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                    Log.d("user",user.toString());
+                    Log.d("token",token.toString());
+                    SharedPrefManager.getInstance(LoginActivitytest.this).SaveUserV2(user);
+                    SharedPrefManager.getInstance(LoginActivitytest.this).saveToken(token);
+                    Intent intent = new Intent(LoginActivitytest.this,ProfileActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 
                     //Changer l'intent pour aller vers la page d'accueil(prescriptions)
 
 
-                } catch (Exception e) {
+                }
+                catch (Exception e){
                     e.printStackTrace();
                 }
 
@@ -142,7 +175,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivitytest.this,t.getMessage(),Toast.LENGTH_LONG).show();
+                alertFail(R.string.aucun);
 
 
             }
@@ -150,12 +184,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        // Toast.makeText(this,"Envoyé",Toast.LENGTH_LONG).show();
+       // Toast.makeText(this,"Envoyé",Toast.LENGTH_LONG).show();
     }
 
-    private void alertFail(String s) {
+    private void alertFail(int s) {
         new AlertDialog.Builder(this)
-                .setTitle("Echec")
+                .setTitle(R.string.echec)
                 .setIcon(R.drawable.ic_loginwarning24)
                 .setMessage(s)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
