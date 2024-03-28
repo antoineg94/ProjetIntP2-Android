@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivitytest.this, ResetPasswordActivity.class);
+                Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
                 startActivity(intent);
                 // Redirection vers la page de réinitialisation du mot de passe
             }
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Redirection vers la page de création de compte
 
-                Intent intent = new Intent(LoginActivitytest.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
 
             }
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("token",token.toString());
                     SharedPrefManager.getInstance(LoginActivity.this).SaveUserV2(user);
                     SharedPrefManager.getInstance(LoginActivity.this).saveToken(token);
-                    Intent intent = new Intent(LoginActivity.this,ProfileActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, GestionPrescriptionActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 

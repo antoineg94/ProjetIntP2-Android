@@ -17,7 +17,6 @@ public class DataFromAPI {
     List<Devices> devices;
 
     public DataFromAPI(UserV2 user, String token, Prescription prescription, List<Prescription> prescriptions, List<Medications> medications, Alerts alert, List<Alerts> alerts, List<Logs> logs, List<Calendars> calendars, Devices device, List<Devices> devices) {
-
         this.user = user;
         this.token = token;
         this.prescription = prescription;

@@ -480,11 +480,11 @@ public class ProfileActivity extends AppCompatActivity {
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                logoutResponse = response.body();
+                APIResponse logoutResponse = response.body();
                 Log.d("logout", logoutResponse.getMessage());
                 if (logoutResponse.getStatus().equals("success")) {
 
-                    Intent intent = new Intent(ProfileActivity.this, LoginActivitytest.class);
+                    Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }

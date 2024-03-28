@@ -249,7 +249,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         minute = calendar.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, selectedMinute) -> {
-            String time = hourOfDay + ":" + selectedMinute;
+            String time = String.format("%02d:%02d", hourOfDay, selectedMinute);
             editText.setText(time);
         }, hour, minute, true);
 

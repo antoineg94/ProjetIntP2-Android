@@ -129,7 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 APIResponse resultat= response.body();
-                Intent intent = new Intent(RegisterActivity.this,LoginActivitytest.class);
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                 startActivity(intent);
 
             }
