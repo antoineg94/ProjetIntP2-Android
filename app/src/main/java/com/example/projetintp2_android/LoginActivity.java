@@ -1,8 +1,11 @@
 package com.example.projetintp2_android;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +24,9 @@ import com.example.projetintp2_android.Classes.Objects.UserV2;
 import com.example.projetintp2_android.Classes.Retrofit.RetrofitInstance;
 import com.example.projetintp2_android.Classes.SharedPrefs.SharedPrefManager;
 
+import java.util.Locale;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -112,17 +118,17 @@ public class LoginActivity extends AppCompatActivity {
     // methode qui verifie la conxion
 
     private void checkLogin()
-    {
-        email=editTextEmail.getText().toString().trim();
-        password=editTextPassword.getText().toString().trim();
-        boolean valide = true;
-        if(email.isEmpty()| password.isEmpty()){
-            alertFail(R.string.requis);
-            valide = false;
-        }
-        else {
-            sendLogin();
-        }
+        {
+            email=editTextEmail.getText().toString().trim();
+            password=editTextPassword.getText().toString().trim();
+            boolean valide = true;
+            if(email.isEmpty()| password.isEmpty()){
+                alertFail(R.string.requis);
+                valide = false;
+            }
+            else {
+                sendLogin();
+            }
 
     }
 
