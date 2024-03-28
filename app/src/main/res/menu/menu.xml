@@ -23,6 +23,7 @@
     <item
         android:id="@+id/menu_language_switch"
         android:title="FR"
+        android:visible="false"
         app:actionLayout="@layout/layout_menu_langage"
         app:showAsAction="always" />
     <item

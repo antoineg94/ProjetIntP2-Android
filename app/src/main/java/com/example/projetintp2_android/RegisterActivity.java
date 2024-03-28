@@ -108,6 +108,14 @@ public class RegisterActivity extends AppCompatActivity {
             {
                 alertFail(R.string.mot_passe_identique);
             }
+           else if(etNom.getText().toString().matches(".*[1234567890/*!@#$%^&*()_+|}{:?><,./;].*")){
+                etNom.setError("Le nom  ne doit pas contenir de caractères spéciaux ou de chiffres");
+                return;
+            }
+            else if(etPrenom.getText().toString().matches(".*[1234567890/*!@#$%^&*()_+|}{:?><,./;].*")){
+                etPrenom.setError("Le prénom  ne doit pas contenir de caractères spéciaux ou de chiffres");
+                return;
+            }
             else
             {
                 sendRegister(nomComplet,email,motPasse,confirmation);
