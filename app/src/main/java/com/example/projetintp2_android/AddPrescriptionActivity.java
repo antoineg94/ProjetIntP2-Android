@@ -272,10 +272,8 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 pdao.insertPrescription(prescription);
                 Toast.makeText(context, "Prescription ajoutée", Toast.LENGTH_SHORT).show();
                 runOnUiThread(new Runnable() {
-                    @Override
                     public void run() {
-
-                        Toast.makeText(context, "Prescription ajoutée", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddPrescriptionActivity.this, "Your message", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
