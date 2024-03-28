@@ -25,121 +25,75 @@ public interface InterfaceAPI_V2 {
 
     @POST("{locale}/register")
     @FormUrlEncoded
-    Call<APIResponse> register(@Path("locale") String locale,
-                               @Field("name") String nom,
-                               @Field("email") String email,
-                               @Field("password") String psw);
+    Call<APIResponse> register(@Path("locale") String locale, @Field("name") String nom, @Field("email") String email, @Field("password") String psw);
 
     @POST("{locale}/login")
     @FormUrlEncoded
-    Call<APIResponse> login(@Path("locale") String locale,
-                            @Field("email") String nom,
-                            @Field("password") String psw);
+    Call<APIResponse> login(@Path("locale") String locale, @Field("email") String nom, @Field("password") String psw);
 
     @POST("{locale}/logout")
-    Call<APIResponse> logout(@Path("locale") String locale,
-                             @Header("Authorization") String token);
+    Call<APIResponse> logout(@Path("locale") String locale, @Header("Authorization") String token);
 
     @POST("{locale}/update")
     @FormUrlEncoded
-    Call<APIResponse> update(@Path("locale") String locale,
-                             @Header("Authorization") String token,
-                             @Field("name") String nom,
-                             @Field("email") String email,
-                             @Field("password") String psw);
+    Call<APIResponse> update(@Path("locale") String locale, @Header("Authorization") String token, @Field("name") String nom, @Field("email") String email, @Field("password") String psw);
 
     @POST("{locale}/updateName")
     @FormUrlEncoded
-    Call<APIResponse> updateName(@Path("locale") String locale,
-                                 @Header("Authorization") String token,
-                                 @Field("name") String nom);
+    Call<APIResponse> updateName(@Path("locale") String locale, @Header("Authorization") String token, @Field("name") String nom);
 
     @POST("{locale}/updateEmail")
     @FormUrlEncoded
-    Call<APIResponse> updateEmail(@Path("locale") String locale,
-                                  @Header("Authorization") String token,
-                                  @Field("email") String email);
+    Call<APIResponse> updateEmail(@Path("locale") String locale, @Header("Authorization") String token, @Field("email") String email);
 
     @POST("{locale}/updatePassword")
     @FormUrlEncoded
-    Call<APIResponse> updatePassword(@Path("locale") String locale,
-                                     @Header("Authorization") String token,
-                                     @Field("passord") String password);
+    Call<APIResponse> updatePassword(@Path("locale") String locale, @Header("Authorization") String token, @Field("passord") String password);
 
     @GET("{locale}/prescriptions")
-    Call<APIResponse> getPrescriptions(@Path("locale") String locale,
-                                       @Header("Authorization") String token);
+    Call<APIResponse> getPrescriptions(@Path("locale") String locale, @Header("Authorization") String token);
 
     @POST("{locale}/prescriptions")
     @FormUrlEncoded
-    Call<APIResponse> postPrescriptions(@Path("locale") String locale,
-                                        @Header("Authorization") String token,
-                                        @Field("nameOfPrescription") String nameOfPrescription,
-                                        @Field("dateOfPrescription") Date dateOfPrescription,
-                                        @Field("dateOfStart") Date dateOfStart,
-                                        @Field("durationOfPrescriptionInDays") int durationOfPrescriptionInDays,
-                                        @Field("frequencyBetweenDosesInHours") int frequencyBetweenDosesInHours,
-                                        @Field("frequencyOfIntakeInDays") int frequencyOfIntakeInDays,
-                                        @Field("firstIntakeHour") LocalTime firstIntakeHour,
-                                        @Field("medication_id") int medication_id);
+    Call<APIResponse> postPrescriptions(@Path("locale") String locale, @Header("Authorization") String token, @Field("nameOfPrescription") String nameOfPrescription, @Field("dateOfPrescription") Date dateOfPrescription, @Field("dateOfStart") Date dateOfStart, @Field("durationOfPrescriptionInDays") int durationOfPrescriptionInDays, @Field("frequencyBetweenDosesInHours") int frequencyBetweenDosesInHours, @Field("frequencyOfIntakeInDays") int frequencyOfIntakeInDays, @Field("firstIntakeHour") LocalTime firstIntakeHour, @Field("medication_id") int medication_id);
 
     @DELETE("{locale}/prescriptions/{id}")
-    Call<APIResponse> deletePrescriptions(@Path("locale") String locale,
-                                          @Header("Authorization") String token,
-                                          @Path("id") int id);
+    Call<APIResponse> deletePrescriptions(@Path("locale") String locale, @Header("Authorization") String token, @Path("id") int id);
 
     @GET("{locale}/medications")
-    Call<APIResponse> getMedications(@Path("locale") String locale,
-                                     @Header("Authorization") String token);
+    Call<APIResponse> getMedications(@Path("locale") String locale, @Header("Authorization") String token);
 
     @GET("{locale}/alerts")
-    Call<APIResponse> getAlerts(@Path("locale") String locale,
-                                @Header("Authorization") String token);
+    Call<APIResponse> getAlerts(@Path("locale") String locale, @Header("Authorization") String token);
 
     @POST("{locale}/alerts")
     @FormUrlEncoded
-    Call<APIResponse> updateAlerts(@Path("locale") String locale,
-                                   @Header("Authorization") String token,
-                                   @Field("isMedicationTaken") boolean isMedicationTaken
-    );
+    Call<APIResponse> updateAlerts(@Path("locale") String locale, @Header("Authorization") String token, @Field("isMedicationTaken") boolean isMedicationTaken);
 
     @GET("{locale}/calendars")
-    Call<APIResponse> getCalendars(@Path("locale") String locale,
-                                   @Header("Authorization") String token);
+    Call<APIResponse> getCalendars(@Path("locale") String locale, @Header("Authorization") String token);
 
     @GET("{locale}/devices")
-    Call<APIResponse> getDevices(@Path("locale") String locale,
-                                 @Header("Authorization") String token);
+    Call<APIResponse> getDevices(@Path("locale") String locale, @Header("Authorization") String token);
 
     @POST("{locale}/devices")
     @FormUrlEncoded
-    Call<APIResponse> postDevices(@Path("locale") String locale,
-                                  @Header("Authorization") String token,
-                                  @Field("noSerie") String noSerie,
-                                  @Field("associatedPatientFullName") String associatedPatientFullName);
+    Call<APIResponse> postDevices(@Path("locale") String locale, @Header("Authorization") String token, @Field("noSerie") String noSerie, @Field("associatedPatientFullName") String associatedPatientFullName);
 
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/Work_API_DB
     @POST("{locale}/devices")
     @FormUrlEncoded
-    Call<APIResponse> updateDevices(@Path("locale") String locale,
-                                    @Header("Authorization") String token,
-<<<<<<< HEAD
+    Call<APIResponse> updateDevices(@Path("locale") String locale, @Header("Authorization") String token,
+
                                     @Field("associatedPatientFullName") String associatedPatientFullName
 
     );
 
-=======
-                                    @Field("associatedPatientFullName") String associatedPatientFullName);
+
     @DELETE("{locale}/devices/{id}")
-    Call<APIResponse> deleteDevices(@Path("locale") String locale,
-                                    @Header("Authorization") String token,
-                                    @Path("id") int id);
->>>>>>> feature/Work_API_DB
+    Call<APIResponse> deleteDevices(@Path("locale") String locale, @Header("Authorization") String token, @Path("id") int id);
+
     @GET("{locale}/logs")
-    Call<APIResponse> getLogs(@Path("locale") String locale,
-                              @Header("Authorization") String token);
+    Call<APIResponse> getLogs(@Path("locale") String locale, @Header("Authorization") String token);
 
 }
