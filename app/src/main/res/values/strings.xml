@@ -83,5 +83,10 @@
     <string name="nomdevicerequis">Veuillez entrer le numéro de série</string>
     <string name="nomSeriesCaracteres">Le numéro de série doit contenir au moins 6 caractères</string>
     <string name="serie50caracteres">Le numéro de série doit contenir au maximum 50 caractères</string>
-
+    <string name="pasespace">Le numéro de série ne doit pas contenir d\'espaces</string>
+    <string name="serienegatif">Le numéro de série ne peut pas être un nombre négatif</string>
+    <string name="nomPatientdevice">Veuillez entrer le nom du patient associé</string>
+    <string name="nompatientcaractere">Le nom du patient associé doit contenir au moins 6 caractères</string>
+    <string name="nompatient50caracteres">Le nom du patient associé doit contenir au maximum 50 caractères</string>
+    <string name="nomPatientSpetiaux">Le nom du patient associé ne doit pas contenir de caractères spéciaux ou de chiffres</string>
 </resources>

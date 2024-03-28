@@ -178,24 +178,24 @@ public class GestionDevicesActivity extends AppCompatActivity {
             return;
         }
         if(etNoSerie.getText().toString().contains(" ")){
-            etNoSerie.setError("Le numéro de série ne doit pas contenir d'espaces");
+            etNoSerie.setError(getString(R.string.pasespace));
             return;
         }
         if(etNoSerie.getText().toString().startsWith("-")){
-            etNoSerie.setError("Le numéro de série ne peut pas être un nombre négatif");
+            etNoSerie.setError(getString(R.string.serienegatif));
             return;
         }
         if (etAsssociatedPatientFullName.getText().toString().isEmpty()) {
-            etAsssociatedPatientFullName.setError("Veuillez entrer le nom du patient associé");
+            etAsssociatedPatientFullName.setError(getString(R.string.nomPatientdevice));
             return;
         }
 
         if(etAsssociatedPatientFullName.getText().toString().length() < 6){
-            etAsssociatedPatientFullName.setError("Le nom du patient associé doit contenir au moins 6 caractères");
+            etAsssociatedPatientFullName.setError(getString(R.string.nompatientcaractere));
             return;
         }
         if(etAsssociatedPatientFullName.getText().toString().length() > 60){
-            etAsssociatedPatientFullName.setError("Le nom du patient associé doit contenir au maximum 50 caractères");
+            etAsssociatedPatientFullName.setError(getString(R.string.nompatient50caracteres));
             return;
         }
         if(etAsssociatedPatientFullName.getText().toString().matches(".*[1234567890/*!@#$%^&*()_+|}{:?><,./;].*")){

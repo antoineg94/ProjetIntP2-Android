@@ -76,7 +76,10 @@
     <string name="nomdevicerequis">Please enter the serial number</string>
     <string name="nomSeriesCaracteres">The serial number must be at least 6 characters long</string>
     <string name="serie50caracteres">The serial number must be a maximum of 50 characters long</string>
-    <string name="n"
-
-
+    <string name="pasespace">The serial number must not contain spaces</string>
+    <string name="serienegatif">The serial number cannot be a negative number</string>
+    <string name="nomPatientdevice">Please enter the name of the associated patient</string>
+    <string name="nompatientcaractere">The name of the associated patient must be at least 6 characters long</string>
+    <string name="nompatient50caracteres">The name of the associated patient must be no more than 50 characters long</string>
+    <string name="nomPatientSpetiaux">The name of the associated patient should not contain any special characters or numbers</string>
 </resources>
