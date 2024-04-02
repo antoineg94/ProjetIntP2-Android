@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pill Box</string>
+    <string name="title_activity_gestion_medicament">MedicationManagement</string>
+    <string name="title_activity_dispositif">Device</string>
+
+    <string name="ajNom">Prescription name</string>
+    <string name="ajSearch">Select a medication</string>
+    <string name="ajDD">Select a start date</string>
+    <string name="ajD">Prescription start date</string>
+    <string name="ajDF">Prescription duration (in days)</string>
+    <string name="ajInter">Intervals between doses (in hours)</string>
+    <string name="ajFr">Frequency</string>
+
+    <string name="aj_tv_Q">Daily</string>
+    <string name="aj_tv_H">Weekly</string>
+    <string name="aj_tv_M">Monthly</string>
+    <string name="aj_tv_A">Yearly</string>
+
+    <string name="ajBt">Validate</string>
+
+    <string name="adresse_mail">email address</string>
+    <string name="mot_de_passe">password</string>
+    <string name="connexion">login</string>
+    <string name="mot_de_passe_oublie">forgot password ?</string>
+    <string name="creer_un_compte">Create an account</string>
+    <string name="nom">Last Name</string>
+    <string name="prenom">First Name</string>
+    <string name="confirmation_de_mot_de_passe">Password Confirmation</string>
+
+    <string name="entrez_le_nouveau_mot_de_passe">Enter your new password</string>
+    <string name="confirmez_le_mot_de_passe">Enter your new password confirmation</string>
+    <string name="enregistrer">Save</string>
+    <string name="annuler">Cancel</string>
+    <string name="requis">email and password required</string>
+    <string name="echec">Fail</string>
+    <string name="aucun">No Account found</string>
+    <string name="creation">Setting up an account</string>
+    <string name="profilemanagement">Profil Management</string>
+    <string name="champs_creation_compte">the Last Name, First Name,Email and Password fields are required for account creation</string>
+    <string name="mot_passe_identique">Passwords must be the same </string>
+    <string name="erreur_nom_complet">Enter your full name</string>
+    <string name="erreur_courriel">Enter your mail address</string>
+    <string name="erreur_courriel_valide">Please enter a valid email address</string>
+    <string name="ancien_mot_passe"> Enter your old password</string>
+    <string name="nouveau_mot_passe">Enter your new password</string>
+    <string name="caracteres_mot_passe">the password must contain a minimum of 8 characters</string>
+    <string name="nom_complet">Full name</string>
+    <string name="entrez_votre_ancien_mot_de_passe">Enter your old password</string>
+
+
+    <string name="frequencyOfIntakeInDays">Frequency of intake in days</string>
+    <string name="firstintakehour">First intake hour of the medication</string>
+    <string name="fillTheInput">Please fill the field: </string>
+
+    <string name="zD">Date of Prescription:</string>
+    <string name="zDD">Start Date of Prescription: </string>
+    <string name="zDF">Prescription Duration (in days): </string>
+    <string name="zFi">First Medication Intake Hour: </string>
+    <string name="zH">Frequency Between Doses (in hours): </string>
+    <string name="zQ">Frequency of Intake (in days): </string>
+    <string name="zJ">Frequency per Day of Prescription: </string>
+    <string name="caracteresSpeciaux">The name must not contain any special characters or numbers</string>
+    <string name="caracteresSpeciauxPre">The first name must not contain any special characters or numbers</string>
+    <string name="gestion_des_prescriptions">Prescriptions Management</string>
+
+    <string name="gestion_des_dispositifs">Device Management</string>
+    <string name="profil">Profile</string>
+    <string name="guide_d_utilisation">User Guide</string>
+    <string name="d_connexion">Logout</string>
+
+    <string name="ajouter_un_dispositif">Add a device</string>
+    <string name="num_ro_de_s_rie">Serial Number</string>
+    <string name="nom_du_patient">Patient\'s Name</string>
+    <string name="valider">Validate</string>
+    <string name="nomdevicerequis">Please enter the serial number</string>
+    <string name="nomSeriesCaracteres">The serial number must be at least 6 characters long</string>
+    <string name="serie50caracteres">The serial number must be a maximum of 50 characters long</string>
+    <string name="pasespace">The serial number must not contain spaces</string>
+    <string name="serienegatif">The serial number cannot be a negative number</string>
+    <string name="nomPatientdevice">Please enter the name of the associated patient</string>
+    <string name="nompatientcaractere">The name of the associated patient must be at least 6 characters long</string>
+    <string name="nompatient50caracteres">The name of the associated patient must be no more than 50 characters long</string>
+    <string name="nomPatientSpetiaux">The name of the associated patient should not contain any special characters or numbers</string>
+</resources>

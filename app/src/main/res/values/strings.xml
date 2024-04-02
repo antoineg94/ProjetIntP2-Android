@@ -1,3 +1,92 @@
 <resources>
-    <string name="app_name">ProjetIntP2-Android</string>
+    <string name="app_name">Pilulier intelligent</string>
+    <string name="title_activity_login2">LoginActivity2</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_gestion_medicament">GestionMedicament</string>
+    <string name="title_activity_dispositif">Dispositif</string>
+
+
+    <string name="ajNom">Nom de la prescription</string>
+    <string name="ajSearch">Sélectionnez un médicament</string>
+    <string name="ajD">Date de la prescription</string>
+    <string name="ajDD">Date de début de la prescription</string>
+    <string name="ajDF">Durée de la prescription (en jours)</string>
+    <string name="ajInter">Intervalles entre les doses (en heures)</string>
+    <string name="ajFr">Périodicité</string>
+
+    <string name="aj_tv_Q">Quotidienne</string>
+    <string name="aj_tv_H">Hebdomadaire</string>
+    <string name="aj_tv_M">Mensuelle</string>
+    <string name="aj_tv_A">Annuelle</string>
+
+    <string name="ajBt">Valider</string>
+    <string name="adresse_mail">adresse mail</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="connexion">Connexion</string>
+    <string name="mot_de_passe_oublie">Mot de passe oublie ?</string>
+    <string name="creer_un_compte">Créer un compte</string>
+    <string name="nom">Nom</string>
+    <string name="prenom">Prénom</string>
+    <string name="confirmation_de_mot_de_passe">Confirmation de Mot de passe</string>
+    <string name="entrez_le_nouveau_mot_de_passe">entrez le nouveau mot de passe</string>
+    <string name="confirmez_le_mot_de_passe">Confirmez le mot de passe</string>
+    <string name="enregistrer">Enregistrer</string>
+    <string name="annuler">Annuler</string>
+    <string name="requis">email et mot de passe requis</string>
+    <string name="echec">Echec</string>
+    <string name="aucun">aucun compte trouvé</string>
+    <string name="creation">création de compte</string>
+    <string name="profilemanagement">Gestion de Profil</string>
+    <string name="champs_creation_compte">les champs nom,prenom,email et mot de passe sont requis pour la création de compte</string>
+    <string name="mot_passe_identique">les mots de passes doivent être identiques</string>
+    <string name="erreur_nom_complet">Entrez votre nom complet</string>
+    <string name="erreur_courriel">Entrez votre courriel</string>
+    <string name="erreur_courriel_valide">Entrez une adresse mail valide"</string>
+    <string name="ancien_mot_passe">Entrez votre ancien mot de passe</string>
+    <string name="nouveau_mot_passe">Entrez votre nouveau mot de passe</string>
+    <string name="caracteres_mot_passe">Le mot de passe doit contenir minimum 8 caractères</string>
+    <string name="nom_complet">nom complet</string>
+    <string name="entrez_votre_ancien_mot_de_passe">Entrez votre ancien Mot de passe</string>
+
+
+    <string name="frequencyOfIntakeInDays">La fréquence de prise en jours</string>
+    <string name="firstintakehour">La première heure de prise du médicament</string>
+    <string name="fillTheInput">Veuillez remplir le champ: </string>
+
+    <string name="zD">Date de la prescription:</string>
+    <string name="zDD">Date de début de la prescription:  </string>
+    <string name="zDF">Durée de la prescription (en jours): </string>
+    <string name="zFi">La première heure de prise du médicament: </string>
+    <string name="zH">Fréquence entre les doses (en heures): </string>
+    <string name="zQ">Fréquence d\'administration (en jours): </string>
+    <string name="zJ">Fréquence par jour de la prescription: </string>
+    <string name="caracteresSpeciaux">Le nom  ne doit pas contenir de caractères spéciaux ou de chiffres</string>
+    <string name="caracteresSpeciauxPre">Le prénom  ne doit pas contenir de caractères spéciaux ou de chiffres</string>
+    <string name="gestion_des_prescriptions">Gestion des prescriptions</string>
+    <string name="gestion_des_dispositifs">Gestion des dispositifs</string>
+    <string name="profil">Profil</string>
+    <string name="guide_d_utilisation">Guide d\'utilisation</string>
+    <string name="d_connexion">Déconnexion</string>
+
+    <string name="ajouter_un_dispositif">Ajouter un dispositif</string>
+    <string name="num_ro_de_s_rie">Numéro de série</string>
+    <string name="nom_du_patient">Nom du patient</string>
+    <string name="valider">Valider</string>
+    <string name="nomdevicerequis">Veuillez entrer le numéro de série</string>
+    <string name="nomSeriesCaracteres">Le numéro de série doit contenir au moins 6 caractères</string>
+    <string name="serie50caracteres">Le numéro de série doit contenir au maximum 50 caractères</string>
+    <string name="pasespace">Le numéro de série ne doit pas contenir d\'espaces</string>
+    <string name="serienegatif">Le numéro de série ne peut pas être un nombre négatif</string>
+    <string name="nomPatientdevice">Veuillez entrer le nom du patient associé</string>
+    <string name="nompatientcaractere">Le nom du patient associé doit contenir au moins 6 caractères</string>
+    <string name="nompatient50caracteres">Le nom du patient associé doit contenir au maximum 50 caractères</string>
+    <string name="nomPatientSpetiaux">Le nom du patient associé ne doit pas contenir de caractères spéciaux ou de chiffres</string>
 </resources>

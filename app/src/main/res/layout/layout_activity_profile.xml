@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="250dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivLogout"
+            android:layout_width="73dp"
+            android:layout_height="44dp"
+            android:layout_margin="10dp"
+            android:layout_marginHorizontal="10dp"
+            app:srcCompat="@drawable/logout"
+            tools:srcCompat="@drawable/logout" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/nom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/nom_complet"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvNomComplet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/ivModifierNom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_editprofile"
+            tools:srcCompat="@drawable/ic_editprofile" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etNomComplet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="2"
+            android:ems="10"
+            android:gravity="start|left"
+            android:inputType="text"
+            android:text="@string/nom"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            tools:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivEnregistrer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_addmodif"
+            tools:srcCompat="@drawable/ic_addmodif"
+            tools:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivAnnuller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_canlledmodification"
+            tools:srcCompat="@drawable/ic_canlledmodification"
+            tools:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/courriel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/adresse_mail"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvCourriel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/ivModifierCourriel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_editprofile"
+            tools:srcCompat="@drawable/ic_editprofile" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etCourrielmod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="2"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Name"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            tools:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivEnregistrerCou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_addmodif"
+            tools:srcCompat="@drawable/ic_addmodif"
+            tools:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ivAnnulerCou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_canlledmodification"
+            tools:srcCompat="@drawable/ic_canlledmodification"
+            tools:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvMotpasse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/mot_de_passe"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/ivModMoPasse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            app:srcCompat="@drawable/ic_editprofile"
+            tools:srcCompat="@drawable/ic_editprofile" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etAncienMotPasse"
+            android:layout_width="434dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="@string/entrez_votre_ancien_mot_de_passe"
+            android:inputType="textPassword"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            tools:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/etMotPasse"
+            android:layout_width="430dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="@string/entrez_le_nouveau_mot_de_passe"
+            android:inputType="textPassword"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            tools:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/etConfirmMotdePasse"
+            android:layout_width="952dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="@string/confirmez_le_mot_de_passe"
+            android:inputType="textPassword"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            tools:visibility="invisible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/ivSavePassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="@string/enregistrer"
+                android:visibility="invisible"
+                tools:visibility="invisible" />
+
+            <Button
+                android:id="@+id/ivAnnulerMotPasse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="@string/annuler"
+                android:visibility="invisible"
+                tools:visibility="invisible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
